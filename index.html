@@ -174,13 +174,13 @@
         </span>
       </div>
 
-      <!-- แถบเมนูย่อย (แสดงเฉพาะเมื่อไม่ได้อยู่หน้าแรก) -->
-      <div id="subNavbarNav" class="d-none flex-wrap justify-content-center gap-1">
+      <!-- แถบเมนูย่อย (แสดงเฉพาะเมื่อเข้าสู่ระบบหรืออยู่หน้าสลับย่อย) -->
+      <div id="subNavbarNav" class="d-none flex-wrap justify-content-center align-items-center gap-1">
         <div id="navWelcome" class="tab-nav" onclick="switchView('welcome')"><i class="bi bi-house-door-fill me-1"></i>หน้าแรก</div>
         <div id="navUser" class="tab-nav" onclick="switchView('user')"><i class="bi bi-pencil-square me-1"></i>บันทึกคำขอ</div>
         <div id="navTrack" class="tab-nav" onclick="switchView('track')"><i class="bi bi-search me-1"></i>ติดตามสถานะคำขอ</div>
         <div id="navAdmin" class="tab-nav" onclick="switchView('admin')"><i class="bi bi-shield-lock-fill me-1"></i>แผงควบคุมแอดมิน</div>
-        <button class="btn btn-danger btn-sm ms-2 d-none" id="btnLogout" onclick="logoutAdmin()"><i class="bi bi-box-arrow-right"></i> ออกจากระบบ</button>
+        <button class="btn btn-danger btn-sm ms-2 d-none" id="btnLogout" onclick="logoutAdmin()"><i class="bi bi-box-arrow-right me-1"></i>ออกจากระบบ</button>
       </div>
     </div>
   </nav>
@@ -391,11 +391,16 @@
 
     <!-- 3. ADMIN VIEW: แผงควบคุมแอดมิน -->
     <div id="adminView" style="display: none;">
-      <div id="adminAuthGate" class="card card-custom p-5 text-center mx-auto" style="max-width: 420px; margin-top: 5vh;">
-        <i class="bi bi-shield-lock-fill text-primary display-3 mb-3"></i>
-        <h4 class="fw-bold mb-3">ผู้ดูแลระบบ</h4>
-        <input type="password" id="adminPasswordInput" class="form-control text-center mb-3 fs-5" placeholder="ระบุรหัสผ่านแอดมิน">
-        <button class="btn btn-primary w-100 py-2 fw-bold" onclick="attemptAdminAuthentication()">เข้าสู่ระบบ</button>
+      <!-- หน้าป้อนรหัสผ่าน (Auth Gate) แบบ Clean UI ตรงตามภาพอ้างอิง -->
+      <div id="adminAuthGate" class="card card-custom p-5 text-center mx-auto shadow-sm" style="max-width: 420px; margin-top: 8vh; border-radius: 20px;">
+        <div class="mb-3">
+          <i class="bi bi-shield-lock-fill text-primary display-3"></i>
+        </div>
+        <h4 class="fw-bold mb-4 text-dark">ผู้ดูแลระบบ</h4>
+        <div class="mb-3">
+          <input type="password" id="adminPasswordInput" class="form-control text-center py-2.5 fs-6" placeholder="ระบุรหัสผ่านแอดมิน" style="border-radius: 12px; background-color: #f8fafc;">
+        </div>
+        <button class="btn btn-primary w-100 py-2.5 fw-bold shadow-sm" style="border-radius: 12px;" onclick="attemptAdminAuthentication()">เข้าสู่ระบบ</button>
       </div>
 
       <div id="adminMainControlPanel" class="d-none">
@@ -465,7 +470,7 @@
           </div>
         </div>
 
-        <!-- Sub 2: รายงานสถิติและตัวชี้วัด (ปรับเรียงลำดับใหม่ตามสั่ง) -->
+        <!-- Sub 2: รายงานสถิติและตัวชี้วัด (เรียงลำดับตามสั่ง) -->
         <div id="subViewAnalytics" class="admin-subview d-none">
           <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
             <div>
@@ -489,7 +494,7 @@
             <div class="col-md-6 col-xl-3"><div class="card card-custom p-4 bg-info text-white"><div class="small opacity-75">ยืมสะสม (ชิ้นอนุมัติ)</div><h2 class="fw-bold mb-0" id="cardStatTotalBorrowedAccum">0</h2></div></div>
           </div>
 
-          <!-- 2. ยกสัดส่วนเพศ ประเภทสิทธิ์ กลุ่มช่วงอายุ คำร้องรายหมู่บ้าน ขึ้นมาต่อจาก 4 ช่องทันที -->
+          <!-- 2. กลุ่มกราฟย่อย 4 กราฟ -->
           <div class="row g-4 mt-1">
             <div class="col-lg-6 col-xl-3"><div class="card card-custom p-3 h-100"><h6 class="fw-bold text-center">สัดส่วนเพศ</h6><div style="height: 240px; position: relative;"><canvas id="chartGender"></canvas></div></div></div>
             <div class="col-lg-6 col-xl-3"><div class="card card-custom p-3 h-100"><h6 class="fw-bold text-center">ประเภทสิทธิ์</h6><div style="height: 240px; position: relative;"><canvas id="chartStatus"></canvas></div></div></div>
@@ -497,7 +502,7 @@
             <div class="col-lg-6 col-xl-3"><div class="card card-custom p-3 h-100"><h6 class="fw-bold text-center">คำร้องรายหมู่บ้าน</h6><div style="height: 240px; position: relative;"><canvas id="chartMoo"></canvas></div></div></div>
           </div>
 
-          <!-- 3. สถิติจำนวนครั้งกิจกรรมแยกตามประเภทอุปกรณ์ ต่อลงมา -->
+          <!-- 3. สถิติจำนวนครั้งกิจกรรมแยกตามประเภทอุปกรณ์ -->
           <div class="row g-4 mt-1">
             <div class="col-12">
               <div class="card card-custom p-4 border-top border-4 border-primary">
@@ -509,7 +514,7 @@
             </div>
           </div>
 
-          <!-- 4. ตารางสรุปภาพรวมคลังอุปกรณ์ อยู่ล่างสุด (ตัดคำว่า Summary Inventory Matrix ออกแล้ว) -->
+          <!-- 4. ตารางสรุปภาพรวมคลังอุปกรณ์ -->
           <div class="row g-4 mt-1">
             <div class="col-12">
               <div class="card card-custom p-4 border-top border-4 border-info">
@@ -638,7 +643,7 @@
     </div>
   </div>
 
-  <!-- Modal ป๊อปอัปรายละเอียดข้อมูลเชิงลึก (Table Detail Popup Modals) -->
+  <!-- Modal ป๊อปอัปรายละเอียดข้อมูลเชิงลึก -->
   <div class="modal fade" id="rowDetailModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content modal-frosted border-0 shadow-lg">
@@ -853,24 +858,26 @@
 
       const subNav = document.getElementById('subNavbarNav');
       
-      if(target === 'welcome') {
-        if(subNav) subNav.classList.add('d-none');
-        document.getElementById('welcomeView').style.display = 'block';
+      // Control Navbar visibility based on Authentication and target view
+      if (target === 'welcome' || (target === 'admin' && !sessionPassword)) {
+        if (subNav) subNav.classList.add('d-none');
       } else {
-        if(subNav) subNav.classList.remove('d-none');
-        
-        if(target === 'user') {
-          document.getElementById('navUser').classList.add('active');
-          document.getElementById('userView').style.display = 'block';
-          fetchPublicStockAndEquipList();
-        } else if (target === 'track') {
-          document.getElementById('navTrack').classList.add('active');
-          document.getElementById('trackView').style.display = 'block';
-        } else if (target === 'admin') {
-          document.getElementById('navAdmin').classList.add('active');
-          document.getElementById('adminView').style.display = 'block';
-          if (sessionPassword) { executeAdminBackgroundRefresh(); }
-        }
+        if (subNav) subNav.classList.remove('d-none');
+      }
+
+      if (target === 'welcome') {
+        document.getElementById('welcomeView').style.display = 'block';
+      } else if (target === 'user') {
+        document.getElementById('navUser').classList.add('active');
+        document.getElementById('userView').style.display = 'block';
+        fetchPublicStockAndEquipList();
+      } else if (target === 'track') {
+        document.getElementById('navTrack').classList.add('active');
+        document.getElementById('trackView').style.display = 'block';
+      } else if (target === 'admin') {
+        document.getElementById('navAdmin').classList.add('active');
+        document.getElementById('adminView').style.display = 'block';
+        if (sessionPassword) { executeAdminBackgroundRefresh(); }
       }
     }
 
@@ -1118,6 +1125,10 @@
         
         document.getElementById('adminAuthGate').classList.add('d-none'); 
         document.getElementById('adminMainControlPanel').classList.remove('d-none'); 
+        
+        // Show Sub-navbar and Red Logout Button upon successful authentication
+        const subNav = document.getElementById('subNavbarNav');
+        if (subNav) subNav.classList.remove('d-none');
         document.getElementById('btnLogout').classList.remove('d-none');
         
         document.getElementById('welcomeView').style.display = 'none'; 
@@ -1146,6 +1157,10 @@
       document.getElementById('adminAuthGate').classList.remove('d-none'); 
       document.getElementById('adminMainControlPanel').classList.add('d-none'); 
       document.getElementById('btnLogout').classList.add('d-none');
+      
+      const subNav = document.getElementById('subNavbarNav');
+      if (subNav) subNav.classList.add('d-none');
+
       switchView('welcome');
     }
 

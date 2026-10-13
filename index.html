@@ -12,62 +12,132 @@
   
   <style>
     :root { 
-      --primary-gradient: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); 
-      --accent-color: #0288d1; 
-      --bg-light: #f4f6f9;
-      --slate-dark: #1e293b;
+      --primary-blue: #1d4ed8; 
+      --teal-light: #06b6d4; 
+      --bg-light: #f1f5f9;
+      --slate-dark: #0f172a;
     }
     body { font-family: 'Prompt', sans-serif; background-color: var(--bg-light); color: #333; -webkit-tap-highlight-color: transparent; }
-    .navbar-custom { background: var(--primary-gradient); color: white; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .navbar-custom { background-color: #1e3a8a; color: white; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
     .tab-nav { cursor: pointer; font-weight: 500; padding: 10px 14px; border-bottom: 3px solid transparent; transition: all 0.2s; color: rgba(255,255,255,0.8); }
     .tab-nav.active { border-bottom: 3px solid #fff; color: #fff !important; font-weight: 600; }
     .tab-nav:hover { color: #fff !important; }
     
     .card-custom { border: none; border-radius: 16px; box-shadow: 0 4px 18px rgba(0,0,0,0.05); background-color: white; }
     .form-control, .form-select { border-radius: 10px; padding: 10px 14px; background-color: #fafafa; border: 1px solid #ced4da; }
-    .form-control:focus, .form-select:focus { background-color: #fff; box-shadow: 0 0 0 3px rgba(2, 136, 209, 0.2); border-color: var(--accent-color); }
+    .form-control:focus, .form-select:focus { background-color: #fff; box-shadow: 0 0 0 3px rgba(2, 136, 209, 0.2); border-color: #0288d1; }
     .table-sticky-header th { position: sticky; top: 0; z-index: 5; background-color: #f1f3f5; box-shadow: 0 2px 2px -1px rgba(0,0,0,0.05); }
     
     .clickable-row { cursor: pointer; transition: background-color 0.15s ease-in-out; }
     .clickable-row:hover { background-color: rgba(2, 136, 209, 0.08) !important; }
 
-    /* Bento Box Landing Page Styles */
-    .welcome-banner {
-      background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-      color: white;
-      border-radius: 20px;
-      padding: 35px 25px;
-      margin-bottom: 25px;
-      box-shadow: 0 10px 25px rgba(30, 41, 59, 0.15);
+    /* Welcome Landing Page UI Inspired by Design Image */
+    .welcome-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 15px;
     }
-    .bento-card {
-      background: #ffffff;
-      border-radius: 20px;
-      padding: 28px 20px;
+    .welcome-title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #0f172a;
       text-align: center;
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      margin-bottom: 8px;
+    }
+    .welcome-subtitle {
+      color: #64748b;
+      text-align: center;
+      font-size: 1.1rem;
+      margin-bottom: 40px;
+      position: relative;
+    }
+    .welcome-subtitle::after {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 3px;
+      background: #0288d1;
+      margin: 10px auto 0;
+      border-radius: 2px;
+    }
+
+    /* Landing Card Option Styles */
+    .landing-card {
+      border-radius: 24px;
+      padding: 32px 24px;
+      color: white;
+      position: relative;
+      overflow: hidden;
       cursor: pointer;
-      border: 1px solid #e2e8f0;
-      height: 100%;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      min-height: 280px;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      justify-content: space-between;
     }
-    .bento-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 12px 28px rgba(2, 136, 209, 0.15);
-      border-color: #0288d1;
+    .landing-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 18px 35px rgba(0,0,0,0.15);
     }
-    .bento-icon-wrapper {
-      width: 70px;
-      height: 70px;
-      border-radius: 18px;
+    .landing-card-blue {
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    }
+    .landing-card-teal {
+      background: linear-gradient(135deg, #0d9488 0%, #06b6d4 100%);
+    }
+    .landing-card-white {
+      background: #ffffff;
+      color: #0f172a;
+      border: 1px solid #e2e8f0;
+    }
+
+    .icon-circle {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 2rem;
-      margin-bottom: 16px;
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+    }
+    .icon-circle-white-bg { background: rgba(255, 255, 255, 0.2); color: white; }
+    .icon-circle-slate-bg { background: #e0e7ff; color: #1e3a8a; }
+
+    .card-arrow-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: white;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      align-self: flex-end;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .landing-card-white .card-arrow-btn {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+
+    /* Mobile Floating Scan QR Button Only */
+    .mobile-scan-floating-btn {
+      position: fixed;
+      bottom: 25px;
+      right: 20px;
+      z-index: 1050;
+      background: #0288d1;
+      color: white;
+      border-radius: 50px;
+      padding: 10px 18px;
+      box-shadow: 0 8px 25px rgba(2, 136, 209, 0.4);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
     }
 
     /* Counter Cards */
@@ -98,16 +168,8 @@
   <nav class="navbar navbar-custom py-2 mb-3 sticky-top">
     <div class="container-fluid px-3 px-lg-5 d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
       <div class="d-flex align-items-center gap-2">
-        <!-- Header QR Scan Button with Close Button -->
-        <div id="headerQrBtnContainer" class="d-flex align-items-center bg-white bg-opacity-20 rounded-pill p-1 pe-2 shadow-sm">
-          <button class="btn btn-info text-white btn-sm rounded-pill fw-bold d-flex align-items-center gap-1 py-1 px-3" onclick="openQrScannerModal()">
-            <i class="bi bi-qr-code-scan"></i> <span>สแกน QR</span>
-          </button>
-          <button type="button" class="btn-close btn-close-white ms-1" style="font-size: 0.65rem;" onclick="hideHeaderQrScannerBtn()" title="ซ่อนปุ่มสแกน"></button>
-        </div>
-
         <span class="navbar-brand mb-0 h1 text-white fw-bold d-flex align-items-center gap-2 cursor-pointer" onclick="switchView('welcome')">
-          <i class="bi bi-heart-pulse-fill text-warning"></i> ระบบกายอุปกรณ์ อบต.ท่าก๊อ
+          <i class="bi bi-heart-pulse-fill text-warning"></i> ระบบจัดการกายอุปกรณ์ตำบลท่าก๊อ
         </span>
       </div>
 
@@ -120,6 +182,16 @@
       </div>
     </div>
   </nav>
+
+  <!-- Mobile Only Floating QR Scanner Button with Close Button -->
+  <div id="mobileFloatingQrWrapper" class="d-md-none">
+    <div class="mobile-scan-floating-btn shadow-lg">
+      <span onclick="openQrScannerModal()" class="d-flex align-items-center gap-2 cursor-pointer">
+        <i class="bi bi-qr-code-scan fs-5"></i> สแกน QR
+      </span>
+      <button type="button" class="btn-close btn-close-white ms-2" style="font-size: 0.65rem;" onclick="hideMobileFloatingQrBtn()" title="ปิดปุ่มสแกน"></button>
+    </div>
+  </div>
 
   <!-- Live Toast Notification Container -->
   <div class="toast-container position-fixed bottom-0 end-0 p-3">
@@ -134,46 +206,66 @@
 
   <div class="container-fluid px-3 px-lg-5 mb-5">
 
-    <!-- 0. WELCOME VIEW: หน้า Welcome Landing Page (Bento Box) -->
+    <!-- 0. WELCOME VIEW: หน้าแรกตรงตามภาพตัวอย่าง -->
     <div id="welcomeView">
-      <div class="welcome-banner text-center position-relative overflow-hidden">
-        <h2 class="fw-bold mb-2"><i class="bi bi-hospital text-info me-2"></i>ระบบบริการกายอุปกรณ์ ศูนย์ชีวาภิบาล</h2>
-        <p class="mb-0 opacity-90 fs-5">องค์การบริหารส่วนตำบลท่าก๊อ อำเภอแม่สรวย จังหวัดเชียงราย</p>
-        <small class="text-info opacity-75">อำนวยความสะดวกประชาชน ยืม-คืน อุปกรณ์ฟื้นฟูสุขภาพอย่างสะดวก รวดเร็ว โปร่งใส</small>
-      </div>
+      <div class="welcome-container">
+        <h1 class="welcome-title">ยินดีต้อนรับสู่ระบบบริการออนไลน์</h1>
+        <p class="welcome-subtitle">เลือกเมนูที่ต้องการใช้งาน</p>
 
-      <div class="row g-4 justify-content-center">
-        <!-- Card 1: บันทึกคำขอ -->
-        <div class="col-6 col-md-4">
-          <div class="bento-card" onclick="switchView('user')">
-            <div class="bento-icon-wrapper bg-primary bg-opacity-10 text-primary">
-              <i class="bi bi-file-earmark-medical-fill"></i>
+        <div class="row g-4 justify-content-center">
+          <!-- Card 1: บันทึกคำขอ -->
+          <div class="col-12 col-md-4">
+            <div class="landing-card landing-card-blue" onclick="switchView('user')">
+              <div>
+                <div class="icon-circle icon-circle-white-bg">
+                  <i class="bi bi-pencil-square"></i>
+                </div>
+                <h3 class="fw-bold mb-2">บันทึกคำขอ</h3>
+                <p class="opacity-90 small mb-0">ยื่นคำขอและบันทึกข้อมูลการใช้บริการ</p>
+              </div>
+              <div class="card-arrow-btn">
+                <i class="bi bi-arrow-right"></i>
+              </div>
             </div>
-            <h5 class="fw-bold text-dark mb-2">บันทึกคำขอ</h5>
-            <p class="text-muted small mb-0 d-none d-md-block">ยื่นคำร้องขอยืม ขยายเวลา คืน หรือบริจาคกายอุปกรณ์เข้าคลัง</p>
+          </div>
+
+          <!-- Card 2: ติดตามสถานะคำขอ -->
+          <div class="col-12 col-md-4">
+            <div class="landing-card landing-card-teal" onclick="switchView('track')">
+              <div>
+                <div class="icon-circle icon-circle-white-bg">
+                  <i class="bi bi-file-earmark-check"></i>
+                </div>
+                <h3 class="fw-bold mb-2">ติดตามสถานะคำขอ</h3>
+                <p class="opacity-90 small mb-0">ตรวจสอบความคืบหน้าและผลการดำเนินงาน</p>
+              </div>
+              <div class="card-arrow-btn">
+                <i class="bi bi-arrow-right"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3: แผงควบคุมแอดมิน -->
+          <div class="col-12 col-md-4">
+            <div class="landing-card landing-card-white" onclick="switchView('admin')">
+              <div>
+                <div class="icon-circle icon-circle-slate-bg">
+                  <i class="bi bi-shield-check"></i>
+                </div>
+                <h3 class="fw-bold mb-2">แผงควบคุมแอดมิน</h3>
+                <p class="text-muted small mb-3">จัดการคำขอและดูภาพรวมระบบ</p>
+                <span class="badge bg-secondary bg-opacity-10 text-secondary border px-3 py-1 fw-normal">สำหรับเจ้าหน้าที่</span>
+              </div>
+              <div class="card-arrow-btn">
+                <i class="bi bi-arrow-right"></i>
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- Card 2: ติดตามสถานะ -->
-        <div class="col-6 col-md-4">
-          <div class="bento-card" onclick="switchView('track')">
-            <div class="bento-icon-wrapper bg-info bg-opacity-10 text-info">
-              <i class="bi bi-search"></i>
-            </div>
-            <h5 class="fw-bold text-dark mb-2">ติดตามสถานะคำขอ</h5>
-            <p class="text-muted small mb-0 d-none d-md-block">ค้นหาประวัติคำร้อง กำหนดส่งคืน และตรวจสอบสถานะการอนุมัติ</p>
-          </div>
-        </div>
-
-        <!-- Card 3: แผงควบคุมแอดมิน -->
-        <div class="col-12 col-md-4">
-          <div class="bento-card" onclick="switchView('admin')">
-            <div class="bento-icon-wrapper bg-warning bg-opacity-10 text-warning">
-              <i class="bi bi-shield-lock-fill"></i>
-            </div>
-            <h5 class="fw-bold text-dark mb-2">แผงควบคุมแอดมิน</h5>
-            <p class="text-muted small mb-0 d-none d-md-block">สำหรับเจ้าหน้าที่บริหารจัดการ อนุมัติคำขอ จัดการคลัง และรายงานสถิติ</p>
-          </div>
+        <div class="text-center mt-5 pt-4 text-muted small border-top">
+          <div>องค์การบริหารส่วนตำบลท่าก๊อ</div>
+          <div class="opacity-75">ระบบบริการประชาชน</div>
         </div>
       </div>
     </div>
@@ -371,7 +463,7 @@
           </div>
         </div>
 
-        <!-- Sub 2: รายงานสถิติและตัวชี้วัด -->
+        <!-- Sub 2: รายงานสถิติและตัวชี้วัด (ปรับเรียงลำดับใหม่ตามสั่ง) -->
         <div id="subViewAnalytics" class="admin-subview d-none">
           <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
             <div>
@@ -387,7 +479,7 @@
             </div>
           </div>
 
-          <!-- Cards Summary Metric (วิเคราะห์คำนวณถูกต้องตามโจทย์) -->
+          <!-- 1. แดชบอร์ดสรุปสถิติ 4 ช่อง -->
           <div class="row g-3">
             <div class="col-md-6 col-xl-3"><div class="card card-custom p-4 bg-primary text-white"><div class="small opacity-75">คำขอรอดำเนินการ</div><h2 class="fw-bold mb-0" id="cardStatPending">0</h2></div></div>
             <div class="col-md-6 col-xl-3"><div class="card card-custom p-4 bg-success text-white"><div class="small opacity-75">อยู่ระหว่างการยืม</div><h2 class="fw-bold mb-0" id="cardStatActive">0</h2></div></div>
@@ -395,13 +487,33 @@
             <div class="col-md-6 col-xl-3"><div class="card card-custom p-4 bg-info text-white"><div class="small opacity-75">ยืมสะสม (ชิ้นอนุมัติ)</div><h2 class="fw-bold mb-0" id="cardStatTotalBorrowedAccum">0</h2></div></div>
           </div>
 
-          <!-- Summary Inventory Matrix Table (ข้อ 4) -->
-          <div class="row g-4 mt-2">
+          <!-- 2. ยกสัดส่วนเพศ ประเภทสิทธิ์ กลุ่มช่วงอายุ คำร้องรายหมู่บ้าน ขึ้นมาต่อจาก 4 ช่องทันที -->
+          <div class="row g-4 mt-1">
+            <div class="col-lg-6 col-xl-3"><div class="card card-custom p-3 h-100"><h6 class="fw-bold text-center">สัดส่วนเพศ</h6><div style="height: 240px; position: relative;"><canvas id="chartGender"></canvas></div></div></div>
+            <div class="col-lg-6 col-xl-3"><div class="card card-custom p-3 h-100"><h6 class="fw-bold text-center">ประเภทสิทธิ์</h6><div style="height: 240px; position: relative;"><canvas id="chartStatus"></canvas></div></div></div>
+            <div class="col-lg-6 col-xl-3"><div class="card card-custom p-3 h-100"><h6 class="fw-bold text-center">กลุ่มช่วงอายุ (4 ช่วง)</h6><div style="height: 240px; position: relative;"><canvas id="chartAgeGroup"></canvas></div></div></div>
+            <div class="col-lg-6 col-xl-3"><div class="card card-custom p-3 h-100"><h6 class="fw-bold text-center">คำร้องรายหมู่บ้าน</h6><div style="height: 240px; position: relative;"><canvas id="chartMoo"></canvas></div></div></div>
+          </div>
+
+          <!-- 3. สถิติจำนวนครั้งกิจกรรมแยกตามประเภทอุปกรณ์ ต่อลงมา -->
+          <div class="row g-4 mt-1">
+            <div class="col-12">
+              <div class="card card-custom p-4 border-top border-4 border-primary">
+                <h6 class="fw-bold text-dark mb-1"><i class="bi bi-bar-chart-fill text-primary me-2"></i> สถิติจำนวนครั้งกิจกรรมการใช้งาน แยกตามประเภทกายอุปกรณ์</h6>
+                <div style="height: 380px; position: relative;">
+                  <canvas id="chartEquipmentUsage"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. ตารางสรุปภาพรวมคลังอุปกรณ์ อยู่ล่างสุด (ตัดคำว่า Summary Inventory Matrix ออกแล้ว) -->
+          <div class="row g-4 mt-1">
             <div class="col-12">
               <div class="card card-custom p-4 border-top border-4 border-info">
                 <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
                   <div>
-                    <h6 class="fw-bold text-dark mb-0"><i class="bi bi-table text-info me-2"></i> ตารางสรุปภาพรวมคลังอุปกรณ์ (Summary Inventory Matrix)</h6>
+                    <h6 class="fw-bold text-dark mb-0"><i class="bi bi-table text-info me-2"></i> ตารางสรุปภาพรวมคลังอุปกรณ์</h6>
                     <small class="text-muted">สรุปจำนวนคลัง สถิติการยืมสะสม การรับคืน และการบริจาคแยกตามปีงบประมาณ</small>
                   </div>
                   <button class="btn btn-sm btn-outline-success fw-bold shadow-sm" onclick="exportInventoryMatrixToCSV()">
@@ -427,25 +539,7 @@
               </div>
             </div>
           </div>
- 
-          <div class="row g-4 mt-1">
-            <div class="col-12">
-              <div class="card card-custom p-4 border-top border-4 border-primary">
-                <h6 class="fw-bold text-dark mb-1"><i class="bi bi-bar-chart-fill text-primary me-2"></i> สถิติจำนวนครั้งกิจกรรมการใช้งาน แยกตามประเภทกายอุปกรณ์</h6>
-                <div style="height: 380px; position: relative;">
-                  <canvas id="chartEquipmentUsage"></canvas>
-                </div>
-              </div>
-            </div>
-          </div>
 
-          <!-- กราฟแบ่งกลุ่มอายุใหม่ 4 ช่วง (0-14, 15-59, 60-79, 80+) -->
-          <div class="row g-4 mt-1">
-            <div class="col-lg-6 col-xl-3"><div class="card card-custom p-3 h-100"><h6 class="fw-bold text-center">สัดส่วนเพศ</h6><div style="height: 240px; position: relative;"><canvas id="chartGender"></canvas></div></div></div>
-            <div class="col-lg-6 col-xl-3"><div class="card card-custom p-3 h-100"><h6 class="fw-bold text-center">ประเภทสิทธิ์</h6><div style="height: 240px; position: relative;"><canvas id="chartStatus"></canvas></div></div></div>
-            <div class="col-lg-6 col-xl-3"><div class="card card-custom p-3 h-100"><h6 class="fw-bold text-center">กลุ่มช่วงอายุ (4 ช่วง)</h6><div style="height: 240px; position: relative;"><canvas id="chartAgeGroup"></canvas></div></div></div>
-            <div class="col-lg-6 col-xl-3"><div class="card card-custom p-3 h-100"><h6 class="fw-bold text-center">คำร้องรายหมู่บ้าน</h6><div style="height: 240px; position: relative;"><canvas id="chartMoo"></canvas></div></div></div>
-          </div>
         </div>
 
         <!-- Sub 3: จัดการคลังอุปกรณ์ -->
@@ -542,7 +636,7 @@
     </div>
   </div>
 
-  <!-- Modal ป๊อปอัปรายละเอียดข้อมูลเชิงลึก (Table Detail Popup Modals - ข้อ 2) -->
+  <!-- Modal ป๊อปอัปรายละเอียดข้อมูลเชิงลึก (Table Detail Popup Modals) -->
   <div class="modal fade" id="rowDetailModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content modal-frosted border-0 shadow-lg">
@@ -550,9 +644,7 @@
           <h5 class="modal-title fw-bold" id="rowDetailModalTitle"><i class="bi bi-info-circle-fill text-info me-2"></i> รายละเอียดข้อมูลคำขอเชิงลึก</h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body p-4" id="rowDetailModalBody">
-          <!-- Dynamic Content Generated via JS -->
-        </div>
+        <div class="modal-body p-4" id="rowDetailModalBody"></div>
         <div class="modal-footer bg-light border-0 d-flex justify-content-between py-2" style="border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;">
           <small class="text-muted"><i class="bi bi-shield-check text-success me-1"></i> ระบบกายอุปกรณ์ อบต.ท่าก๊อ</small>
           <button type="button" class="btn btn-secondary px-4 fw-bold rounded-pill" data-bs-dismiss="modal"><i class="bi bi-x-lg me-1"></i> ปิดหน้าต่าง</button>
@@ -701,9 +793,9 @@
       renderMooSelectionOptions();
       fetchPublicStockAndEquipList();
       
-      if (localStorage.getItem('hide_qr_scan_btn') === 'true') {
-        const container = document.getElementById('headerQrBtnContainer');
-        if (container) container.classList.add('d-none');
+      if (localStorage.getItem('hide_mobile_qr_btn') === 'true') {
+        const el = document.getElementById('mobileFloatingQrWrapper');
+        if (el) el.classList.add('d-none');
       }
 
       const rememberedPass = localStorage.getItem('gas_admin_session_key');
@@ -715,9 +807,9 @@
       }
     };
 
-    function hideHeaderQrScannerBtn() {
-      document.getElementById('headerQrBtnContainer').classList.add('d-none');
-      localStorage.setItem('hide_qr_scan_btn', 'true');
+    function hideMobileFloatingQrBtn() {
+      document.getElementById('mobileFloatingQrWrapper').classList.add('d-none');
+      localStorage.setItem('hide_mobile_qr_btn', 'true');
     }
 
     function renderMooSelectionOptions() {
@@ -1094,7 +1186,6 @@
       else executeAdminBackgroundRefresh();
     }
 
-    // Auto Select Latest Fiscal Year Default (ข้อ 3)
     function populateFiscalYearDropdownFilter() {
       const sel = document.getElementById('analyticsFiscalYearFilter'); 
       if(!masterAdminCachedData) return;
@@ -1104,7 +1195,7 @@
       masterAdminCachedData.history.forEach(h => { if(h['Fiscal Year']) years.add(h['Fiscal Year']); });
       if(years.size === 0) years.add('ปี ' + (new Date().getFullYear() + 543));
       
-      let sortedYears = Array.from(years).sort().reverse(); // เอาล่าสุดขึ้นก่อน
+      let sortedYears = Array.from(years).sort().reverse();
       
       sel.innerHTML = "";
       sortedYears.forEach(yr => { 
@@ -1113,7 +1204,7 @@
         opt.textContent = yr; 
         sel.appendChild(opt); 
       });
-      if(sortedYears.length > 0) sel.value = sortedYears[0]; // กำหนดเป็นปีล่าสุดเสมอ
+      if(sortedYears.length > 0) sel.value = sortedYears[0];
     }
 
     function switchAdminSubTab(subTabName) {
@@ -1161,7 +1252,7 @@
     }
 
     // ==========================================
-    // Table Row Detail Popup Modals (ข้อ 2)
+    // Table Row Detail Popup Modals
     // ==========================================
     function openRowDetailModal(sheetName, id) {
       if(!masterAdminCachedData) return;
@@ -1185,7 +1276,6 @@
 
       modalTitle.innerHTML = `<i class="bi bi-card-heading text-info me-2"></i> รายละเอียดข้อมูล: ${fullName} (${reqId})`;
 
-      // ดึงประวัติบุคคลย้อนหลัง
       let cleanIdCard = idCard.replace(/\D/g, '');
       let personHistory = masterAdminCachedData.history.filter(h => h['ID Card'].toString().replace(/\D/g, '') === cleanIdCard);
 
@@ -1531,7 +1621,7 @@
     }
 
     // ==========================================
-    // Visual Charts Dashboard & Summary Inventory Matrix
+    // Visual Charts Dashboard & Inventory Summary
     // ==========================================
     function refreshDashboardVisualCharts() {
       if(!masterAdminCachedData) return;
@@ -1544,7 +1634,6 @@
       document.getElementById('cardStatActive').textContent = masterAdminCachedData.tracker.length;
       document.getElementById('cardStatReturned').textContent = masterAdminCachedData.history.filter(h => h['Action Type'] === 'คืน' || h['Action Type'].includes('คืน')).length;
 
-      // สูตรคำนวณยืมสะสมใหม่: Sum of Approved Qty จาก History_Log ในปีงบนั้น (ข้อ 3)
       let sumApprovedBorrowedPieces = 0;
       hFilter.forEach(h => {
         let act = (h['Action Type'] || '').trim();
@@ -1554,7 +1643,6 @@
       });
       document.getElementById('cardStatTotalBorrowedAccum').textContent = sumApprovedBorrowedPieces;
 
-      // สัดส่วนกลุ่มอายุ 4 ช่วงสากล: 0-14, 15-59, 60-79, 80+ (ข้อ 3)
       let genderCounts = { 'ชาย': 0, 'หญิง': 0 };
       let statusCounts = { 'บุคคลทั่วไป': 0, 'เด็ก': 0, 'ผู้สูงอายุ': 0, 'ผู้พิการ': 0, 'บุคคลไม่มีสัญชาติ/ไม่มีสถานะทางทะเบียน': 0 };
       let ageGroup4Counts = { '0-14 ปี': 0, '15-59 ปี': 0, '60-79 ปี': 0, '80+ ปี': 0 };
@@ -1608,11 +1696,9 @@
       
       renderStackedChartNode('chartEquipmentUsage', equipmentLabels, datasetsUsage);
 
-      // Render Summary Inventory Matrix Table (ข้อ 4)
       renderSummaryInventoryMatrixTable(selectedFY);
     }
 
-    // Render Summary Inventory Matrix Table (ข้อ 4)
     function renderSummaryInventoryMatrixTable(selectedFY) {
       const tbody = document.getElementById('tableInventoryMatrixBody');
       if (!tbody || !masterAdminCachedData) return;
@@ -1658,12 +1744,11 @@
       tbody.innerHTML = matrixHtml || '<tr><td colspan="7" class="text-center text-muted">ไม่มีข้อมูลคลังอุปกรณ์</td></tr>';
     }
 
-    // Export Summary Inventory Matrix to CSV (ข้อ 4)
     function exportInventoryMatrixToCSV() {
       if (!masterAdminCachedData) return alert("ไม่มีข้อมูลสำหรับการ Export");
       const selectedFY = document.getElementById('analyticsFiscalYearFilter').value;
 
-      let csvContent = "\uFEFF"; // UTF-8 BOM for Thai Excel
+      let csvContent = "\uFEFF";
       csvContent += `ตารางสรุปภาพรวมคลังอุปกรณ์ ตำบลท่าก๊อ (${selectedFY})\n`;
       csvContent += `ชื่อกายอุปกรณ์,รวม (ชิ้น),ถูกยืม (ชิ้น),ยืมสะสม (ชิ้น),คืนแล้ว (ชิ้น),บริจาค (ชิ้น),อัตราใช้งาน (%)\n`;
 

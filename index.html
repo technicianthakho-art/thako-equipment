@@ -123,7 +123,7 @@
       color: #0f172a;
     }
 
-    /* Mobile Floating Scan QR Button Only */
+    /* Mobile Only Floating Scan QR Button */
     .mobile-scan-floating-btn {
       position: fixed;
       bottom: 25px;
@@ -166,15 +166,17 @@
 
   <!-- Navigation Bar -->
   <nav class="navbar navbar-custom py-2 mb-3 sticky-top">
-    <div class="container-fluid px-3 px-lg-5 d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+    <div class="container-fluid px-3 px-lg-5 d-flex justify-content-between align-items-center">
       <div class="d-flex align-items-center gap-2">
-        <span class="navbar-brand mb-0 h1 text-white fw-bold d-flex align-items-center gap-2 cursor-pointer" onclick="switchView('welcome')">
-          <i class="bi bi-heart-pulse-fill text-warning"></i> ระบบจัดการกายอุปกรณ์ตำบลท่าก๊อ
+        <span class="navbar-brand mb-0 text-white fw-bold d-flex flex-column cursor-pointer" onclick="switchView('welcome')">
+          <span class="fs-5 lh-1 fw-bold">ระบบจัดการกายอุปกรณ์ตำบลท่าก๊อ</span>
+          <span class="fw-normal opacity-75" style="font-size: 0.8rem;">องค์การบริหารส่วนตำบลท่าก๊อ</span>
         </span>
       </div>
 
-      <div class="d-flex flex-wrap justify-content-center gap-1">
-        <div id="navWelcome" class="tab-nav active" onclick="switchView('welcome')"><i class="bi bi-house-door-fill me-1"></i>หน้าแรก</div>
+      <!-- แถบเมนูย่อย (แสดงเฉพาะเมื่อไม่ได้อยู่หน้าแรก) -->
+      <div id="subNavbarNav" class="d-none flex-wrap justify-content-center gap-1">
+        <div id="navWelcome" class="tab-nav" onclick="switchView('welcome')"><i class="bi bi-house-door-fill me-1"></i>หน้าแรก</div>
         <div id="navUser" class="tab-nav" onclick="switchView('user')"><i class="bi bi-pencil-square me-1"></i>บันทึกคำขอ</div>
         <div id="navTrack" class="tab-nav" onclick="switchView('track')"><i class="bi bi-search me-1"></i>ติดตามสถานะคำขอ</div>
         <div id="navAdmin" class="tab-nav" onclick="switchView('admin')"><i class="bi bi-shield-lock-fill me-1"></i>แผงควบคุมแอดมิน</div>
@@ -206,11 +208,11 @@
 
   <div class="container-fluid px-3 px-lg-5 mb-5">
 
-    <!-- 0. WELCOME VIEW: หน้าแรกตรงตามภาพตัวอย่าง -->
+    <!-- 0. WELCOME VIEW: หน้าแรกคลีนตรงตามภาพตัวอย่าง -->
     <div id="welcomeView">
       <div class="welcome-container">
         <h1 class="welcome-title">ยินดีต้อนรับสู่ระบบบริการออนไลน์</h1>
-        <p class="welcome-subtitle">เลือกเมนูที่ต้องการใช้งาน</p>
+        <p class="welcome-subtitle">ระบบจัดการกายอุปกรณ์ขององค์กรตำบลท่าก๊อ</p>
 
         <div class="row g-4 justify-content-center">
           <!-- Card 1: บันทึกคำขอ -->
@@ -848,21 +850,27 @@
         const el = document.getElementById(id);
         if(el) el.style.display = 'none';
       });
+
+      const subNav = document.getElementById('subNavbarNav');
       
       if(target === 'welcome') {
-        document.getElementById('navWelcome').classList.add('active');
+        if(subNav) subNav.classList.add('d-none');
         document.getElementById('welcomeView').style.display = 'block';
-      } else if(target === 'user') {
-        document.getElementById('navUser').classList.add('active');
-        document.getElementById('userView').style.display = 'block';
-        fetchPublicStockAndEquipList();
-      } else if (target === 'track') {
-        document.getElementById('navTrack').classList.add('active');
-        document.getElementById('trackView').style.display = 'block';
-      } else if (target === 'admin') {
-        document.getElementById('navAdmin').classList.add('active');
-        document.getElementById('adminView').style.display = 'block';
-        if (sessionPassword) { executeAdminBackgroundRefresh(); }
+      } else {
+        if(subNav) subNav.classList.remove('d-none');
+        
+        if(target === 'user') {
+          document.getElementById('navUser').classList.add('active');
+          document.getElementById('userView').style.display = 'block';
+          fetchPublicStockAndEquipList();
+        } else if (target === 'track') {
+          document.getElementById('navTrack').classList.add('active');
+          document.getElementById('trackView').style.display = 'block';
+        } else if (target === 'admin') {
+          document.getElementById('navAdmin').classList.add('active');
+          document.getElementById('adminView').style.display = 'block';
+          if (sessionPassword) { executeAdminBackgroundRefresh(); }
+        }
       }
     }
 

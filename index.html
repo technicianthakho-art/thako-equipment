@@ -21,8 +21,8 @@
     .navbar-custom { background-color: #1e3a8a; color: white; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
     
     /* ล็อคเมนูให้วางแนวนอน 100% ไม่ตกบรรทัด */
+    /* ล็อคเมนูให้วางแนวนอน 100% ไม่ตกบรรทัด */
     .navbar-nav-horizontal {
-      display: flex !important;
       flex-direction: row !important;
       flex-wrap: nowrap !important;
       align-items: center !important;
@@ -208,7 +208,7 @@
       </div>
 
       <!-- แถบเมนูย่อยแนวนอน (ล็อคแนวนอน 100% ไม่หลุดบรรทัด) -->
-      <div id="subNavbarNav" class="d-none navbar-nav-horizontal">
+      <div id="subNavbarNav" class="navbar-nav-horizontal" style="display: none !important;">
         <div id="navWelcome" class="tab-nav" onclick="switchView('welcome')"><i class="bi bi-house-door-fill me-1"></i>หน้าแรก</div>
         <div id="navUser" class="tab-nav" onclick="switchView('user')"><i class="bi bi-pencil-square me-1"></i>บันทึกคำขอ</div>
         <div id="navTrack" class="tab-nav" onclick="switchView('track')"><i class="bi bi-search me-1"></i>ติดตามสถานะคำขอ</div>
@@ -891,22 +891,15 @@
 
       const subNav = document.getElementById('subNavbarNav');
       
-      // ล็อคให้หน้าแรก (welcome) ซ่อนแถบเมนูมุมขวาบนทั้งหมด 100% เสมอ
-      // จะยอมให้แสดงเมนูมุมขวาบนก็ต่อเมื่อเข้าหน้าย่อยอื่น หรือเป็นแอดมินที่ล็อกอินสำเร็จแล้วเท่านั้น
+      // ล็อคซ่อนเมนูมุมขวาบนเด็ดขาดในหน้าแรก (welcome)
       if (target === 'welcome' || !sessionPassword) {
-        if (target === 'welcome') {
-          if (subNav) subNav.classList.add('d-none');
-        } else if (target === 'admin' && !sessionPassword) {
-          if (subNav) subNav.classList.add('d-none');
-        } else {
-          if (subNav) subNav.classList.remove('d-none');
-        }
+        if (subNav) subNav.style.setProperty('display', 'none', 'important');
       } else {
-        // หากล็อกอินเป็นแอดมินแล้ว และสลับไปหน้าอื่นๆ ให้แสดงเมนูมุมขวาบนได้ตามปกติ
-        if (target === 'welcome') {
-          if (subNav) subNav.classList.add('d-none'); // หน้าแรกซ่อนเด็ดขาด 100%
+        // แสดงเมนูเฉพาะกรณีอยู่ในหน้าแอดมินและล็อกอินสำเร็จแล้วเท่านั้น
+        if (target === 'admin' && sessionPassword) {
+          if (subNav) subNav.style.setProperty('display', 'flex', 'important');
         } else {
-          if (subNav) subNav.classList.remove('d-none');
+          if (subNav) subNav.style.setProperty('display', 'none', 'important');
         }
       }
 
@@ -1171,11 +1164,12 @@
         document.getElementById('adminAuthGate').classList.add('d-none'); 
         document.getElementById('adminMainControlPanel').classList.remove('d-none'); 
         
-        // เมื่อยืนยันรหัสผ่านแอดมินสำเร็จ ให้เปิดแสดงเมนูขวาบนพร้อมปุ่มออกจากระบบสีแดงทันที
+        // Show Sub-navbar and Red Logout Button upon successful authentication
         const subNav = document.getElementById('subNavbarNav');
-        if (subNav) subNav.classList.remove('d-none');
-        const btnLogout = document.getElementById('btnLogout');
-        if (btnLogout) btnLogout.classList.remove('d-none');
+        if (subNav && document.getElementById('adminView').style.display !== 'none') {
+          subNav.style.setProperty('display', 'flex', 'important');
+        }
+        document.getElementById('btnLogout').classList.remove('d-none');
         
         document.getElementById('welcomeView').style.display = 'none'; 
         document.getElementById('userView').style.display = 'none'; 
@@ -1205,7 +1199,7 @@
       document.getElementById('btnLogout').classList.add('d-none');
       
       const subNav = document.getElementById('subNavbarNav');
-      if (subNav) subNav.classList.add('d-none');
+      if (subNav) subNav.style.setProperty('display', 'none', 'important');
 
       switchView('welcome');
     }

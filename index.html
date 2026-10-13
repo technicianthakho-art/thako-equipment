@@ -891,11 +891,23 @@
 
       const subNav = document.getElementById('subNavbarNav');
       
-      // Control Navbar visibility (ซ่อนในหน้าแรกและหน้าล็อกอิน / แสดงเฉพาะหน้าประชาชนและหน้าที่ล็อกอินแอดมินสำเร็จแล้ว)
-      if (target === 'welcome' || (target === 'admin' && !sessionPassword)) {
-        if (subNav) subNav.classList.add('d-none');
+      // ล็อคให้หน้าแรก (welcome) ซ่อนแถบเมนูมุมขวาบนทั้งหมด 100% เสมอ
+      // จะยอมให้แสดงเมนูมุมขวาบนก็ต่อเมื่อเข้าหน้าย่อยอื่น หรือเป็นแอดมินที่ล็อกอินสำเร็จแล้วเท่านั้น
+      if (target === 'welcome' || !sessionPassword) {
+        if (target === 'welcome') {
+          if (subNav) subNav.classList.add('d-none');
+        } else if (target === 'admin' && !sessionPassword) {
+          if (subNav) subNav.classList.add('d-none');
+        } else {
+          if (subNav) subNav.classList.remove('d-none');
+        }
       } else {
-        if (subNav) subNav.classList.remove('d-none');
+        // หากล็อกอินเป็นแอดมินแล้ว และสลับไปหน้าอื่นๆ ให้แสดงเมนูมุมขวาบนได้ตามปกติ
+        if (target === 'welcome') {
+          if (subNav) subNav.classList.add('d-none'); // หน้าแรกซ่อนเด็ดขาด 100%
+        } else {
+          if (subNav) subNav.classList.remove('d-none');
+        }
       }
 
       if (target === 'welcome') {
@@ -1159,10 +1171,11 @@
         document.getElementById('adminAuthGate').classList.add('d-none'); 
         document.getElementById('adminMainControlPanel').classList.remove('d-none'); 
         
-        // Show Sub-navbar and Red Logout Button upon successful authentication
+        // เมื่อยืนยันรหัสผ่านแอดมินสำเร็จ ให้เปิดแสดงเมนูขวาบนพร้อมปุ่มออกจากระบบสีแดงทันที
         const subNav = document.getElementById('subNavbarNav');
         if (subNav) subNav.classList.remove('d-none');
-        document.getElementById('btnLogout').classList.remove('d-none');
+        const btnLogout = document.getElementById('btnLogout');
+        if (btnLogout) btnLogout.classList.remove('d-none');
         
         document.getElementById('welcomeView').style.display = 'none'; 
         document.getElementById('userView').style.display = 'none'; 

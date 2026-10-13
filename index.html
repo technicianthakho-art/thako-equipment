@@ -19,13 +19,14 @@
     }
     body { font-family: 'Prompt', sans-serif; background-color: var(--bg-light); color: #333; -webkit-tap-highlight-color: transparent; }
     .navbar-custom { background-color: #1e3a8a; color: white; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-    /* บังคับให้ Navbar Nav เรียงตัวเป็นแนวนอน 100% ห้ามแตกบรรทัด */
+    
+    /* ล็อคเมนูให้วางแนวนอน 100% ไม่ตกบรรทัด */
     .navbar-nav-horizontal {
       display: flex !important;
       flex-direction: row !important;
       flex-wrap: nowrap !important;
       align-items: center !important;
-      gap: 4px;
+      gap: 6px;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
     }
@@ -36,7 +37,7 @@
       border-bottom: 3px solid transparent; 
       transition: all 0.2s; 
       color: rgba(255,255,255,0.85); 
-      white-space: nowrap !important; /* ป้องกันข้อความในแท็บแตกบรรทัด */
+      white-space: nowrap !important; /* ห้ามตัวอักษรตัดขึ้นบรรทัดใหม่ */
     }
     .tab-nav.active { border-bottom: 3px solid #fff; color: #fff !important; font-weight: 600; }
     .tab-nav:hover { color: #fff !important; }
@@ -61,6 +62,7 @@
       color: #0f172a;
       text-align: center;
       margin-bottom: 8px;
+      word-break: keep-all;
     }
     .welcome-subtitle {
       color: #64748b;
@@ -68,6 +70,7 @@
       font-size: 1.1rem;
       margin-bottom: 40px;
       position: relative;
+      word-break: keep-all;
     }
     .welcome-subtitle::after {
       content: '';
@@ -97,6 +100,18 @@
     .landing-card:hover {
       transform: translateY(-8px);
       box-shadow: 0 18px 35px rgba(0,0,0,0.15);
+    }
+
+    /* Responsive Design Optimization สำหรับหน้าจอมือถือ */
+    @media (max-width: 576px) {
+      .welcome-container { padding: 20px 10px; }
+      .welcome-title { font-size: 1.4rem; }
+      .welcome-subtitle { font-size: 0.95rem; margin-bottom: 25px; }
+      .landing-card { min-height: 200px; padding: 20px 16px; border-radius: 18px; }
+      .icon-circle { width: 56px; height: 56px; font-size: 1.5rem; margin-bottom: 12px; }
+      .brand-title-main { font-size: 0.95rem !important; }
+      .brand-title-sub { font-size: 0.7rem !important; }
+      .tab-nav { padding: 6px 8px; font-size: 0.82rem; }
     }
     .landing-card-blue {
       background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
@@ -184,15 +199,15 @@
 
 <!-- Navigation Bar -->
   <nav class="navbar navbar-custom py-2 mb-3 sticky-top">
-    <div class="container-fluid px-3 px-lg-5 d-flex justify-content-between align-items-center flex-nowrap">
+    <div class="container-fluid px-2 px-lg-5 d-flex justify-content-between align-items-center flex-nowrap">
       <div class="d-flex align-items-center gap-2 flex-shrink-0">
         <span class="navbar-brand mb-0 text-white fw-bold d-flex flex-column cursor-pointer" onclick="switchView('welcome')">
-          <span class="fs-5 lh-1 fw-bold">ระบบจัดการกายอุปกรณ์ตำบลท่าก๊อ</span>
-          <span class="fw-normal opacity-75" style="font-size: 0.8rem;">องค์การบริหารส่วนตำบลท่าก๊อ</span>
+          <span class="fs-5 lh-1 fw-bold brand-title-main">ระบบจัดการกายอุปกรณ์ตำบลท่าก๊อ</span>
+          <span class="fw-normal opacity-75 brand-title-sub" style="font-size: 0.8rem;">องค์การบริหารส่วนตำบลท่าก๊อ</span>
         </span>
       </div>
 
-      <!-- แถบเมนูย่อย (ล็อคแนวนอน 100% ไม่ตกบรรทัด) -->
+      <!-- แถบเมนูย่อยแนวนอน (ล็อคแนวนอน 100% ไม่หลุดบรรทัด) -->
       <div id="subNavbarNav" class="d-none navbar-nav-horizontal">
         <div id="navWelcome" class="tab-nav" onclick="switchView('welcome')"><i class="bi bi-house-door-fill me-1"></i>หน้าแรก</div>
         <div id="navUser" class="tab-nav" onclick="switchView('user')"><i class="bi bi-pencil-square me-1"></i>บันทึกคำขอ</div>
@@ -876,7 +891,7 @@
 
       const subNav = document.getElementById('subNavbarNav');
       
-      // Control Navbar visibility based on Authentication and target view
+      // Control Navbar visibility (ซ่อนในหน้าแรกและหน้าล็อกอิน / แสดงเฉพาะหน้าประชาชนและหน้าที่ล็อกอินแอดมินสำเร็จแล้ว)
       if (target === 'welcome' || (target === 'admin' && !sessionPassword)) {
         if (subNav) subNav.classList.add('d-none');
       } else {

@@ -329,7 +329,7 @@
     <div id="trackView" style="display: none;">
       <div class="card card-custom p-4 border-top border-4 border-info mx-auto" style="max-width: 1000px;">
         <h4 class="fw-bold text-center text-dark"><i class="bi bi-search text-info me-2"></i> ตรวจสอบสถานะคำขอและประวัติทั้งหมด</h4>
-        <p class="text-center text-muted small mb-4">ค้นหาด้วย ชื่อ-นามสกุล, เบอร์โทรศัพท์, เลขบัตรประชาชน หรือรหัสครุภัณฑ์ (Asset Code)</p>
+        <p class="text-center text-muted small mb-4">ค้นหาด้วย ชื่อ-นามสกุล, เบอร์โทรศัพท์, เลขบัตรประชาชน หรือรหัสครุภัณฑ์</p>
      
         <div class="input-group mb-4 shadow-sm" style="max-width: 500px; margin: 0 auto;">
           <input type="text" id="searchKeyword" class="form-control form-control-lg text-center" placeholder="ป้อนข้อมูลที่ต้องการค้นหา...">
@@ -351,10 +351,12 @@
       </div>
 
       <div id="adminMainControlPanel" class="d-none">
+        <!-- Sub-Tabs เรียง 6 เมนูตามความต้องการ -->
         <ul class="nav nav-pills mb-4 bg-white p-2 rounded-3 shadow-sm border" id="adminSubTabs">
           <li class="nav-item"><button class="nav-link active" onclick="switchAdminSubTab('operations')"><i class="bi bi-list-check me-1"></i>ติดตามงานและอนุมัติ</button></li>
           <li class="nav-item"><button class="nav-link" onclick="switchAdminSubTab('analytics')"><i class="bi bi-pie-chart-fill me-1"></i>รายงานสถิติ</button></li>
           <li class="nav-item"><button class="nav-link" onclick="switchAdminSubTab('inventory')"><i class="bi bi-boxes me-1"></i>จัดการคลังอุปกรณ์</button></li>
+          <li class="nav-item"><button class="nav-link" onclick="switchAdminSubTab('asset_items')"><i class="bi bi-qr-code me-1"></i>ทะเบียนครุภัณฑ์รายชิ้น & QR Code</button></li>
           <li class="nav-item"><button class="nav-link" onclick="switchAdminSubTab('history')"><i class="bi bi-journal-text me-1"></i>ประวัติทั้งหมด</button></li>
           <li class="nav-item"><button class="nav-link" onclick="switchAdminSubTab('calendar')"><i class="bi bi-calendar3 me-1"></i>ปฏิทินงาน</button></li>
         </ul>
@@ -377,7 +379,7 @@
                     <th>ชื่อผู้ยื่นคำร้อง</th>
                     <th>อุปกรณ์ที่ขอ</th>
                     <th class="text-center">จำนวน</th>
-                    <th>เลือกรหัสครุภัณฑ์ (Asset Code)</th>
+                    <th>เลือกรหัสครุภัณฑ์</th>
                     <th>เบอร์ติดต่อ</th>
                     <th class="text-center">พิจารณา/จัดการ</th>
                   </tr>
@@ -399,7 +401,7 @@
                 <thead class="table-success table-sticky-header">
                   <tr>
                     <th>รหัสติดตาม</th>
-                    <th>รหัสครุภัณฑ์ (Asset Code)</th>
+                    <th>รหัสครุภัณฑ์</th>
                     <th>ผู้ใช้งาน</th>
                     <th>ข้อมูลติดต่อ</th>
                     <th>ข้อมูลส่วนตัว/ที่อยู่</th>
@@ -491,7 +493,7 @@
           </div>
         </div>
 
-        <!-- Sub 3: จัดการคลังอุปกรณ์ & ระบบทะเบียนครุภัณฑ์รายชิ้น -->
+        <!-- Sub 3: จัดการคลังอุปกรณ์ -->
         <div id="subViewInventory" class="admin-subview d-none">
           <div class="row g-4 mb-4">
             <div class="col-xl-4 col-lg-5">
@@ -524,8 +526,10 @@
               <div class="row g-3" id="inventoryCardsContainer"></div>
             </div>
           </div>
+        </div>
 
-          <!-- Section: ทะเบียนครุภัณฑ์รายชิ้น & ออกป้ายพิมพ์ QR Code สติ๊กเกอร์ (Desktop View) -->
+        <!-- Sub 4: ทะเบียนครุภัณฑ์รายชิ้น & ระบบพิมพ์สติ๊กเกอร์ QR Code (แยกเป็นแท็บเฉพาะ) -->
+        <div id="subViewAssetItems" class="admin-subview d-none">
           <div class="card card-custom p-4 border-top border-4 border-dark shadow-sm">
             <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
               <div>
@@ -554,12 +558,12 @@
               </div>
             </div>
 
-            <div class="table-responsive bg-white rounded border" style="max-height: 400px;">
+            <div class="table-responsive bg-white rounded border" style="max-height: 480px;">
               <table class="table table-hover align-middle mb-0 text-nowrap">
                 <thead class="table-asset-header table-sticky-header">
                   <tr>
                     <th class="text-center" style="width: 40px;"><input type="checkbox" id="selectAllAssetCheck" onchange="toggleSelectAllAssets(this)"></th>
-                    <th>รหัสครุภัณฑ์ (Asset Code)</th>
+                    <th>รหัสครุภัณฑ์</th>
                     <th>ชื่ออุปกรณ์</th>
                     <th>สถานะ</th>
                     <th>ผู้ถือครองปัจจุบัน</th>
@@ -574,7 +578,7 @@
           </div>
         </div>
 
-        <!-- Sub 4: ประวัติทั้งหมด -->
+        <!-- Sub 5: ประวัติทั้งหมด -->
         <div id="subViewHistory" class="admin-subview d-none">
           <div class="card card-custom p-4 shadow-sm border-start border-4 border-secondary">
             <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
@@ -606,7 +610,7 @@
                     <th>ประเภท</th>
                     <th>อุปกรณ์</th>
                     <th class="text-center">จำนวน</th>
-                    <th>วันอ้างอิง/กำหนดส่งคืน</th>
+                    <th>วันอ้างอิง/กำหนดคืน</th>
                     <th>สถานะ</th>
                     <th class="text-center">การกระทำ</th>
                   </tr>
@@ -617,7 +621,7 @@
           </div>
         </div>
 
-        <!-- Sub 5: ปฏิทินงาน -->
+        <!-- Sub 6: ปฏิทินงาน -->
         <div id="subViewCalendar" class="admin-subview d-none">
           <div class="card card-custom p-4 shadow-sm border-top border-4 border-dark">
              <div class="d-flex justify-content-between align-items-center mb-3">
@@ -649,7 +653,7 @@
     </div>
   </div>
 
-  <!-- Modal สแกน QR Code สำหรับมือถือ (Quick Action View) -->
+  <!-- Modal สแกน QR Code สำหรับมือถือ -->
   <div class="modal fade" id="qrScannerModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
@@ -665,7 +669,7 @@
     </div>
   </div>
 
-  <!-- Modal ผูกรหัสครุภัณฑ์กับตาราง Tracker ย้อนหลัง (Link Asset Modal) -->
+  <!-- Modal ผูกรหัสครุภัณฑ์กับตาราง Tracker -->
   <div class="modal fade" id="linkAssetModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content" style="border-radius: 16px;">
@@ -680,7 +684,7 @@
             <input type="text" class="form-control bg-light" id="linkBorrowerName" readonly>
           </div>
           <div class="mb-3">
-            <label class="form-label fw-bold">เลือกรหัสครุภัณฑ์ (Asset Code) ในคลัง</label>
+            <label class="form-label fw-bold">เลือกรหัสครุภัณฑ์ ในคลัง</label>
             <select class="form-select" id="linkAssetSelect"></select>
           </div>
           <div class="d-flex justify-content-end gap-2 mt-4">
@@ -692,7 +696,7 @@
     </div>
   </div>
 
-  <!-- Modal แสดงประวัติการใช้งานกายอุปกรณ์ (Asset History Modal) -->
+  <!-- Modal แสดงประวัติการใช้งานกายอุปกรณ์ -->
   <div class="modal fade" id="assetLifecycleModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content modal-frosted border-0 shadow-lg">
@@ -1025,14 +1029,15 @@
           html += `<div class="card mb-4 border-start border-4 border-success shadow-sm">
             <div class="card-header bg-white"><h6 class="fw-bold text-success mb-0"><i class="bi bi-people-fill me-2"></i> บัญชีรายชื่อผู้ครองสิทธิ์ใช้งานอุปกรณ์ประจำการ</h6></div>
             <div class="table-responsive"><table class="table table-sm table-hover align-middle mb-0 text-nowrap">
-            <thead class="table-light"><tr><th>รหัสติดตาม</th><th>รหัสครุภัณฑ์</th><th>ชื่อ-นามสกุล</th><th>เบอร์โทรศัพท์</th><th>อุปกรณ์</th><th class="text-center">จำนวน</th><th>วันกำหนดคืน</th><th>สถานะ</th></tr></thead><tbody>`;
+            <thead class="table-light"><tr><th>รหัสติดตาม</th><th>รหัสครุภัณฑ์</th><th>ชื่อ-นามสกุล</th><th>เบอร์โทรศัพท์</th><th>อุปกรณ์</th><th class="text-center">จำนวน</th><th>วันที่ยืม</th><th>วันกำหนดคืน</th><th>สถานะ</th></tr></thead><tbody>`;
           res.active.forEach(t => {
              let name = (t['Title'] || '') + t['Name'];
              let phone = t['Phone'].toString().replace(/^'/, '');
+             let borrowDate = t['Borrow Date'] || t['Approve Date'] || t['Relevant Date'] || '-';
              let assetCode = t['Asset Code'] 
               ? `<button class="btn btn-sm btn-link p-0 text-decoration-none fw-bold" onclick="viewAssetLifecycleHistory('${t['Asset Code']}')"><code class="bg-light text-primary px-1 border rounded">${t['Asset Code']}</code></button>` 
               : '<span class="text-muted small">-</span>';
-             html += `<tr><td><code class="text-dark bg-light px-1 rounded">${t['Tracker ID']}</code></td><td>${assetCode}</td><td class="fw-medium">${name}</td><td>${phone}</td><td class="text-accent fw-bold">${t['Equipment Name']}</td><td class="text-center">${t['Qty']}</td><td class="text-danger fw-bold"><i class="bi bi-calendar-x"></i> ${t['Due Date']}</td><td><span class="badge bg-success">ใช้งานอยู่</span></td></tr>`;
+             html += `<tr><td><code class="text-dark bg-light px-1 rounded">${t['Tracker ID']}</code></td><td>${assetCode}</td><td class="fw-medium">${name}</td><td>${phone}</td><td class="text-accent fw-bold">${t['Equipment Name']}</td><td class="text-center">${t['Qty']}</td><td>${borrowDate}</td><td class="text-danger fw-bold"><i class="bi bi-calendar-x"></i> ${t['Due Date']}</td><td><span class="badge bg-success">ใช้งานอยู่</span></td></tr>`;
           });
           html += `</tbody></table></div></div>`;
         }
@@ -1045,7 +1050,7 @@
           res.history.forEach(h => {
              let name = (h['Title'] || '') + h['Name'];
              let phone = h['Phone'].toString().replace(/^'/, '');
-             let stColor = h['Status'] === 'Rejected' ? 'text-danger' : (h['Status'] === 'Pending' ? 'text-warning' : 'text-success');
+             let stColor = (h['Status'] === 'ไม่อนุมัติ' || h['Status'] === 'Rejected') ? 'text-danger' : ((h['Status'] === 'รอพิจารณา' || h['Status'] === 'Pending') ? 'text-warning' : 'text-success');
              let badgeColor = h['Action Type'] === 'คืน' ? 'bg-info text-dark' : (h['Action Type'] === 'บริจาค' ? 'bg-primary' : 'bg-dark');
              let assetCode = h['Asset Code'] 
               ? `<button class="btn btn-sm btn-link p-0 text-decoration-none" onclick="viewAssetLifecycleHistory('${h['Asset Code']}')"><code class="bg-light text-secondary px-1 border rounded">${h['Asset Code']}</code></button>` 
@@ -1215,6 +1220,7 @@
       if (subTabName === 'operations') document.getElementById('subViewOperations').classList.remove('d-none');
       else if (subTabName === 'analytics') document.getElementById('subViewAnalytics').classList.remove('d-none');
       else if (subTabName === 'inventory') document.getElementById('subViewInventory').classList.remove('d-none');
+      else if (subTabName === 'asset_items') document.getElementById('subViewAssetItems').classList.remove('d-none');
       else if (subTabName === 'history') document.getElementById('subViewHistory').classList.remove('d-none');
       else if (subTabName === 'calendar') { 
         document.getElementById('subViewCalendar').classList.remove('d-none'); 
@@ -1280,12 +1286,12 @@
           bodyElem.innerHTML = `
             <div class="row g-3 small">
               <div class="col-md-6"><b>ผู้ครองสิทธิ์:</b> ${row['Title'] || ''}${row['Name']}</div>
-              <div class="col-md-6"><b>รหัสครุภัณฑ์ (Asset Code):</b> <code class="text-primary fw-bold">${row['Asset Code'] || '-'}</code></div>
+              <div class="col-md-6"><b>รหัสครุภัณฑ์:</b> <code class="text-primary fw-bold">${row['Asset Code'] || '-'}</code></div>
               <div class="col-md-6"><b>เลขบัตรประชาชน:</b> ${row['ID Card'].toString().replace(/^'/, '')}</div>
               <div class="col-md-6"><b>เบอร์โทรศัพท์:</b> ${row['Phone'].toString().replace(/^'/, '')}</div>
               <div class="col-md-6"><b>ที่อยู่:</b> หมู่ที่ ${row['Moo']} ${row['Village']}</div>
               <div class="col-md-6"><b>อุปกรณ์ประจำการ:</b> <span class="text-success fw-bold">${row['Equipment Name']}</span> (${row['Qty']} ชิ้น)</div>
-              <div class="col-md-6"><b>วันที่เริ่มยืม:</b> ${row['Relevant Date'] || row['Borrow Date'] || '-'}</div>
+              <div class="col-md-6"><b>วันที่ยืม:</b> ${row['Borrow Date'] || row['Approve Date'] || row['Relevant Date'] || '-'}</div>
               <div class="col-md-6"><b>วันกำหนดคืน:</b> <span class="text-danger fw-bold">${row['Due Date']}</span></div>
             </div>`;
         }
@@ -1336,14 +1342,14 @@
       });
       pTable.innerHTML = pHtml || '<tr><td colspan="8" class="text-center text-muted py-3">ไม่มีรายการค้างรอดำเนินการครับ</td></tr>';
       
-      // 2. Tracker Table (Restored Borrow Date Column)
+      // 2. Tracker Table (ดึงค่าวันที่ยืม Borrow Date)
       const tTable = document.getElementById('tableTrackerBody');
       let tHtml = "";
       masterAdminCachedData.tracker.forEach(t => {
         let fullName = (t['Title'] || '') + t['Name'];
         let dispIdCard = t['ID Card'].toString().replace(/^'/, '');
         let dispPhone = t['Phone'].toString().replace(/^'/, '');
-        let startDate = t['Relevant Date'] || t['Borrow Date'] || '-';
+        let borrowDateStr = t['Borrow Date'] || t['Approve Date'] || t['Relevant Date'] || '-';
         
         let assetCodeDisp = t['Asset Code'] 
           ? `<button class="btn btn-sm btn-link p-0 text-decoration-none fw-bold" onclick="viewAssetLifecycleHistory('${t['Asset Code']}')"><code class="bg-light text-primary px-2 py-1 border rounded fw-bold">${t['Asset Code']}</code></button>` 
@@ -1357,7 +1363,7 @@
           <td class="small">อายุ: ${t['Age']} ปี | ${t['Gender']}<br><span class="badge bg-info text-dark">${t['User Status']}</span> ม.${t['Moo']} ${t['Village']}</td>
           <td class="text-accent fw-bold">${t['Equipment Name']}</td>
           <td class="text-center fw-bold text-dark fs-5">${t['Qty']}</td>
-          <td class="small text-muted">${startDate}</td>
+          <td class="small text-dark fw-medium">${borrowDateStr}</td>
           <td class="text-danger fw-bold"><i class="bi bi-calendar-x"></i> ${t['Due Date']}</td>
           <td><span class="badge bg-success rounded-pill px-3 py-2">ใช้งานปกติ</span></td>
           <td class="text-center" onclick="event.stopPropagation();">
@@ -1392,19 +1398,24 @@
       });
       invContainer.innerHTML = invHtml || '<div class="col-12 text-center py-5 text-muted">ไม่มีข้อมูลอุปกรณ์ในคลังระบบ</div>';
 
-      // 4. Asset Items Ledger Table
+      // 4. Asset Items Table
       filterAssetItemsTable();
 
-      // 5. History Log Table
+      // 5. History Log Table (Exact Match Filter + Thai Status)
       const hTable = document.getElementById('tableHistoryBody');
-      const actionFilter = document.getElementById('historyActionFilter').value;
+      const actionFilter = document.getElementById('historyActionFilter').value.trim();
       let hHtml = "";
       let filteredHistory = masterAdminCachedData.history.slice().reverse();
-      if (actionFilter) filteredHistory = filteredHistory.filter(h => (h['Action Type'] || '').trim().includes(actionFilter));
+      
+      // Exact Match Filter: ยืม แสดงเฉพาะ ยืม, ยืมต่อ แสดงเฉพาะ ยืมต่อ
+      if (actionFilter) {
+        filteredHistory = filteredHistory.filter(h => (h['Action Type'] || '').trim() === actionFilter);
+      }
 
       filteredHistory.forEach(h => {
-        let stColor = h['Status'] === 'Rejected' ? 'text-danger' : (h['Status'] === 'Pending' ? 'text-warning' : 'text-success');
-        let badgeColor = h['Action Type'] === 'คืน' ? 'bg-info text-dark' : (h['Action Type'] === 'บริจาค' ? 'bg-primary' : 'bg-dark');
+        let stText = h['Status'] || 'อนุมัติแล้ว';
+        let stColor = (stText === 'ไม่อนุมัติ' || stText === 'Rejected') ? 'text-danger' : ((stText === 'รอพิจารณา' || stText === 'Pending') ? 'text-warning' : 'text-success');
+        let badgeColor = h['Action Type'] === 'คืน' ? 'bg-info text-dark' : (h['Action Type'] === 'บริจาค' ? 'bg-primary' : (h['Action Type'] === 'ยืมต่อ' ? 'bg-warning text-dark' : 'bg-dark'));
         let fullName = (h['Title'] || '') + h['Name'];
         let assetCodeDisp = h['Asset Code'] 
           ? `<button class="btn btn-sm btn-link p-0 text-decoration-none" onclick="viewAssetLifecycleHistory('${h['Asset Code']}')"><code class="bg-light text-secondary px-1 border rounded">${h['Asset Code']}</code></button>` 
@@ -1421,7 +1432,7 @@
           <td class="fw-medium">${h['Equipment Name']}</td>
           <td class="text-center fw-bold">${h['Qty']}</td>
           <td class="text-muted small">${h['Relevant Date']}</td>
-          <td class="${stColor} fw-bold">${h['Status']}</td>
+          <td class="${stColor} fw-bold">${stText}</td>
           <td class="text-center"><button class="btn btn-sm btn-outline-danger p-1" onclick="executeAdminDeleteRowAction('History_Log', '${h['Log ID']}')"><i class="bi bi-trash3-fill"></i></button></td>
         </tr>`;
       });
@@ -1561,7 +1572,7 @@
             html += `<tr>
               <td class="small">${h.timestamp}</td>
               <td><span class="badge bg-secondary">${h.actionType}</span></td>
-              <td class="fw-bold">${h.borrowerName} <small class="text-muted">(ม.${h.moo} ${h.village})</small></td>
+              <td><span class="fw-bold">${h.borrowerName}</span> <small class="text-muted">(ม.${h.moo} ${h.village})</small></td>
               <td>${h.phone}</td>
               <td class="fw-bold text-success">${h.status}</td>
             </tr>`;
@@ -1740,7 +1751,7 @@
       if(!masterAdminCachedData) return;
       const selectedFY = document.getElementById('analyticsFiscalYearFilter').value;
       let rFilter = masterAdminCachedData.requests.filter(r => r['Fiscal Year'] === selectedFY);
-      let hFilter = masterAdminCachedData.history.filter(h => h['Fiscal Year'] === selectedFY && (h['Status'] === 'Approved' || h['Status'] === 'Returned'));
+      let hFilter = masterAdminCachedData.history.filter(h => h['Fiscal Year'] === selectedFY && (h['Status'] === 'อนุมัติแล้ว' || h['Status'] === 'Approved' || h['Status'] === 'Returned' || h['Status'] === 'รับคืนเรียบร้อย'));
       
       document.getElementById('cardStatPending').textContent = masterAdminCachedData.requests.filter(r => r['Status'] === 'Pending').length;
       document.getElementById('cardStatActive').textContent = masterAdminCachedData.tracker.length;
@@ -1833,7 +1844,7 @@
     function renderSummaryInventoryMatrixTable(selectedFY) {
       const tbody = document.getElementById('tableInventoryMatrixBody');
       if (!tbody || !masterAdminCachedData) return;
-      let hYearFilter = masterAdminCachedData.history.filter(h => h['Fiscal Year'] === selectedFY && (h['Status'] === 'Approved' || h['Status'] === 'Returned'));
+      let hYearFilter = masterAdminCachedData.history.filter(h => h['Fiscal Year'] === selectedFY && (h['Status'] === 'อนุมัติแล้ว' || h['Status'] === 'Approved' || h['Status'] === 'Returned' || h['Status'] === 'รับคืนเรียบร้อย'));
       let matrixHtml = "";
 
       masterAdminCachedData.stock.forEach(stock => {

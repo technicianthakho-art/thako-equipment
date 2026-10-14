@@ -502,7 +502,7 @@
           </div>
         </div>
 
-        <!-- Sub 2: รายงานสถิติและตัวชี้วัด (เรียงลำดับตามสั่ง) -->
+        <!-- Sub 2: รายงานสถิติและตัวชี้วัด -->
         <div id="subViewAnalytics" class="admin-subview d-none">
           <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
             <div>
@@ -514,7 +514,7 @@
                 <i class="bi bi-arrow-clockwise"></i> รีเฟรชข้อมูลสถิติ
               </button>
               <label class="fw-medium text-nowrap">ปีงบประมาณ:</label>
-              <select class="form-select form-select-sm" id="analyticsFiscalYearFilter" onchange="refreshDashboardVisualCharts()" style="width: 150px;"></select>
+              <select class="form-select form-select-sm" id="analyticsFiscalYearFilter" onchange="syncAndRefreshFiscalYearViews(this.value)" style="width: 150px;"></select>
             </div>
           </div>
 
@@ -546,18 +546,20 @@
             </div>
           </div>
 
-          <!-- 4. ตารางสรุปภาพรวมคลังอุปกรณ์ (อัปเดตลำดับคอลัมน์ใหม่ 8 คอลัมน์) -->
+          <!-- 4. ตารางสรุปภาพรวมคลังอุปกรณ์ (ปรับใส่ Dropdown ปีงบประมาณแทนที่ Export CSV) -->
           <div class="row g-4 mt-1">
             <div class="col-12">
               <div class="card card-custom p-4 border-top border-4 border-info">
                 <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
                   <div>
                     <h6 class="fw-bold text-dark mb-0"><i class="bi bi-table text-info me-2"></i> ตารางสรุปภาพรวมคลังอุปกรณ์</h6>
-                    <small class="text-muted">สรุปสถานะปัจจุบันและสถิติตัวเลขสะสมแยกตามปีงบประมาณ</small>
+                    <small class="text-muted">สรุปสถานะการใช้งานและสถิติตัวเลขสะสมแยกตามปีงบประมาณ</small>
                   </div>
-                  <button class="btn btn-sm btn-outline-success fw-bold shadow-sm" onclick="exportInventoryMatrixToCSV()">
-                    <i class="bi bi-file-earmark-spreadsheet-fill me-1"></i> Export CSV
-                  </button>
+                  <!-- ปรับปุ่มเปลี่ยนปีงบประมาณมาวางแทนที่ปุ่ม Export CSV -->
+                  <div class="d-flex align-items-center gap-2">
+                    <label class="fw-medium text-nowrap text-dark small">ปีงบประมาณ:</label>
+                    <select class="form-select form-select-sm" id="tableMatrixFiscalYearFilter" onchange="syncAndRefreshFiscalYearViews(this.value)" style="width: 140px; border-radius: 8px;"></select>
+                  </div>
                 </div>
                 <div class="table-responsive">
                   <table class="table table-bordered table-hover align-middle mb-0 text-nowrap">
@@ -1249,8 +1251,10 @@
       else executeAdminBackgroundRefresh();
     }
 
+    // เติมตัวเลือกและ Sync Dropdown ปีงบประมาณของทั้ง 2 จุด
     function populateFiscalYearDropdownFilter() {
-      const sel = document.getElementById('analyticsFiscalYearFilter'); 
+      const selMain = document.getElementById('analyticsFiscalYearFilter'); 
+      const selMatrix = document.getElementById('tableMatrixFiscalYearFilter');
       if(!masterAdminCachedData) return;
       
       let years = new Set(); 
@@ -1260,14 +1264,28 @@
       
       let sortedYears = Array.from(years).sort().reverse();
       
-      sel.innerHTML = "";
-      sortedYears.forEach(yr => { 
-        let opt = document.createElement('option'); 
-        opt.value = yr; 
-        opt.textContent = yr; 
-        sel.appendChild(opt); 
+      [selMain, selMatrix].forEach(sel => {
+        if (!sel) return;
+        sel.innerHTML = "";
+        sortedYears.forEach(yr => { 
+          let opt = document.createElement('option'); 
+          opt.value = yr; 
+          opt.textContent = yr; 
+          sel.appendChild(opt); 
+        });
+        if(sortedYears.length > 0) sel.value = sortedYears[0];
       });
-      if(sortedYears.length > 0) sel.value = sortedYears[0];
+    }
+
+    // ฟังก์ชัน Sync ค่าปีงบประมาณและอัปเดต UI พร้อมกันทุกตาราง/กราฟ
+    function syncAndRefreshFiscalYearViews(selectedFY) {
+      const selMain = document.getElementById('analyticsFiscalYearFilter');
+      const selMatrix = document.getElementById('tableMatrixFiscalYearFilter');
+      
+      if (selMain && selMain.value !== selectedFY) selMain.value = selectedFY;
+      if (selMatrix && selMatrix.value !== selectedFY) selMatrix.value = selectedFY;
+
+      refreshDashboardVisualCharts();
     }
 
     function switchAdminSubTab(subTabName) {
@@ -1691,7 +1709,7 @@
       const selectedFY = document.getElementById('analyticsFiscalYearFilter').value;
       
       let rFilter = masterAdminCachedData.requests.filter(r => r['Fiscal Year'] === selectedFY);
-      let hFilter = masterAdminCachedData.history.filter(h => h['Fiscal Year'] === selectedFY && h['Status'] === 'Approved');
+      let hFilter = masterAdminCachedData.history.filter(h => h['Fiscal Year'] === selectedFY && (h['Status'] === 'Approved' || h['Status'] === 'Returned'));
       
       document.getElementById('cardStatPending').textContent = masterAdminCachedData.requests.filter(r => r['Status'] === 'Pending').length;
       document.getElementById('cardStatActive').textContent = masterAdminCachedData.tracker.length;
@@ -1763,23 +1781,23 @@
     }
 
     // ==========================================
-    // Updated Table & CSV Logic with New 8-Column Sequence
+    // Updated Summary Inventory Matrix (Pure Fiscal Year Logic)
     // ==========================================
     function renderSummaryInventoryMatrixTable(selectedFY) {
       const tbody = document.getElementById('tableInventoryMatrixBody');
       if (!tbody || !masterAdminCachedData) return;
 
-      let hYearFilter = masterAdminCachedData.history.filter(h => h['Fiscal Year'] === selectedFY && h['Status'] === 'Approved');
+      // กรองประวัติที่อนุมัติ/คืนแล้ว เฉพาะปีงบประมาณที่เลือก
+      let hYearFilter = masterAdminCachedData.history.filter(h => h['Fiscal Year'] === selectedFY && (h['Status'] === 'Approved' || h['Status'] === 'Returned'));
       let matrixHtml = "";
 
       masterAdminCachedData.stock.forEach(stock => {
         let eName = stock['Name'].trim();
-        let total = Number(stock['Total Qty']) || 0;
-        let borrowed = Number(stock['Borrowed Qty']) || 0;
+        let total = Number(stock['Total Qty']) || 0; // จำนวนคลังตั้งต้น
 
-        let accumBorrowed = 0;
-        let accumReturned = 0;
-        let accumDonated = 0;
+        let accumBorrowed = 0; // ยืมสะสมในปีนี้
+        let accumReturned = 0; // คืนแล้วในปีนี้
+        let accumDonated = 0;  // บริจาคในปีนี้
 
         hYearFilter.forEach(h => {
           let hEquip = (h['Equipment Name'] || '').trim();
@@ -1793,19 +1811,22 @@
           }
         });
 
-        // 1. กลุ่มสถานะปัจจุบัน
-        let usagePercent = total > 0 ? ((borrowed / total) * 100).toFixed(1) : 0;
+        // 1. ถูกยืมประจำปีนี้ = (ยืมสะสม - คืนแล้ว)
+        let activeInFY = Math.max(0, accumBorrowed - accumReturned);
+        
+        // 2. เปอร์เซ็นต์ใช้งานประจำปี = (ถูกยืมปีนี้ / รวม) * 100
+        let usagePercent = total > 0 ? ((activeInFY / total) * 100).toFixed(1) : 0;
         let usageBadgeColor = usagePercent > 70 ? 'bg-danger' : (usagePercent >= 30 ? 'bg-warning text-dark' : 'bg-success');
 
-        // 2. กลุ่มสถิติตัวเลขสะสม
+        // 3. เปอร์เซ็นต์หมุนเวียนสะสมประจำปี = (ยืมสะสมปีนี้ / รวม) * 100
         let accumTurnoverPercent = total > 0 ? ((accumBorrowed / total) * 100).toFixed(1) : 0;
         let turnoverBadgeColor = accumTurnoverPercent >= 100 ? 'bg-primary' : (accumTurnoverPercent >= 50 ? 'bg-info text-dark' : 'bg-secondary');
 
-        // ลำดับ 8 คอลัมน์: ชื่อ | รวม | ถูกยืม | ใช้งาน% | ยืมสะสม | คืนแล้ว | บริจาค | หมุนเวียนสะสม%
+        // เรียงลำดับ 8 คอลัมน์: ชื่อ | รวม | ถูกยืม (ปีนี้) | ใช้งาน% | ยืมสะสม (ปีนี้) | คืนแล้ว (ปีนี้) | บริจาค (ปีนี้) | หมุนเวียนสะสม%
         matrixHtml += `<tr>
           <td class="fw-bold text-dark">${eName}</td>
           <td class="text-center fw-semibold">${total}</td>
-          <td class="text-center text-danger fw-bold">${borrowed}</td>
+          <td class="text-center text-danger fw-bold">${activeInFY}</td>
           <td class="text-center"><span class="badge ${usageBadgeColor} px-2 py-1 fs-6">${usagePercent}%</span></td>
           <td class="text-center text-primary fw-bold">${accumBorrowed}</td>
           <td class="text-center text-success fw-bold">${accumReturned}</td>
@@ -1814,52 +1835,7 @@
         </tr>`;
       });
 
-      tbody.innerHTML = matrixHtml || '<tr><td colspan="8" class="text-center text-muted">ไม่มีข้อมูลคลังอุปกรณ์</td></tr>';
-    }
-
-    function exportInventoryMatrixToCSV() {
-      if (!masterAdminCachedData) return alert("ไม่มีข้อมูลสำหรับการ Export");
-      const selectedFY = document.getElementById('analyticsFiscalYearFilter').value;
-
-      let csvContent = "\uFEFF";
-      csvContent += `ตารางสรุปภาพรวมคลังอุปกรณ์ ตำบลท่าก๊อ (${selectedFY})\n`;
-      csvContent += `ชื่อกายอุปกรณ์,รวม (ชิ้น),ถูกยืม (ชิ้น),ใช้งาน (%),ยืมสะสม (ชิ้น),คืนแล้ว (ชิ้น),บริจาค (ชิ้น),หมุนเวียนสะสม (%)\n`;
-
-      let hYearFilter = masterAdminCachedData.history.filter(h => h['Fiscal Year'] === selectedFY && h['Status'] === 'Approved');
-
-      masterAdminCachedData.stock.forEach(stock => {
-        let eName = stock['Name'].trim();
-        let total = Number(stock['Total Qty']) || 0;
-        let borrowed = Number(stock['Borrowed Qty']) || 0;
-
-        let accumBorrowed = 0, accumReturned = 0, accumDonated = 0;
-
-        hYearFilter.forEach(h => {
-          let hEquip = (h['Equipment Name'] || '').trim();
-          let qty = Number(h['Qty']) || 0;
-          let act = (h['Action Type'] || '').trim();
-
-          if (hEquip === eName) {
-            if (act === 'ยืม' || act === 'ยืมต่อ') accumBorrowed += qty;
-            else if (act === 'คืน' || act.includes('คืน')) accumReturned += qty;
-            else if (act === 'บริจาค') accumDonated += qty;
-          }
-        });
-
-        let usagePercent = total > 0 ? ((borrowed / total) * 100).toFixed(1) : 0;
-        let accumTurnoverPercent = total > 0 ? ((accumBorrowed / total) * 100).toFixed(1) : 0;
-
-        csvContent += `"${eName}",${total},${borrowed},${usagePercent}%,${accumBorrowed},${accumReturned},${accumDonated},${accumTurnoverPercent}%\n`;
-      });
-
-      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-      const link = document.createElement("a");
-      const url = URL.createObjectURL(blob);
-      link.setAttribute("href", url);
-      link.setAttribute("download", `Inventory_Summary_Matrix_${selectedFY}.csv`);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      tbody.innerHTML = matrixHtml || '<tr><td colspan="8" class="text-center text-muted">ไม่มีข้อมูลคลังอุปกรณ์สำหรับปีงบประมาณนี้</td></tr>';
     }
 
     function renderPieChartWithLabels(canvasId, type, labels, data, labelTitle, colors) {

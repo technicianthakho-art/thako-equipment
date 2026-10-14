@@ -49,14 +49,14 @@
     .clickable-row:hover { background-color: rgba(2, 136, 209, 0.08) !important; }
 
     .welcome-container { max-width: 1100px; margin: 0 auto; padding: 40px 15px; }
-    .welcome-title { font-size: 2.2rem; font-weight: 700; color: #0f172a; text-align: center; margin-bottom: 8px; }
-    .welcome-subtitle { color: #64748b; text-align: center; font-size: 1.1rem; margin-bottom: 40px; position: relative; }
+    .welcome-title { font-size: 2.2rem; font-weight: 700; color: #0f172a; text-align: center; margin-bottom: 8px; word-break: keep-all; }
+    .welcome-subtitle { color: #64748b; text-align: center; font-size: 1.1rem; margin-bottom: 40px; position: relative; word-break: keep-all; }
     .welcome-subtitle::after { content: ''; display: block; width: 40px; height: 3px; background: #0288d1; margin: 10px auto 0; border-radius: 2px; }
 
     .landing-card {
-      border-radius: 24px; padding: 32px 24px; color: white; position: relative; overflow: hidden;
-      cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-      min-height: 280px; display: flex; flex-direction: column; justify-content: space-between;
+      border-radius: 24px; padding: 32px 24px; color: white; position: relative; overflow: hidden; cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 10px 25px rgba(0,0,0,0.08); min-height: 280px;
+      display: flex; flex-direction: column; justify-content: space-between;
     }
     .landing-card:hover { transform: translateY(-8px); box-shadow: 0 18px 35px rgba(0,0,0,0.15); }
 
@@ -78,18 +78,14 @@
     .icon-circle-white-bg { background: rgba(255, 255, 255, 0.2); color: white; }
     .icon-circle-slate-bg { background: #e0e7ff; color: #1e3a8a; }
 
-    .card-arrow-btn {
-      width: 44px; height: 44px; border-radius: 50%; background: white; color: #0f172a;
-      display: flex; align-items: center; justify-content: center; font-size: 1.2rem; align-self: flex-end;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
+    .card-arrow-btn { width: 44px; height: 44px; border-radius: 50%; background: white; color: #0f172a; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; align-self: flex-end; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
     .landing-card-white .card-arrow-btn { background: #f1f5f9; color: #0f172a; }
 
     /* Mobile Only Floating Scan QR Button */
     .mobile-scan-floating-btn {
-      position: fixed; bottom: 25px; right: 20px; z-index: 1050;
-      background: #0288d1; color: white; border-radius: 50px; padding: 10px 18px;
-      box-shadow: 0 8px 25px rgba(2, 136, 209, 0.4); display: flex; align-items: center; gap: 8px; font-weight: 600;
+      position: fixed; bottom: 25px; right: 20px; z-index: 1050; background: #0288d1; color: white;
+      border-radius: 50px; padding: 10px 18px; box-shadow: 0 8px 25px rgba(2, 136, 209, 0.4);
+      display: flex; align-items: center; gap: 8px; font-weight: 600;
     }
 
     .equip-counter-card { border: 1px solid #e2e8f0; border-radius: 12px; transition: all 0.2s ease; background-color: #fff; }
@@ -97,47 +93,27 @@
     .btn-counter { width: 38px; height: 38px; border-radius: 8px; font-weight: bold; display: flex; align-items: center; justify-content: center; }
     .counter-input { width: 50px; text-align: center; font-weight: bold; font-size: 1.1rem; border: none; background: transparent; }
     
-    .modal-frosted {
-      background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-      border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.3);
-    }
+    .modal-frosted { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.3); }
+
     #reader { width: 100%; border-radius: 12px; overflow: hidden; }
     .toast-container { z-index: 2000; }
     .hover-elevate { transition: transform 0.2s ease, box-shadow 0.2s ease; }
     .hover-elevate:hover { transform: translateY(-3px); box-shadow: 0 8px 18px rgba(0,0,0,0.1) !important; }
     #customCalendarWrapper { background: #fff; padding: 15px; border-radius: 10px; }
 
-    /* ==========================================
-       Print Sticker Styles (Thermal / Sheet)
-       ========================================== */
-    .qr-sticker-item {
-      width: 60mm;
-      height: 40mm;
-      border: 1px dashed #999;
-      padding: 4mm;
-      display: inline-flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      background: #fff;
-      box-sizing: border-box;
-      margin: 3mm;
-      page-break-inside: avoid;
-    }
-    .qr-sticker-header { font-size: 8pt; font-weight: bold; color: #333; margin-bottom: 2mm; }
-    .qr-sticker-img { width: 22mm; height: 22mm; margin-bottom: 1.5mm; }
-    .qr-sticker-name { font-size: 8pt; font-weight: bold; line-height: 1.1; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .qr-sticker-code { font-size: 10pt; font-weight: bold; color: #000; letter-spacing: 0.5px; }
-
+    /* Thermal Print Sticker CSS Media Rules */
     @media print {
       body * { visibility: hidden; }
       #printableStickerArea, #printableStickerArea * { visibility: visible; }
-      #printableStickerArea {
-        position: absolute; left: 0; top: 0; width: 100%; margin: 0; padding: 0;
-        display: flex !important; flex-wrap: wrap !important;
+      #printableStickerArea { position: absolute; left: 0; top: 0; width: 100%; }
+      .sticker-label-card {
+        width: 50mm; height: 30mm; border: 1px dashed #000; padding: 2mm; box-sizing: border-box;
+        display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+        page-break-after: always; text-align: center; font-family: 'Prompt', sans-serif;
       }
-      .qr-sticker-item { border: none !important; margin: 2mm !important; }
+      .sticker-header { font-size: 7pt; font-weight: bold; line-height: 1; }
+      .sticker-qr { width: 16mm; height: 16mm; margin: 1mm 0; }
+      .sticker-footer { font-size: 7pt; font-weight: bold; line-height: 1.1; }
     }
   </style>
 </head>
@@ -163,7 +139,7 @@
     </div>
   </nav>
 
-  <!-- Mobile Only Floating QR Scanner Button (เฉพาะบนจอมือถือ d-md-none) -->
+  <!-- Mobile Only Floating QR Scanner Button (Hidden on Desktop) -->
   <div id="mobileFloatingQrWrapper" class="d-md-none">
     <div class="mobile-scan-floating-btn shadow-lg">
       <span onclick="openQrScannerModal()" class="d-flex align-items-center gap-2 cursor-pointer">
@@ -249,6 +225,7 @@
           <div class="card card-custom p-4 border-top border-4 border-primary">
             <h5 class="fw-bold text-primary mb-4"><i class="bi bi-file-earmark-medical-fill me-2"></i> กรอกข้อมูลยื่นคำร้อง</h5>
             <form id="requestForm" onsubmit="submitFormUser(event)">
+              
               <div class="p-3 bg-light rounded-3 border mb-3">
                 <label class="form-label fw-bold text-dark">วัตถุประสงค์</label>
                 <div class="d-flex flex-wrap gap-3 mt-1">
@@ -293,7 +270,7 @@
                 </div>
               </div>
               
-              <div class="row g-3 mb-3">
+               <div class="row g-3 mb-3">
                 <div class="col-md-4"><label class="form-label fw-semibold">หมู่ที่</label><select class="form-select" id="uMoo" onchange="autoPopulateVillage(this.value)" required><option value="">เลือก...</option></select></div>
                 <div class="col-md-8"><label class="form-label fw-semibold">ชื่อหมู่บ้าน</label><input type="text" class="form-control bg-light" id="uVillage" readonly required></div>
               </div>
@@ -312,8 +289,25 @@
                 <i class="bi bi-info-circle-fill me-1"></i> ระบบจะคำนวณวันส่งคืนอุปกรณ์ให้ท่านเป็นเวลา <b>90 วัน</b> นับถัดจากวันที่อนุมัติโดยอัตโนมัติ
               </div>
 
-              <button type="submit" id="btnSubmitUser" class="btn btn-primary w-100 py-2.5 fw-bold shadow-sm"><i class="bi bi-send-check-fill me-2"></i>ยืนยันส่งข้อมูลคำขอ</button>
+               <button type="submit" id="btnSubmitUser" class="btn btn-primary w-100 py-2.5 fw-bold shadow-sm"><i class="bi bi-send-check-fill me-2"></i>ยืนยันส่งข้อมูลคำขอ</button>
             </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal แจ้งเตือนเมื่อส่งสำเร็จ -->
+    <div class="modal fade" id="submitSuccessModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
+          <div class="modal-body text-center p-5">
+            <div class="mb-4"><i class="bi bi-check-circle-fill text-success" style="font-size: 4.5rem;"></i></div>
+            <h4 class="fw-bold mb-2 text-dark">บันทึกข้อมูลเรียบร้อย</h4>
+            <p class="text-muted small mb-4" id="submitSuccessMsg"></p>
+            <div class="d-flex justify-content-center gap-2">
+              <button type="button" class="btn btn-outline-secondary px-4 rounded-pill" data-bs-dismiss="modal">ปิดหน้าต่าง</button>
+              <button type="button" class="btn btn-primary px-4 rounded-pill shadow-sm" data-bs-dismiss="modal" onclick="resetUserFormFocus()">บันทึกคำร้องต่อไป</button>
+            </div>
           </div>
         </div>
       </div>
@@ -323,7 +317,7 @@
     <div id="trackView" style="display: none;">
       <div class="card card-custom p-4 border-top border-4 border-info mx-auto" style="max-width: 1000px;">
         <h4 class="fw-bold text-center text-dark"><i class="bi bi-search text-info me-2"></i> ตรวจสอบสถานะคำขอและประวัติทั้งหมด</h4>
-        <p class="text-center text-muted small mb-4">ค้นหาด้วย ชื่อ-นามสกุล, เบอร์โทรศัพท์ หรือเลขบัตรประชาชน</p>
+        <p class="text-center text-muted small mb-4">ค้นหาด้วย ชื่อ-นามสกุล, เบอร์โทรศัพท์, เลขบัตรประชาชน หรือรหัสครุภัณฑ์ (Asset Code)</p>
      
         <div class="input-group mb-4 shadow-sm" style="max-width: 500px; margin: 0 auto;">
           <input type="text" id="searchKeyword" class="form-control form-control-lg text-center" placeholder="ป้อนข้อมูลที่ต้องการค้นหา...">
@@ -348,7 +342,7 @@
         <ul class="nav nav-pills mb-4 bg-white p-2 rounded-3 shadow-sm border" id="adminSubTabs">
           <li class="nav-item"><button class="nav-link active" onclick="switchAdminSubTab('operations')"><i class="bi bi-list-check me-1"></i>ติดตามงานและอนุมัติ</button></li>
           <li class="nav-item"><button class="nav-link" onclick="switchAdminSubTab('analytics')"><i class="bi bi-pie-chart-fill me-1"></i>รายงานสถิติ</button></li>
-          <li class="nav-item"><button class="nav-link" onclick="switchAdminSubTab('inventory')"><i class="bi bi-boxes me-1"></i>จัดการคลังและพิมพ์ QR</button></li>
+          <li class="nav-item"><button class="nav-link" onclick="switchAdminSubTab('inventory')"><i class="bi bi-boxes me-1"></i>จัดการคลังอุปกรณ์</button></li>
           <li class="nav-item"><button class="nav-link" onclick="switchAdminSubTab('history')"><i class="bi bi-journal-text me-1"></i>ประวัติทั้งหมด</button></li>
           <li class="nav-item"><button class="nav-link" onclick="switchAdminSubTab('calendar')"><i class="bi bi-calendar3 me-1"></i>ปฏิทินงาน</button></li>
         </ul>
@@ -369,10 +363,9 @@
                     <th>รหัสคำขอ</th>
                     <th>ประเภท</th>
                     <th>ชื่อผู้ยื่นคำร้อง</th>
-                    <th>อุปกรณ์</th>
+                    <th>อุปกรณ์ที่ขอ</th>
                     <th class="text-center">จำนวน</th>
-                    <th>วันที่ยื่นเรื่อง</th>
-                    <th>เลือกชิ้นครุภัณฑ์ (Asset)</th>
+                    <th>เลือกรหัสครุภัณฑ์ (Asset Code)</th>
                     <th>เบอร์ติดต่อ</th>
                     <th class="text-center">พิจารณา/จัดการ</th>
                   </tr>
@@ -394,11 +387,11 @@
                 <thead class="table-success table-sticky-header">
                   <tr>
                     <th>รหัสติดตาม</th>
+                    <th>รหัสครุภัณฑ์ (Asset Code)</th>
                     <th>ผู้ใช้งาน</th>
                     <th>ข้อมูลติดต่อ</th>
                     <th>ข้อมูลส่วนตัว/ที่อยู่</th>
                     <th>อุปกรณ์</th>
-                    <th>รหัสชิ้นงาน (QR)</th>
                     <th class="text-center">จำนวน</th>
                     <th>วันกำหนดคืน</th>
                     <th>สถานะ</th>
@@ -419,7 +412,9 @@
               <small class="text-muted" id="lastUpdatedTimestampDisplay"></small>
             </div>
             <div class="d-flex align-items-center gap-2">
-              <button class="btn btn-sm btn-primary fw-bold shadow-sm me-2" onclick="handleManualAnalyticsRefresh(this)"><i class="bi bi-arrow-clockwise"></i> รีเฟรชสถิติ</button>
+              <button class="btn btn-sm btn-primary fw-bold shadow-sm me-2" onclick="handleManualAnalyticsRefresh(this)">
+                <i class="bi bi-arrow-clockwise"></i> รีเฟรชข้อมูลสถิติ
+              </button>
               <label class="fw-medium text-nowrap">ปีงบประมาณ:</label>
               <select class="form-select form-select-sm" id="analyticsFiscalYearFilter" onchange="syncAndRefreshFiscalYearViews(this.value)" style="width: 150px;"></select>
             </div>
@@ -483,13 +478,12 @@
           </div>
         </div>
 
-        <!-- Sub 3: จัดการคลังอุปกรณ์ และระบบออกรหัส QR รายชิ้น -->
+        <!-- Sub 3: จัดการคลังอุปกรณ์ & ระบบทะเบียนครุภัณฑ์รายชิ้น -->
         <div id="subViewInventory" class="admin-subview d-none">
-          <!-- 3.1 สต็อกรวมหลัก -->
           <div class="row g-4 mb-4">
             <div class="col-xl-4 col-lg-5">
               <div class="card card-custom p-4 border-top border-4 border-primary shadow-sm h-100">
-                <h5 class="fw-bold text-dark mb-3" id="invFormTitle"><i class="bi bi-plus-circle-fill text-primary me-2"></i> เพิ่มประเภทอุปกรณ์ใหม่</h5>
+                <h5 class="fw-bold text-dark mb-3" id="invFormTitle"><i class="bi bi-plus-circle-fill text-primary me-2"></i> จัดการชนิดกายอุปกรณ์</h5>
                 <form id="inventoryCrudForm" onsubmit="executeInventorySubmit(event)">
                   <input type="hidden" id="invId">
                   <div class="mb-3">
@@ -509,7 +503,7 @@
             </div>
             <div class="col-xl-8 col-lg-7">
               <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5 class="fw-bold text-dark mb-0"><i class="bi bi-bar-chart-line-fill text-info me-2"></i> สต็อกกายอุปกรณ์คงเหลือ</h5>
+                <h5 class="fw-bold text-dark mb-0"><i class="bi bi-bar-chart-line-fill text-info me-2"></i> สต็อกกายอุปกรณ์คงเหลือรวม</h5>
                 <button class="btn btn-sm btn-outline-info fw-bold shadow-sm" onclick="triggerAdminDataRefresh(this)">
                   <i class="bi bi-arrow-clockwise me-1"></i> รีเฟรชคลังอุปกรณ์
                 </button>
@@ -518,51 +512,47 @@
             </div>
           </div>
 
-          <!-- 3.2 หมวด: ระบบออกรหัสและพิมพ์สติ๊กเกอร์ QR Code รายชิ้น (Asset-Centric) -->
+          <!-- Section: ทะเบียนครุภัณฑ์รายชิ้น & ออกป้ายพิมพ์ QR Code สติ๊กเกอร์ (Desktop View) -->
           <div class="card card-custom p-4 border-top border-4 border-dark shadow-sm">
             <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
               <div>
-                <h5 class="fw-bold text-dark mb-0"><i class="bi bi-qr-code-scan text-primary me-2"></i> ระบบออกรหัสและพิมพ์สติ๊กเกอร์ QR Code ครุภัณฑ์รายชิ้น</h5>
-                <small class="text-muted">เลือกชนิดอุปกรณ์เพื่อดูรายการชิ้นงานทั้งหมด ออกรหัสเพิ่ม และพิมพ์ป้ายสติ๊กเกอร์ QR Code ติดตัวอุปกรณ์</small>
+                <h5 class="fw-bold text-dark mb-0"><i class="bi bi-qr-code text-primary me-2"></i> ทะเบียนครุภัณฑ์รายชิ้น & ระบบพิมพ์สติ๊กเกอร์ QR Code</h5>
+                <small class="text-muted">บริหารจัดการครุภัณฑ์ถาวรย่อย ออกรหัสสติ๊กเกอร์ความร้อน และตรวจสอบประวัติรายชิ้น</small>
               </div>
-              <div class="d-flex gap-2">
-                <button class="btn btn-dark btn-sm fw-bold shadow-sm" onclick="printSelectedStickers()"><i class="bi bi-printer-fill me-1"></i> พิมพ์สติ๊กเกอร์ QR ที่เลือก</button>
-              </div>
-            </div>
-
-            <!-- ฟิลเตอร์เลือกประเภทอุปกรณ์ & ฟอร์มออกรหัสชุดใหม่ -->
-            <div class="row g-3 p-3 bg-light rounded-3 border mb-4 align-items-end">
-              <div class="col-md-4">
-                <label class="form-label fw-bold text-dark small">เลือกชนิดกายอุปกรณ์:</label>
-                <select class="form-select" id="assetFilterEquipSelect" onchange="renderAssetItemsTable()"></select>
-              </div>
-              <div class="col-md-3">
-                <label class="form-label fw-bold text-dark small">ออกรหัสเพิ่ม (จำนวนชิ้น):</label>
-                <input type="number" class="form-control" id="genCountInput" min="1" max="100" value="1" placeholder="ระบุจำนวนชิ้น">
-              </div>
-              <div class="col-md-3">
-                <label class="form-label fw-bold text-dark small">สภาพ/หมายเหตุ:</label>
-                <input type="text" class="form-control" id="genNoteInput" value="สภาพดี" placeholder="เช่น รับบริจาคใหม่">
-              </div>
-              <div class="col-md-2">
-                <button type="button" class="btn btn-primary w-100 fw-bold" onclick="executeGenerateAssetBatch()"><i class="bi bi-plus-lg"></i> ออกรหัสเพิ่ม</button>
+              <div class="d-flex align-items-center gap-2">
+                <button class="btn btn-sm btn-primary fw-bold shadow-sm" onclick="printSelectedStickers()">
+                  <i class="bi bi-printer-fill me-1"></i> พิมพ์สติ๊กเกอร์ชิ้นที่เลือก
+                </button>
               </div>
             </div>
 
-            <!-- ตารางสมุดทะเบียนครุภัณฑ์รายชิ้น -->
-            <div class="table-responsive bg-white rounded border" style="max-height: 480px;">
+            <div class="row g-3 mb-3 bg-light p-3 rounded-3 border">
+              <div class="col-md-5">
+                <label class="form-label fw-bold text-dark mb-1">เลือกประเภทกายอุปกรณ์</label>
+                <select class="form-select" id="assetItemCategoryFilter" onchange="filterAssetItemsTable()"></select>
+              </div>
+              <div class="col-md-7">
+                <label class="form-label fw-bold text-dark mb-1">ออกรหัสครุภัณฑ์ชุดใหม่ (Quick Add Items)</label>
+                <div class="input-group">
+                  <input type="number" id="quickAddAssetCount" class="form-control" placeholder="จำนวนชิ้น" min="1" value="1">
+                  <input type="text" id="quickAddAssetNote" class="form-control" placeholder="หมายเหตุ/สภาพ (เช่น ใหม่)">
+                  <button class="btn btn-success fw-bold px-3" onclick="executeGenerateAssetItems()"><i class="bi bi-plus-lg me-1"></i> ออกรหัสเพิ่ม</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="table-responsive bg-white rounded border" style="max-height: 400px;">
               <table class="table table-hover align-middle mb-0 text-nowrap">
                 <thead class="table-dark table-sticky-header">
                   <tr>
-                    <th style="width: 40px;" class="text-center"><input type="checkbox" id="chkSelectAllAssets" onchange="toggleSelectAllAssets(this)"></th>
+                    <th class="text-center" style="width: 40px;"><input type="checkbox" id="selectAllAssetCheck" onchange="toggleSelectAllAssets(this)"></th>
                     <th>รหัสครุภัณฑ์ (Asset Code)</th>
-                    <th>ชื่อกายอุปกรณ์</th>
-                    <th class="text-center">QR พรีวิว</th>
-                    <th>สถานะปัจจุบัน</th>
-                    <th>ผู้ครองสิทธิ์ปัจจุบัน</th>
-                    <th>กำหนดส่งคืน</th>
-                    <th>วันที่ขึ้นทะเบียน</th>
-                    <th class="text-center">ประวัติ/จัดการ</th>
+                    <th>ชื่ออุปกรณ์</th>
+                    <th>สถานะ</th>
+                    <th>ผู้ถือครองปัจจุบัน</th>
+                    <th>วันกำหนดคืน</th>
+                    <th>สภาพ/หมายเหตุ</th>
+                    <th class="text-center">ประวัติ / พิมพ์</th>
                   </tr>
                 </thead>
                 <tbody id="tableAssetItemsBody"></tbody>
@@ -585,7 +575,9 @@
                   <option value="บริจาค">บริจาค</option>
                 </select>
                 <input type="text" id="filterHistoryInput" class="form-control form-control-sm" placeholder="ค้นหาด่วน..." onkeyup="executeTableFilter('filterHistoryInput', 'tableHistoryBody')" style="width: 180px;">
-                <button class="btn btn-sm btn-outline-secondary fw-bold shadow-sm" onclick="triggerAdminDataRefresh(this)"><i class="bi bi-arrow-clockwise me-1"></i> รีเฟรชประวัติ</button>
+                <button class="btn btn-sm btn-outline-secondary fw-bold shadow-sm" onclick="triggerAdminDataRefresh(this)">
+                  <i class="bi bi-arrow-clockwise me-1"></i> รีเฟรชประวัติ
+                </button>
               </div>
             </div>
             <div class="table-responsive bg-white rounded border" style="max-height: 500px;">
@@ -594,14 +586,14 @@
                   <tr>
                     <th>วันที่/เวลา ทำรายการ</th>
                     <th>รหัสคำขอ</th>
+                    <th>รหัสครุภัณฑ์</th>
                     <th>ผู้ทำรายการ</th>
                     <th>ข้อมูลติดต่อ</th>
                     <th>ข้อมูลส่วนตัว/ที่อยู่</th>
                     <th>ประเภท</th>
                     <th>อุปกรณ์</th>
-                    <th>รหัสชิ้นงาน</th>
                     <th class="text-center">จำนวน</th>
-                    <th>วันอ้างอิง/กำหนดคืน</th>
+                    <th>วันอ้างอิง/กำหนดส่งคืน</th>
                     <th>สถานะ</th>
                     <th class="text-center">การกระทำ</th>
                   </tr>
@@ -615,7 +607,7 @@
         <!-- Sub 5: ปฏิทินงาน -->
         <div id="subViewCalendar" class="admin-subview d-none">
           <div class="card card-custom p-4 shadow-sm border-top border-4 border-dark">
-            <div class="d-flex justify-content-between align-items-center mb-3">
+             <div class="d-flex justify-content-between align-items-center mb-3">
               <h5 class="fw-bold text-dark mb-0"><i class="bi bi-calendar3-event me-2"></i> ปฏิทินงานกำหนดจ่ายส่งคืนคลังระบบ</h5>
               <button class="btn btn-sm btn-outline-primary shadow-sm fw-bold" onclick="loadCustomSystemCalendar()"><i class="bi bi-arrow-clockwise me-1"></i> รีเฟรชปฏิทิน</button>
             </div>
@@ -627,20 +619,24 @@
     </div>
   </div>
 
-  <!-- Modal ป๊อปอัปดูประวัติเฉพาะชิ้นงาน (Asset History Modal) -->
-  <div class="modal fade" id="assetHistoryModal" tabindex="-1" aria-hidden="true">
+  <!-- Modal ป๊อปอัปรายละเอียดข้อมูลเชิงลึก -->
+  <div class="modal fade" id="rowDetailModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content modal-frosted border-0 shadow-lg">
-        <div class="modal-header bg-dark text-white py-3">
-          <h5 class="modal-title fw-bold" id="assetHistoryModalTitle"><i class="bi bi-journal-bookmark-fill text-warning me-2"></i> ประวัติการใช้งานอุปกรณ์รายชิ้น</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        <div class="modal-header bg-dark text-white py-3" style="border-top-left-radius: 20px; border-top-right-radius: 20px;">
+          <h5 class="modal-title fw-bold" id="rowDetailModalTitle"><i class="bi bi-info-circle-fill text-info me-2"></i> รายละเอียดข้อมูลคำขอเชิงลึก</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body p-4" id="assetHistoryModalBody"></div>
+        <div class="modal-body p-4" id="rowDetailModalBody"></div>
+        <div class="modal-footer bg-light border-0 d-flex justify-content-between py-2" style="border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;">
+          <small class="text-muted"><i class="bi bi-shield-check text-success me-1"></i> ระบบกายอุปกรณ์ อบต.ท่าก๊อ</small>
+          <button type="button" class="btn btn-secondary px-4 fw-bold rounded-pill" data-bs-dismiss="modal"><i class="bi bi-x-lg me-1"></i> ปิดหน้าต่าง</button>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Modal สแกน QR Code สำหรับมือถือ พร้อม Quick Actions -->
+  <!-- Modal สแกน QR Code สำหรับมือถือ (Quick Action View) -->
   <div class="modal fade" id="qrScannerModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
@@ -656,23 +652,52 @@
     </div>
   </div>
 
-  <!-- Modal ป๊อปอัปรายละเอียดข้อมูลเชิงลึกทั่วไป -->
-  <div class="modal fade" id="rowDetailModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-      <div class="modal-content modal-frosted border-0 shadow-lg">
+  <!-- Modal ผูกรหัสครุภัณฑ์กับตาราง Tracker ย้อนหลัง (Link Asset Modal) -->
+  <div class="modal fade" id="linkAssetModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="border-radius: 16px;">
         <div class="modal-header bg-dark text-white py-3">
-          <h5 class="modal-title fw-bold" id="rowDetailModalTitle"><i class="bi bi-info-circle-fill text-info me-2"></i> รายละเอียดข้อมูลคำขอ</h5>
+          <h5 class="modal-title fw-bold"><i class="bi bi-link-45deg text-info me-2"></i> ผูกรหัสครุภัณฑ์กับผู้ยืม</h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
         </div>
-        <div class="modal-body p-4" id="rowDetailModalBody"></div>
+        <div class="modal-body p-4">
+          <input type="hidden" id="linkTrackerId">
+          <div class="mb-3">
+            <label class="form-label fw-bold">ผู้ถือครองสิทธิ์ปัจจุบัน</label>
+            <input type="text" class="form-control bg-light" id="linkBorrowerName" readonly>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-bold">เลือกรหัสครุภัณฑ์ (Asset Code) ในคลัง</label>
+            <select class="form-select" id="linkAssetSelect"></select>
+          </div>
+          <div class="d-flex justify-content-end gap-2 mt-4">
+            <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">ยกเลิก</button>
+            <button type="button" class="btn btn-primary px-4 fw-bold" onclick="saveLinkAssetToTracker()"><i class="bi bi-save-fill me-1"></i> ยืนยันผูกรหัส</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Printable Sticker Container (ใช้ตอนสั่งพิมพ์สติ๊กเกอร์) -->
+  <!-- Modal แสดงประวัติวงจรชีวิตครุภัณฑ์ (Asset Lifecycle Timeline Modal) -->
+  <div class="modal fade" id="assetLifecycleModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content modal-frosted border-0 shadow-lg">
+        <div class="modal-header bg-primary text-white py-3" style="border-top-left-radius: 20px; border-top-right-radius: 20px;">
+          <h5 class="modal-title fw-bold" id="assetLifecycleTitle"><i class="bi bi-journal-check me-2"></i> ประวัติวงจรชีวิตครุภัณฑ์</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4" id="assetLifecycleBody"></div>
+        <div class="modal-footer bg-light border-0 py-2" style="border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;">
+          <button type="button" class="btn btn-secondary px-4 rounded-pill fw-bold" data-bs-dismiss="modal">ปิดหน้าต่าง</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Thermal Print Area Hidden Anchor -->
   <div id="printableStickerArea" class="d-none"></div>
 
-  <!-- External JS Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
@@ -726,7 +751,7 @@
     window.onload = function() {
       renderMooSelectionOptions();
       fetchPublicStockAndEquipList();
-
+      
       if (localStorage.getItem('hide_mobile_qr_btn') === 'true') {
         const el = document.getElementById('mobileFloatingQrWrapper');
         if (el) el.classList.add('d-none');
@@ -755,9 +780,7 @@
       }
     }
 
-    function autoPopulateVillage(mooVal) {
-      document.getElementById('uVillage').value = VILLAGE_MAP[mooVal] ? VILLAGE_MAP[mooVal] : "";
-    }
+    function autoPopulateVillage(mooVal) { document.getElementById('uVillage').value = VILLAGE_MAP[mooVal] ? VILLAGE_MAP[mooVal] : ""; }
 
     function checkCustomTitle(val) {
       const customInput = document.getElementById('uTitleCustom');
@@ -786,19 +809,22 @@
         }
       }
 
-      if (target === 'welcome') document.getElementById('welcomeView').style.display = 'block';
-      else if (target === 'user') { document.getElementById('navUser').classList.add('active'); document.getElementById('userView').style.display = 'block'; fetchPublicStockAndEquipList(); }
-      else if (target === 'track') { document.getElementById('navTrack').classList.add('active'); document.getElementById('trackView').style.display = 'block'; }
-      else if (target === 'admin') {
+      if (target === 'welcome') {
+        document.getElementById('welcomeView').style.display = 'block';
+      } else if (target === 'user') {
+        document.getElementById('navUser').classList.add('active');
+        document.getElementById('userView').style.display = 'block';
+        fetchPublicStockAndEquipList();
+      } else if (target === 'track') {
+        document.getElementById('navTrack').classList.add('active');
+        document.getElementById('trackView').style.display = 'block';
+      } else if (target === 'admin') {
         document.getElementById('navAdmin').classList.add('active');
         document.getElementById('adminView').style.display = 'block';
-        if (sessionPassword) executeAdminBackgroundRefresh();
+        if (sessionPassword) { executeAdminBackgroundRefresh(); }
       }
     }
 
-    // ==========================================
-    // Public Stock & Form User Logic
-    // ==========================================
     async function fetchPublicStockAndEquipList() {
       try {
         const stockData = await callGASApi('getPublicStock');
@@ -809,15 +835,10 @@
         stockData.forEach(item => {
           let progressPercent = item.total > 0 ? (item.available / item.total) * 100 : 0;
           let badgeColor = progressPercent > 40 ? 'bg-success' : (progressPercent > 10 ? 'bg-warning text-dark' : 'bg-danger');
-          html += `<div class="mb-3 p-2.5 border rounded bg-light hover-elevate">
-            <div class="d-flex justify-content-between align-items-center mb-1">
-              <span class="fw-bold small text-dark">${item.name}</span>
-              <span class="badge ${badgeColor}">คงเหลือ: ${item.available}</span>
-            </div>
-            <div class="progress" style="height: 8px;"><div class="progress-bar ${badgeColor}" style="width: ${progressPercent}%"></div></div>
-          </div>`;
+          html += `<div class="mb-3 p-2.5 border rounded bg-light hover-elevate"><div class="d-flex justify-content-between align-items-center mb-1"><span class="fw-bold small text-dark">${item.name}</span><span class="badge ${badgeColor}">คงเหลือ: ${item.available}</span></div><div class="progress" style="height: 8px;"><div class="progress-bar ${badgeColor}" style="width: ${progressPercent}%"></div></div></div>`;
         });
         c.innerHTML = html || '<div class="text-center text-muted">ไม่มีข้อมูลอุปกรณ์ในคลังระบบ</div>';
+        
         renderEquipmentCards();
       } catch(err) {
         document.getElementById('publicStockContainer').innerHTML = `<div class="alert alert-danger small p-2">${err.message}</div>`;
@@ -827,6 +848,7 @@
     function renderEquipmentCards() {
       const container = document.getElementById('equipmentCardsContainer');
       if (!container || !globalStockData) return;
+
       const currentAction = document.querySelector('input[name="actionType"]:checked')?.value || 'ยืม';
       container.innerHTML = "";
       
@@ -835,7 +857,7 @@
         let isBorrowMode = (currentAction === 'ยืม');
         let maxLimit = isBorrowMode ? item.available : 99;
 
-        container.innerHTML += `
+        let cardHtml = `
           <div class="col-md-6">
             <div class="equip-counter-card p-3 d-flex align-items-center justify-content-between">
               <div>
@@ -851,6 +873,7 @@
               </div>
             </div>
           </div>`;
+        container.innerHTML += cardHtml;
       });
       validateStockRealTime();
     }
@@ -858,13 +881,16 @@
     function updateItemCounter(equipName, delta, maxLimit) {
       let current = userSelectedItemsMap[equipName] || 0;
       let nextVal = current + delta;
+
       if (nextVal < 0) nextVal = 0;
       if (nextVal > maxLimit) {
         alert(`ขออภัยครับ ไม่สามารถเลือกเกินจำนวนที่มีในคลัง (${maxLimit} ชิ้น) ได้ครับ`);
         nextVal = maxLimit;
       }
+
       if (nextVal === 0) delete userSelectedItemsMap[equipName];
       else userSelectedItemsMap[equipName] = nextVal;
+
       renderEquipmentCards();
     }
 
@@ -882,6 +908,7 @@
           let qtyReq = userSelectedItemsMap[eName];
           let matchStock = globalStockData.find(s => s.name === eName);
           let avail = matchStock ? matchStock.available : 0;
+
           if (qtyReq > avail) {
             hasError = true;
             errorText = `อุปกรณ์ "${eName}" ขอจำนวน ${qtyReq} ชิ้น เกินจำนวนคงเหลือในคลัง (${avail} ชิ้น)`;
@@ -889,21 +916,38 @@
         });
       }
 
-      if (hasError) { alertBox.classList.remove('d-none'); alertMsg.textContent = errorText; submitBtn.disabled = true; }
-      else { alertBox.classList.add('d-none'); submitBtn.disabled = false; }
+      if (hasError) {
+        alertBox.classList.remove('d-none');
+        alertMsg.textContent = errorText;
+        submitBtn.disabled = true;
+      } else {
+        alertBox.classList.add('d-none');
+        submitBtn.disabled = false;
+      }
+    }
+
+    function resetUserFormFocus() {
+      window.scrollTo(0, 0);
+      document.getElementById('uTitle').focus();
     }
 
     async function submitFormUser(e) {
       e.preventDefault();
+      
       let itemsArray = [];
       Object.keys(userSelectedItemsMap).forEach(name => {
-        if (userSelectedItemsMap[name] > 0) itemsArray.push({ equipName: name, quantity: userSelectedItemsMap[name] });
+        if (userSelectedItemsMap[name] > 0) {
+          itemsArray.push({ equipName: name, quantity: userSelectedItemsMap[name] });
+        }
       });
 
-      if(itemsArray.length === 0) return alert("โปรดกดปุ่ม + เลือกจำนวนอุปกรณ์อย่างน้อย 1 รายการก่อนส่งคำร้องครับ");
+      if(itemsArray.length === 0) {
+        return alert("โปรดกดปุ่ม + เลือกจำนวนอุปกรณ์อย่างน้อย 1 รายการก่อนส่งคำร้องครับ");
+      }
       
       const btn = document.getElementById('btnSubmitUser'); 
-      btn.disabled = true; btn.textContent = "กำลังส่งข้อมูลคำขอ...";
+      btn.disabled = true; 
+      btn.textContent = "กำลังส่งข้อมูลคำขอ...";
 
       let finalTitle = document.getElementById('uTitle').value;
       if(finalTitle === 'CUSTOM') finalTitle = document.getElementById('uTitleCustom').value.trim();
@@ -924,12 +968,18 @@
 
       try {
         const responseText = await callGASApi('submitRequest', payload);
-        alert("บันทึกข้อมูลเรียบร้อย: " + responseText);
-        document.getElementById('requestForm').reset();
+        document.getElementById('submitSuccessMsg').innerHTML = `ท่านได้ส่งข้อมูลคำขอแล้ว กรุณารอการอนุมัติ<br><br><small class="text-primary">${responseText}</small>`;
+        let sModal = new bootstrap.Modal(document.getElementById('submitSuccessModal'));
+        sModal.show();
+
+        document.getElementById('requestForm').reset(); 
+        document.getElementById('uTitleCustom').classList.add('d-none');
         userSelectedItemsMap = {};
-        btn.disabled = false;
+        btn.disabled = false; 
         btn.innerHTML = '<i class="bi bi-send-check-fill me-2"></i>ยืนยันส่งข้อมูลคำขอ';
+        
         fetchPublicStockAndEquipList();
+        if(sessionPassword) executeAdminBackgroundRefresh();
       } catch(err) {
         alert("เกิดข้อผิดพลาด: " + err.message);
         btn.disabled = false;
@@ -937,9 +987,6 @@
       }
     }
 
-    // ==========================================
-    // Track Search Logic
-    // ==========================================
     async function executeTrackSearch() {
       const keyword = document.getElementById('searchKeyword').value.trim();
       if(!keyword) return alert("โปรดกรอกข้อมูลค้นหาครับ");
@@ -954,38 +1001,50 @@
         }
 
         let html = '<div class="mt-4">';
+
         if (res.pending.length > 0) {
           html += `<div class="card mb-4 border-start border-4 border-warning shadow-sm">
-            <div class="card-header bg-white"><h6 class="fw-bold text-warning mb-0"><i class="bi bi-hourglass-split me-2"></i> คำร้องรอพิจารณา</h6></div>
+            <div class="card-header bg-white"><h6 class="fw-bold text-warning mb-0"><i class="bi bi-hourglass-split me-2"></i> คำร้องขอรับบริการรอพิจารณาอนุมัติ</h6></div>
             <div class="table-responsive"><table class="table table-sm table-hover align-middle mb-0 text-nowrap">
-            <thead class="table-light"><tr><th>รหัสคำขอ</th><th>ชื่อ-นามสกุล</th><th>เบอร์โทร</th><th>อุปกรณ์</th><th>จำนวน</th><th>สถานะ</th></tr></thead><tbody>`;
+            <thead class="table-light"><tr><th>รหัสคำขอ</th><th>ชื่อ-นามสกุล</th><th>เบอร์โทรศัพท์</th><th>ประเภท</th><th>อุปกรณ์</th><th class="text-center">จำนวน</th><th>วันที่ยื่นเรื่อง</th><th>สถานะ</th></tr></thead><tbody>`;
           res.pending.forEach(r => {
-             html += `<tr><td><code>${r['Request ID']}</code></td><td>${(r['Title']||'')+r['Name']}</td><td>${r['Phone'].toString().replace(/^'/,'')}</td><td class="text-primary">${r['Equipment Name']}</td><td>${r['Qty']}</td><td><span class="badge bg-warning text-dark">รอตรวจสอบ</span></td></tr>`;
+             let name = (r['Title'] || '') + r['Name'];
+             let phone = r['Phone'].toString().replace(/^'/, '');
+             html += `<tr><td><code class="text-dark bg-light px-1 rounded">${r['Request ID']}</code></td><td class="fw-medium">${name}</td><td>${phone}</td><td><span class="badge bg-secondary">${r['Action Type']}</span></td><td class="text-primary fw-semibold">${r['Equipment Name']}</td><td class="text-center">${r['Qty']}</td><td>${r['Relevant Date']}</td><td><span class="badge bg-warning text-dark">รอตรวจสอบ</span></td></tr>`;
           });
           html += `</tbody></table></div></div>`;
         }
 
         if (res.active.length > 0) {
           html += `<div class="card mb-4 border-start border-4 border-success shadow-sm">
-            <div class="card-header bg-white"><h6 class="fw-bold text-success mb-0"><i class="bi bi-people-fill me-2"></i> กำลังครอบครองใช้งาน</h6></div>
+            <div class="card-header bg-white"><h6 class="fw-bold text-success mb-0"><i class="bi bi-people-fill me-2"></i> บัญชีรายชื่อผู้ครองสิทธิ์ใช้งานอุปกรณ์ประจำการ</h6></div>
             <div class="table-responsive"><table class="table table-sm table-hover align-middle mb-0 text-nowrap">
-            <thead class="table-light"><tr><th>รหัสติดตาม</th><th>ชื่อ-นามสกุล</th><th>เบอร์โทร</th><th>อุปกรณ์</th><th>กำหนดส่งคืน</th><th>สถานะ</th></tr></thead><tbody>`;
+            <thead class="table-light"><tr><th>รหัสติดตาม</th><th>รหัสครุภัณฑ์</th><th>ชื่อ-นามสกุล</th><th>เบอร์โทรศัพท์</th><th>อุปกรณ์</th><th class="text-center">จำนวน</th><th>วันกำหนดคืน</th><th>สถานะ</th></tr></thead><tbody>`;
           res.active.forEach(t => {
-             html += `<tr><td><code>${t['Tracker ID']}</code></td><td>${(t['Title']||'')+t['Name']}</td><td>${t['Phone'].toString().replace(/^'/,'')}</td><td class="text-success fw-bold">${t['Equipment Name']}</td><td class="text-danger fw-bold">${t['Due Date']}</td><td><span class="badge bg-success">ใช้งานอยู่</span></td></tr>`;
+             let name = (t['Title'] || '') + t['Name'];
+             let phone = t['Phone'].toString().replace(/^'/, '');
+             let assetCode = t['Asset Code'] ? `<code class="bg-light text-primary px-1 border rounded">${t['Asset Code']}</code>` : '<span class="text-muted small">-</span>';
+             html += `<tr><td><code class="text-dark bg-light px-1 rounded">${t['Tracker ID']}</code></td><td>${assetCode}</td><td class="fw-medium">${name}</td><td>${phone}</td><td class="text-accent fw-bold">${t['Equipment Name']}</td><td class="text-center">${t['Qty']}</td><td class="text-danger fw-bold"><i class="bi bi-calendar-x"></i> ${t['Due Date']}</td><td><span class="badge bg-success">ใช้งานอยู่</span></td></tr>`;
           });
           html += `</tbody></table></div></div>`;
         }
 
         if (res.history.length > 0) {
           html += `<div class="card mb-4 border-start border-4 border-secondary shadow-sm">
-            <div class="card-header bg-white"><h6 class="fw-bold text-secondary mb-0"><i class="bi bi-database-fill me-2"></i> ประวัติทั้งหมด</h6></div>
+            <div class="card-header bg-white"><h6 class="fw-bold text-secondary mb-0"><i class="bi bi-database-fill me-2"></i> ฐานข้อมูลประวัติทั้งหมด</h6></div>
             <div class="table-responsive"><table class="table table-sm table-hover align-middle mb-0 text-nowrap">
-            <thead class="table-light"><tr><th>วัน/เวลา</th><th>รหัสคำขอ</th><th>ชื่อ-นามสกุล</th><th>ประเภท</th><th>อุปกรณ์</th><th>สถานะ</th></tr></thead><tbody>`;
+            <thead class="table-light"><tr><th>วันที่/เวลา</th><th>รหัสคำขอ</th><th>รหัสครุภัณฑ์</th><th>ชื่อ-นามสกุล</th><th>เบอร์โทรศัพท์</th><th>ประเภท</th><th>อุปกรณ์</th><th class="text-center">จำนวน</th><th>สถานะ</th></tr></thead><tbody>`;
           res.history.forEach(h => {
-             html += `<tr><td class="small">${h['Timestamp']}</td><td><code>${h['Request ID']}</code></td><td>${(h['Title']||'')+h['Name']}</td><td>${h['Action Type']}</td><td>${h['Equipment Name']}</td><td>${h['Status']}</td></tr>`;
+             let name = (h['Title'] || '') + h['Name'];
+             let phone = h['Phone'].toString().replace(/^'/, '');
+             let stColor = h['Status'] === 'Rejected' ? 'text-danger' : (h['Status'] === 'Pending' ? 'text-warning' : 'text-success');
+             let badgeColor = h['Action Type'] === 'คืนอุปกรณ์' || h['Action Type'] === 'คืน' ? 'bg-info text-dark' : (h['Action Type'] === 'บริจาค' ? 'bg-primary' : 'bg-dark');
+             let assetCode = h['Asset Code'] ? `<code class="bg-light text-secondary px-1 border rounded">${h['Asset Code']}</code>` : '-';
+             html += `<tr><td class="small">${h['Timestamp']}</td><td><code class="text-dark bg-light px-1 rounded">${h['Request ID']}</code></td><td>${assetCode}</td><td class="fw-medium">${name}</td><td>${phone}</td><td><span class="badge ${badgeColor}">${h['Action Type']}</span></td><td class="fw-medium">${h['Equipment Name']}</td><td class="text-center">${h['Qty']}</td><td class="${stColor} fw-bold">${h['Status']}</td></tr>`;
           });
           html += `</tbody></table></div></div>`;
         }
+
         html += '</div>';
         out.innerHTML = html;
       } catch(err) {
@@ -993,9 +1052,6 @@
       }
     }
 
-    // ==========================================
-    // Admin Control Panel & Asset Management Logic
-    // ==========================================
     async function attemptAdminAuthentication(isAuto = false) {
       const pass = document.getElementById('adminPasswordInput').value; if(!pass) return;
       try {
@@ -1007,13 +1063,21 @@
         document.getElementById('adminMainControlPanel').classList.remove('d-none'); 
         
         const subNav = document.getElementById('subNavbarNav');
-        if (subNav) subNav.style.setProperty('display', 'flex', 'important');
+        if (subNav && document.getElementById('adminView').style.display !== 'none') {
+          subNav.style.setProperty('display', 'flex', 'important');
+        }
         document.getElementById('btnLogout').classList.remove('d-none');
+        
+        document.getElementById('welcomeView').style.display = 'none'; 
+        document.getElementById('userView').style.display = 'none'; 
+        document.getElementById('trackView').style.display = 'none'; 
+        document.getElementById('adminView').style.display = 'block';
         
         masterAdminCachedData = dataset; 
         populateFiscalYearDropdownFilter(); 
-        populateAssetFilterEquipOptions();
+        populateAssetCategoryFilterDropdown();
         switchAdminSubTab('operations'); 
+        evaluateOverdueSchedules(dataset); 
         setupBackgroundPeriodicSync();
       } catch(err) {
         if(!isAuto) alert("รหัสผ่านไม่ถูกต้อง หรือเกิดข้อผิดพลาด: " + err.message);
@@ -1034,23 +1098,27 @@
       
       const subNav = document.getElementById('subNavbarNav');
       if (subNav) subNav.style.setProperty('display', 'none', 'important');
+
       switchView('welcome');
     }
 
     function setupBackgroundPeriodicSync() { 
       if(backgroundAutoRefreshTimer) clearInterval(backgroundAutoRefreshTimer); 
-      backgroundAutoRefreshTimer = setInterval(executeAdminBackgroundRefresh, 20000); 
+      backgroundAutoRefreshTimer = setInterval(executeAdminBackgroundRefresh, 15000); 
     }
 
     async function executeAdminBackgroundRefresh() {
       if (!sessionPassword) return;
       if (!document.getElementById('subViewAnalytics').classList.contains('d-none')) return;
+      if (!document.getElementById('subViewCalendar').classList.contains('d-none')) return;
+
       try {
         const freshDataset = await callGASApi('getAdminDashboardData', {}, sessionPassword);
         masterAdminCachedData = freshDataset; 
         populateFiscalYearDropdownFilter(); 
-        populateAssetFilterEquipOptions();
+        populateAssetCategoryFilterDropdown();
         refreshAdminSubViewsUI(); 
+        evaluateOverdueSchedules(freshDataset);
       } catch(err) {}
     }
 
@@ -1059,16 +1127,18 @@
       let origHtml = btnBtn.innerHTML;
       btnBtn.disabled = true;
       btnBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> ดึงข้อมูล...';
+      
       try {
         const freshDataset = await callGASApi('getAdminDashboardData', {}, sessionPassword);
         masterAdminCachedData = freshDataset;
         populateFiscalYearDropdownFilter();
-        populateAssetFilterEquipOptions();
+        populateAssetCategoryFilterDropdown();
         refreshAdminSubViewsUI();
+        evaluateOverdueSchedules(freshDataset);
         btnBtn.disabled = false;
         btnBtn.innerHTML = origHtml;
       } catch(err) {
-        alert("เกิดข้อผิดพลาด: " + err.message);
+        alert("เกิดข้อผิดพลาดในการดึงข้อมูล: " + err.message);
         btnBtn.disabled = false;
         btnBtn.innerHTML = origHtml;
       }
@@ -1090,14 +1160,31 @@
       if(years.size === 0) years.add('ปี ' + (new Date().getFullYear() + 543));
       
       let sortedYears = Array.from(years).sort().reverse();
+      
       [selMain, selMatrix].forEach(sel => {
         if (!sel) return;
         sel.innerHTML = "";
         sortedYears.forEach(yr => { 
-          let opt = document.createElement('option'); opt.value = yr; opt.textContent = yr; sel.appendChild(opt); 
+          let opt = document.createElement('option'); 
+          opt.value = yr; opt.textContent = yr; sel.appendChild(opt); 
         });
         if(sortedYears.length > 0) sel.value = sortedYears[0];
       });
+    }
+
+    function populateAssetCategoryFilterDropdown() {
+      const sel = document.getElementById('assetItemCategoryFilter');
+      if (!sel || !masterAdminCachedData) return;
+      let currVal = sel.value;
+      sel.innerHTML = '<option value="">-- กายอุปกรณ์ทุกประเภท --</option>';
+
+      masterAdminCachedData.stock.forEach(s => {
+        let opt = document.createElement('option');
+        opt.value = s['Equipment ID'];
+        opt.textContent = `${s['Equipment ID']} - ${s['Name']}`;
+        sel.appendChild(opt);
+      });
+      if (currVal) sel.value = currVal;
     }
 
     function syncAndRefreshFiscalYearViews(selectedFY) {
@@ -1106,22 +1193,6 @@
       if (selMain && selMain.value !== selectedFY) selMain.value = selectedFY;
       if (selMatrix && selMatrix.value !== selectedFY) selMatrix.value = selectedFY;
       refreshDashboardVisualCharts();
-    }
-
-    function populateAssetFilterEquipOptions() {
-      const sel = document.getElementById('assetFilterEquipSelect');
-      if (!sel || !masterAdminCachedData || !masterAdminCachedData.stock) return;
-      const currentVal = sel.value;
-      sel.innerHTML = "";
-      masterAdminCachedData.stock.forEach(s => {
-        let opt = document.createElement('option');
-        opt.value = s['Equipment ID'];
-        opt.textContent = `${s['Equipment ID']} : ${s['Name']}`;
-        opt.setAttribute('data-name', s['Name']);
-        sel.appendChild(opt);
-      });
-      if (currentVal) sel.value = currentVal;
-      renderAssetItemsTable();
     }
 
     function switchAdminSubTab(subTabName) {
@@ -1137,199 +1208,390 @@
       else if (subTabName === 'history') document.getElementById('subViewHistory').classList.remove('d-none');
       else if (subTabName === 'calendar') { 
         document.getElementById('subViewCalendar').classList.remove('d-none'); 
-        if(!globalFullCalendarInstance) setTimeout(loadCustomSystemCalendar, 200);
+        if(!globalFullCalendarInstance) { setTimeout(loadCustomSystemCalendar, 200); }
       }
       refreshAdminSubViewsUI();
     }
 
-    // ==========================================
-    // Render Asset Items & Sticker Generator
-    // ==========================================
-    function renderAssetItemsTable() {
-      const sel = document.getElementById('assetFilterEquipSelect');
-      const tbody = document.getElementById('tableAssetItemsBody');
-      if (!sel || !tbody || !masterAdminCachedData) return;
+    async function loadCustomSystemCalendar() {
+      if(!sessionPassword) return;
+      const calendarNode = document.getElementById('systemFullCalendarNode');
+      calendarNode.innerHTML = '<div class="text-center py-5 text-muted"><div class="spinner-border spinner-border-sm text-primary me-2"></div>กำลังประมวลผลปฏิทิน...</div>';
+      
+      try {
+        const eventsArr = await callGASApi('getCalendarEventsData', {}, sessionPassword);
+        calendarNode.innerHTML = "";
+        if(globalFullCalendarInstance) { globalFullCalendarInstance.destroy(); }
+        
+        globalFullCalendarInstance = new FullCalendar.Calendar(calendarNode, {
+          initialView: 'dayGridMonth',
+          locale: 'th',
+          headerToolbar: { left: 'prev,next today', center: 'title', right: 'dayGridMonth,timeGridWeek' },
+          buttonText: { today: 'วันนี้', month: 'เดือน', week: 'สัปดาห์' },
+          events: eventsArr,
+          eventClick: function(info) {
+            alert(`${info.event.title}\n\nรายละเอียดเพิ่มเติม:\n${info.event.extendedProps.description || ''}`);
+          }
+        });
+        globalFullCalendarInstance.render();
+      } catch(err) {
+        calendarNode.innerHTML = `<div class="alert alert-danger">${err.message}</div>`;
+      }
+    }
 
-      const selectedEqId = sel.value;
-      const allAssets = masterAdminCachedData.assets || [];
-      const filtered = allAssets.filter(a => a['Equipment ID'] === selectedEqId);
+    function refreshAdminSubViewsUI() {
+      if(!masterAdminCachedData) return;
+      document.getElementById('lastUpdatedTimestampDisplay').textContent = "อัปเดตล่าสุด: " + new Date().toLocaleTimeString('th-TH') + " น.";
+      refreshDashboardVisualCharts();
+      
+      // 1. Requests Table (Pending)
+      const pTable = document.getElementById('tablePendingBody');
+      let pFilter = masterAdminCachedData.requests.filter(r => r['Status'] === 'Pending');
+      let pHtml = "";
 
-      let html = "";
-      filtered.forEach((asset, idx) => {
-        const code = asset['Asset Code'];
-        const name = asset['Equipment Name'];
-        const status = asset['Status'] || 'Available';
-        const borrower = asset['Current Borrower'] || '-';
-        const dueDate = asset['Due Date'] || '-';
-        const regDate = asset['Registered Date'] || '-';
+      pFilter.forEach((r, idx) => {
+        let fullName = (r['Title'] || '') + r['Name'];
+        let dispPhone = r['Phone'].toString().replace(/^'/, '');
+        let dispIdCard = r['ID Card'].toString().replace(/^'/, '');
+        let reqEquip = r['Equipment Name'].toString().trim();
 
-        let badgeClass = 'bg-success';
-        if (status === 'Borrowed') badgeClass = 'bg-warning text-dark';
-        else if (status === 'Maintenance') badgeClass = 'bg-danger';
+        let availableAssets = masterAdminCachedData.assetItems.filter(a => a['Equipment Name'].trim() === reqEquip && a['Status'] === 'Available');
+        let selectHtml = `<select class="form-select form-select-sm" id="assign_asset_${r['Request ID']}">
+          <option value="">-- สุ่ม/ระบุอัตโนมัติ --</option>`;
+        availableAssets.forEach(a => {
+          selectHtml += `<option value="${a['Asset Code']}">${a['Asset Code']}</option>`;
+        });
+        selectHtml += `</select>`;
 
-        html += `<tr>
-          <td class="text-center"><input type="checkbox" class="chk-asset-item" value="${code}" data-name="${name}"></td>
-          <td><code class="fw-bold fs-6 text-dark">${code}</code></td>
-          <td class="fw-medium">${name}</td>
-          <td class="text-center"><div id="qr_thumb_${idx}" style="display:inline-block;"></div></td>
-          <td><span class="badge ${badgeClass}">${status}</span></td>
-          <td class="fw-medium text-primary">${borrower}</td>
-          <td class="small text-danger fw-semibold">${dueDate}</td>
-          <td class="small text-muted">${regDate}</td>
-          <td class="text-center">
-            <button class="btn btn-sm btn-outline-info py-0 px-2 fw-semibold" onclick="openAssetHistoryModal('${code}')"><i class="bi bi-clock-history me-1"></i> ประวัติ</button>
-            <button class="btn btn-sm btn-outline-secondary py-0 px-2" onclick="printSingleSticker('${code}', '${name}')"><i class="bi bi-printer"></i></button>
+        pHtml += `<tr class="clickable-row" onclick="openRowDetailModal('Requests', '${r['Request ID']}')">
+          <td><code class="text-dark bg-light p-1 rounded border">${r['Request ID']}</code></td>
+          <td><span class="badge bg-secondary">${r['Action Type']}</span></td>
+          <td class="fw-bold text-dark">${fullName}<br><small class="text-muted"><i class="bi bi-person-vcard"></i> ${dispIdCard}</small></td>
+          <td class="text-primary fw-semibold">${r['Equipment Name']}<br><small class="text-muted">ม.${r['Moo']} ${r['Village']}</small></td>
+          <td class="text-center fw-bold fs-6">${r['Qty']}</td>
+          <td onclick="event.stopPropagation();">${selectHtml}</td>
+          <td><i class="bi bi-telephone-fill text-success"></i> ${dispPhone}</td>
+          <td class="text-center" onclick="event.stopPropagation();">
+            <button class="btn btn-sm btn-success me-1 py-1" onclick="submitAdminDecisionWithAsset('${r['Request ID']}', true)"><i class="bi bi-check-lg"></i> อนุมัติ</button>
+            <button class="btn btn-sm btn-outline-danger py-1" onclick="submitAdminDecisionWithAsset('${r['Request ID']}', false)"><i class="bi bi-x-lg"></i> ปฏิเสธ</button>
           </td>
         </tr>`;
       });
-
-      tbody.innerHTML = html || `<tr><td colspan="9" class="text-center py-4 text-muted">ยังไม่มีรายการชิ้นงานในประเภทนี้ กดปุ่ม "ออกรหัสเพิ่ม" เพื่อเริ่มใช้งาน</td></tr>`;
-
-      // Render QR Code พรีวิวขนาดเล็ก
-      filtered.forEach((asset, idx) => {
-        const node = document.getElementById(`qr_thumb_${idx}`);
-        if (node) {
-          node.innerHTML = "";
-          new QRCode(node, { text: asset['Asset Code'], width: 32, height: 32, correctLevel: QRCode.CorrectLevel.M });
-        }
+      pTable.innerHTML = pHtml || '<tr><td colspan="8" class="text-center text-muted py-3">ไม่มีรายการค้างรอดำเนินการครับ</td></tr>';
+      
+      // 2. Tracker Table
+      const tTable = document.getElementById('tableTrackerBody');
+      let tHtml = "";
+      masterAdminCachedData.tracker.forEach(t => {
+        let fullName = (t['Title'] || '') + t['Name'];
+        let dispIdCard = t['ID Card'].toString().replace(/^'/, '');
+        let dispPhone = t['Phone'].toString().replace(/^'/, '');
+        let assetCodeDisp = t['Asset Code'] 
+          ? `<code class="bg-light text-primary px-2 py-1 border rounded fw-bold">${t['Asset Code']}</code>` 
+          : `<button class="btn btn-sm btn-outline-primary py-0 px-2" onclick="openLinkAssetModal('${t['Tracker ID']}', '${fullName}', '${t['Equipment Name']}')"><i class="bi bi-link-45deg"></i> ผูกรหัส</button>`;
+        
+        tHtml += `<tr class="clickable-row" onclick="openRowDetailModal('Tracker', '${t['Tracker ID']}')">
+          <td><code>${t['Tracker ID']}</code></td>
+          <td onclick="event.stopPropagation();">${assetCodeDisp}</td>
+          <td class="fw-bold text-success">${fullName} <br><small class="text-muted"><i class="bi bi-person-vcard"></i> ${dispIdCard}</small></td>
+          <td><span class="fw-medium text-dark"><i class="bi bi-telephone-fill text-success"></i> ${dispPhone}</span></td>
+          <td class="small">อายุ: ${t['Age']} ปี | ${t['Gender']}<br><span class="badge bg-info text-dark">${t['User Status']}</span> ม.${t['Moo']} ${t['Village']}</td>
+          <td class="text-accent fw-bold">${t['Equipment Name']}</td>
+          <td class="text-center fw-bold text-dark fs-5">${t['Qty']}</td>
+          <td class="text-danger fw-bold"><i class="bi bi-calendar-x"></i> ${t['Due Date']}</td>
+          <td><span class="badge bg-success rounded-pill px-3 py-2">ใช้งานปกติ</span></td>
+          <td class="text-center" onclick="event.stopPropagation();">
+            <button class="btn btn-sm btn-warning text-dark py-1 me-1 shadow-sm" onclick="processDirectTrackerRenew('${t['Tracker ID']}')"><i class="bi bi-arrow-repeat"></i> ยืมต่อ</button>
+            <button class="btn btn-sm btn-success py-1 me-1 shadow-sm" onclick="processDirectTrackerReturn('${t['Tracker ID']}')"><i class="bi bi-box-arrow-in-down"></i> รับคืน</button>
+            <button class="btn btn-sm btn-danger py-1 shadow-sm" onclick="executeAdminDeleteRowAction('Tracker', '${t['Tracker ID']}')"><i class="bi bi-trash"></i></button>
+          </td>
+        </tr>`;
       });
+      tTable.innerHTML = tHtml || '<tr><td colspan="10" class="text-center text-muted py-4">ไม่มีรายการค้างส่งคืนในระบบครับ</td></tr>';
+
+      // 3. Stock Cards
+      const invContainer = document.getElementById('inventoryCardsContainer');
+      let invHtml = "";
+      masterAdminCachedData.stock.forEach(s => {
+        invHtml += `
+          <div class="col-md-6 col-xl-4">
+            <div class="card card-custom h-100 border-top border-4 border-info shadow-sm hover-elevate">
+              <div class="card-body p-3">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                  <h6 class="fw-bold text-dark mb-0">${s['Name']}</h6>
+                  <button class="btn btn-sm btn-light border-0" onclick="setupInventoryEditMode('${s['Equipment ID']}', '${s['Name']}', ${s['Total Qty']})"><i class="bi bi-pencil-square text-primary"></i></button>
+                </div>
+                <div class="row text-center g-1">
+                  <div class="col-4"><div class="text-muted mb-1" style="font-size: 0.8rem;">ทั้งหมด</div><div class="fw-bold fs-4 text-dark">${s['Total Qty']}</div></div>
+                  <div class="col-4 border-start border-end"><div class="text-muted mb-1" style="font-size: 0.8rem;">ถูกยืม</div><div class="fw-bold fs-4 text-warning">${s['Borrowed Qty']}</div></div>
+                  <div class="col-4"><div class="text-muted mb-1" style="font-size: 0.8rem;">คงเหลือ</div><div class="fw-bold fs-4 text-success">${s['Available Qty']}</div></div>
+                </div>
+              </div>
+            </div>
+          </div>`;
+      });
+      invContainer.innerHTML = invHtml || '<div class="col-12 text-center py-5 text-muted">ไม่มีข้อมูลอุปกรณ์ในคลังระบบ</div>';
+
+      // 4. Asset Items Ledger Table
+      filterAssetItemsTable();
+
+      // 5. History Log Table
+      const hTable = document.getElementById('tableHistoryBody');
+      const actionFilter = document.getElementById('historyActionFilter').value;
+      let hHtml = "";
+      let filteredHistory = masterAdminCachedData.history.slice().reverse();
+      if (actionFilter) filteredHistory = filteredHistory.filter(h => (h['Action Type'] || '').trim().includes(actionFilter));
+
+      filteredHistory.forEach(h => {
+        let stColor = h['Status'] === 'Rejected' ? 'text-danger' : (h['Status'] === 'Pending' ? 'text-warning' : 'text-success');
+        let badgeColor = h['Action Type'] === 'คืน' ? 'bg-info text-dark' : (h['Action Type'] === 'บริจาค' ? 'bg-primary' : 'bg-dark');
+        let fullName = (h['Title'] || '') + h['Name'];
+        let assetCodeDisp = h['Asset Code'] ? `<code class="bg-light text-secondary px-1 border rounded">${h['Asset Code']}</code>` : '-';
+   
+        hHtml += `<tr>
+          <td class="small text-muted">${h['Timestamp']}</td>
+          <td><code>${h['Request ID']}</code></td>
+          <td>${assetCodeDisp}</td>
+          <td class="fw-bold text-dark">${fullName}</td>
+          <td>${h['Phone'].toString().replace(/^'/, '')}</td>
+          <td class="small">ม.${h['Moo']} ${h['Village']}</td>
+          <td><span class="badge ${badgeColor}">${h['Action Type']}</span></td>
+          <td class="fw-medium">${h['Equipment Name']}</td>
+          <td class="text-center fw-bold">${h['Qty']}</td>
+          <td class="text-muted small">${h['Relevant Date']}</td>
+          <td class="${stColor} fw-bold">${h['Status']}</td>
+          <td class="text-center"><button class="btn btn-sm btn-outline-danger p-1" onclick="executeAdminDeleteRowAction('History_Log', '${h['Log ID']}')"><i class="bi bi-trash3-fill"></i></button></td>
+        </tr>`;
+      });
+      hTable.innerHTML = hHtml || '<tr><td colspan="12" class="text-center text-muted py-4">ไม่มีข้อมูลบันทึกประวัติครับ</td></tr>';
     }
 
-    function toggleSelectAllAssets(masterChk) {
-      document.querySelectorAll('.chk-asset-item').forEach(chk => chk.checked = masterChk.checked);
+    function filterAssetItemsTable() {
+      const tbody = document.getElementById('tableAssetItemsBody');
+      if (!tbody || !masterAdminCachedData) return;
+      const catVal = document.getElementById('assetItemCategoryFilter').value;
+      
+      let items = masterAdminCachedData.assetItems || [];
+      if (catVal) items = items.filter(a => a['Equipment ID'] === catVal);
+
+      let html = "";
+      items.forEach(a => {
+        let stBadge = a['Status'] === 'Available' 
+          ? '<span class="badge bg-success px-2 py-1">🟢 Available</span>' 
+          : (a['Status'] === 'Borrowed' ? '<span class="badge bg-warning text-dark px-2 py-1">🟡 Borrowed</span>' : '<span class="badge bg-danger px-2 py-1">🔴 Maintenance</span>');
+
+        html += `<tr>
+          <td class="text-center"><input type="checkbox" class="asset-select-check" value="${a['Asset Code']}"></td>
+          <td><code class="fw-bold text-primary fs-6">${a['Asset Code']}</code></td>
+          <td class="fw-medium">${a['Equipment Name']}</td>
+          <td>${stBadge}</td>
+          <td>${a['Current Borrower'] || '<span class="text-muted small">-</span>'}</td>
+          <td class="small text-danger fw-bold">${a['Due Date'] || '-'}</td>
+          <td class="small text-muted">${a['Condition Note'] || '-'}</td>
+          <td class="text-center">
+            <button class="btn btn-sm btn-outline-primary py-0 px-2 me-1" onclick="viewAssetLifecycleHistory('${a['Asset Code']}')"><i class="bi bi-journal-text"></i> ประวัติ</button>
+            <button class="btn btn-sm btn-outline-dark py-0 px-2" onclick="printSingleSticker('${a['Asset Code']}', '${a['Equipment Name']}')"><i class="bi bi-qr-code"></i></button>
+          </td>
+        </tr>`;
+      });
+      tbody.innerHTML = html || '<tr><td colspan="8" class="text-center text-muted py-3">ไม่มีรายการครุภัณฑ์รายชิ้นในหมวดนี้</td></tr>';
     }
 
-    async function executeGenerateAssetBatch() {
-      const sel = document.getElementById('assetFilterEquipSelect');
-      const eqId = sel.value;
-      const equipName = sel.options[sel.selectedIndex].getAttribute('data-name');
-      const count = parseInt(document.getElementById('genCountInput').value, 10);
-      const note = document.getElementById('genNoteInput').value.trim();
+    function toggleSelectAllAssets(masterCheck) {
+      document.querySelectorAll('.asset-select-check').forEach(chk => chk.checked = masterCheck.checked);
+    }
 
-      if (!eqId || isNaN(count) || count <= 0) return alert("โปรดระบุจำนวนชิ้นที่ถูกต้องครับ");
-      if (!confirm(`ยืนยันออกรหัสครุภัณฑ์ ${equipName} (${eqId}) เพิ่มจำนวน ${count} ชิ้น ใช่หรือไม่?`)) return;
+    async function executeGenerateAssetItems() {
+      const equipId = document.getElementById('assetItemCategoryFilter').value;
+      if (!equipId) return alert("โปรดเลือกประเภทกายอุปกรณ์ก่อนกดออกรหัสเพิ่มครับ");
+
+      const count = document.getElementById('quickAddAssetCount').value;
+      const note = document.getElementById('quickAddAssetNote').value.trim();
+      const matchStock = masterAdminCachedData.stock.find(s => s['Equipment ID'] === equipId);
+      const equipName = matchStock ? matchStock['Name'] : '';
 
       try {
-        const resMsg = await callGASApi('generateAssetItems', { eqId: eqId, equipName: equipName, count: count, conditionNote: note }, sessionPassword);
+        const resMsg = await callGASApi('generateAssetItems', {
+          equipId: equipId, equipName: equipName, count: count, conditionNote: note
+        }, sessionPassword);
         alert(resMsg);
-        triggerAdminDataRefresh(document.createElement('button'));
+        executeAdminBackgroundRefresh();
       } catch(err) {
         alert("เกิดข้อผิดพลาด: " + err.message);
       }
     }
 
-    async function openAssetHistoryModal(assetCode) {
-      const modalTitle = document.getElementById('assetHistoryModalTitle');
-      const modalBody = document.getElementById('assetHistoryModalBody');
-      modalTitle.innerHTML = `<i class="bi bi-journal-bookmark-fill text-warning me-2"></i> ประวัติการใช้งาน: ${assetCode}`;
-      modalBody.innerHTML = '<div class="text-center py-4"><div class="spinner-border spinner-border-sm text-info me-2"></div>กำลังดึงประวัติ...</div>';
+    function openLinkAssetModal(trackerId, borrowerName, equipName) {
+      document.getElementById('linkTrackerId').value = trackerId;
+      document.getElementById('linkBorrowerName').value = `${borrowerName} (${equipName})`;
       
-      let hModal = new bootstrap.Modal(document.getElementById('assetHistoryModal'));
-      hModal.show();
+      const sel = document.getElementById('linkAssetSelect');
+      sel.innerHTML = "";
+      let availableAssets = masterAdminCachedData.assetItems.filter(a => a['Equipment Name'].trim() === equipName.trim() && a['Status'] === 'Available');
+      
+      if (availableAssets.length === 0) {
+        sel.innerHTML = '<option value="">-- ไม่มีอุปกรณ์รหัสว่างในคลัง --</option>';
+      } else {
+        availableAssets.forEach(a => {
+          let opt = document.createElement('option');
+          opt.value = a['Asset Code']; opt.textContent = `${a['Asset Code']} (${a['Condition Note'] || 'ปกติ'})`;
+          sel.appendChild(opt);
+        });
+      }
+      new bootstrap.Modal(document.getElementById('linkAssetModal')).show();
+    }
+
+    async function saveLinkAssetToTracker() {
+      const trackerId = document.getElementById('linkTrackerId').value;
+      const assetCode = document.getElementById('linkAssetSelect').value;
+      if (!assetCode) return alert("โปรดเลือกรหัสครุภัณฑ์ก่อนกดบันทึกครับ");
 
       try {
-        const res = await callGASApi('getAssetHistory', { assetCode: assetCode }, sessionPassword);
-        let html = "";
-        if (res.currentUsage) {
-          html += `<div class="alert alert-warning border-start border-4 border-warning mb-3">
-            <h6 class="fw-bold text-dark mb-1"><i class="bi bi-person-fill text-warning"></i> กำลังถูกยืมใช้งาน</h6>
-            <div><b>ผู้ยืม:</b> ${res.currentUsage.borrower} (โทร: ${res.currentUsage.phone})</div>
-            <div><b>ที่อยู่:</b> ม.${res.currentUsage.moo} ${res.currentUsage.village} | <b>วันกำหนดคืน:</b> <span class="text-danger fw-bold">${res.currentUsage.dueDate}</span></div>
-          </div>`;
-        } else {
-          html += `<div class="alert alert-success py-2 small mb-3"><i class="bi bi-check-circle-fill me-1"></i> อุปกรณ์ชิ้นนี้อยู่ในคลังระบบ (พร้อมให้ยืม)</div>`;
-        }
+        const resMsg = await callGASApi('linkAssetToTracker', { trackerId: trackerId, assetCode: assetCode }, sessionPassword);
+        alert(resMsg);
+        bootstrap.Modal.getInstance(document.getElementById('linkAssetModal')).hide();
+        executeAdminBackgroundRefresh();
+      } catch(err) {
+        alert("เกิดข้อผิดพลาด: " + err.message);
+      }
+    }
 
-        html += `<h6 class="fw-bold text-dark mt-3 mb-2"><i class="bi bi-clock-history me-1"></i> ประวัติการยืม-คืนย้อนหลัง</h6>`;
-        if (res.historyList && res.historyList.length > 0) {
-          html += `<div class="table-responsive"><table class="table table-sm table-hover align-middle mb-0">
-            <thead class="table-light"><tr><th>วัน/เวลา</th><th>กิจกรรม</th><th>ผู้ยืม/ส่งคืน</th><th>สถานะ</th></tr></thead><tbody>`;
-          res.historyList.forEach(h => {
-            html += `<tr><td>${h.timestamp}</td><td><span class="badge bg-secondary">${h.action}</span></td><td>${h.borrower}</td><td>${h.status}</td></tr>`;
-          });
-          html += `</tbody></table></div>`;
+    async function viewAssetLifecycleHistory(assetCode) {
+      const modalBody = document.getElementById('assetLifecycleBody');
+      document.getElementById('assetLifecycleTitle').innerHTML = `<i class="bi bi-journal-check me-2"></i> วงจรชีวิตครุภัณฑ์: ${assetCode}`;
+      modalBody.innerHTML = '<div class="text-center py-4"><div class="spinner-border text-primary"></div> กำลังดึงประวัติ...</div>';
+      
+      let lifecycleModal = new bootstrap.Modal(document.getElementById('assetLifecycleModal'));
+      lifecycleModal.show();
+
+      try {
+        const resData = await callGASApi('getAssetHistory', { assetCode: assetCode });
+        let cur = resData.current;
+        let hist = resData.history || [];
+
+        let html = `
+          <div class="p-3 bg-light rounded-3 border mb-3">
+            <div class="row">
+              <div class="col-md-6"><b>รหัสครุภัณฑ์:</b> <code class="fs-6">${assetCode}</code></div>
+              <div class="col-md-6"><b>ชื่ออุปกรณ์:</b> ${cur ? cur.equipName : '-'}</div>
+              <div class="col-md-6 mt-1"><b>วันที่รับเข้าคลัง:</b> ${cur ? cur.registeredDate : '-'}</div>
+              <div class="col-md-6 mt-1"><b>สถานะปัจจุบัน:</b> <span class="badge bg-primary">${cur ? cur.status : '-'}</span></div>
+            </div>
+          </div>
+          <h6 class="fw-bold text-dark mb-2"><i class="bi bi-clock-history me-1"></i> ไทม์ไลน์ประวัติการใช้งานย้อนหลัง (${hist.length} รายการ)</h6>
+          <div class="table-responsive" style="max-height: 300px;">
+            <table class="table table-sm table-hover align-middle mb-0 text-nowrap">
+              <thead class="table-dark"><tr><th>วัน/เวลา</th><th>กิจกรรม</th><th>ผู้ยืม/ผู้ทำรายการ</th><th>เบอร์ติดต่อ</th><th>สถานะ</th></tr></thead>
+              <tbody>`;
+
+        if (hist.length === 0) {
+          html += `<tr><td colspan="5" class="text-center text-muted py-3">ยังไม่มีประวัติการยืม-คืนสำหรับอุปกรณ์ชิ้นนี้</td></tr>`;
         } else {
-          html += `<div class="text-center text-muted small py-3">ยังไม่มีประวัติการใช้งานย้อนหลังของชิ้นนี้</div>`;
+          hist.forEach(h => {
+            html += `<tr>
+              <td class="small">${h.timestamp}</td>
+              <td><span class="badge bg-secondary">${h.actionType}</span></td>
+              <td class="fw-bold">${h.borrowerName} <small class="text-muted">(ม.${h.moo} ${h.village})</small></td>
+              <td>${h.phone}</td>
+              <td class="fw-bold text-success">${h.status}</td>
+            </tr>`;
+          });
         }
+        html += `</tbody></table></div>`;
         modalBody.innerHTML = html;
       } catch(err) {
         modalBody.innerHTML = `<div class="alert alert-danger">${err.message}</div>`;
       }
     }
 
-    // ==========================================
-    // Sticker Print Generator (Print Preview)
-    // ==========================================
-    function printSingleSticker(code, name) {
-      generateAndPrintStickers([{ code: code, name: name }]);
+    function printSingleSticker(assetCode, equipName) {
+      generateAndPrintStickers([{ assetCode: assetCode, equipName: equipName }]);
     }
 
     function printSelectedStickers() {
-      const selected = [];
-      document.querySelectorAll('.chk-asset-item:checked').forEach(chk => {
-        selected.push({ code: chk.value, name: chk.getAttribute('data-name') });
+      let selectedList = [];
+      document.querySelectorAll('.asset-select-check:checked').forEach(chk => {
+        let code = chk.value;
+        let item = masterAdminCachedData.assetItems.find(a => a['Asset Code'] === code);
+        if (item) selectedList.push({ assetCode: item['Asset Code'], equipName: item['Equipment Name'] });
       });
-      if (selected.length === 0) return alert("โปรดติ๊กเลือกอุปกรณ์ที่ต้องการพิมพ์สติ๊กเกอร์อย่างน้อย 1 ชิ้นครับ");
-      generateAndPrintStickers(selected);
+
+      if (selectedList.length === 0) return alert("โปรดติ๊กเลือกอุปกรณ์อย่างน้อย 1 รายการก่อนสั่งพิมพ์ครับ");
+      generateAndPrintStickers(selectedList);
     }
 
-    function generateAndPrintStickers(itemsList) {
-      const printArea = document.getElementById('printableStickerArea');
-      printArea.innerHTML = "";
-      printArea.classList.remove('d-none');
+    function generateAndPrintStickers(items) {
+      const area = document.getElementById('printableStickerArea');
+      area.innerHTML = "";
+      area.classList.remove('d-none');
 
-      itemsList.forEach((item, index) => {
-        const stickerDiv = document.createElement('div');
-        stickerDiv.className = 'qr-sticker-item';
-        stickerDiv.innerHTML = `
-          <div class="qr-sticker-header">อบต.ท่าก๊อ • กายอุปกรณ์</div>
-          <div id="print_qr_${index}" class="qr-sticker-img"></div>
-          <div class="qr-sticker-name">${item.name}</div>
-          <div class="qr-sticker-code">${item.code}</div>
-        `;
-        printArea.appendChild(stickerDiv);
+      items.forEach((item, idx) => {
+        let cardDiv = document.createElement('div');
+        cardDiv.className = 'sticker-label-card';
+        
+        let headerDiv = document.createElement('div');
+        headerDiv.className = 'sticker-header';
+        headerDiv.textContent = 'อบต.ท่าก๊อ - กายอุปกรณ์';
 
-        new QRCode(stickerDiv.querySelector(`#print_qr_${index}`), {
-          text: item.code,
-          width: 80,
-          height: 80,
-          correctLevel: QRCode.CorrectLevel.H
+        let qrDiv = document.createElement('div');
+        qrDiv.className = 'sticker-qr';
+        qrDiv.id = `qr_node_${idx}`;
+
+        let footerDiv = document.createElement('div');
+        footerDiv.className = 'sticker-footer';
+        footerDiv.innerHTML = `${item.equipName}<br><b>${item.assetCode}</b>`;
+
+        cardDiv.appendChild(headerDiv);
+        cardDiv.appendChild(qrDiv);
+        cardDiv.appendChild(footerDiv);
+        area.appendChild(cardDiv);
+
+        new QRCode(qrDiv, {
+          text: item.assetCode, width: 64, height: 64,
+          correctLevel: QRCode.CorrectLevel.M
         });
       });
 
       setTimeout(() => {
         window.print();
-        printArea.classList.add('d-none');
-        printArea.innerHTML = "";
+        area.classList.add('d-none');
       }, 500);
     }
 
-    // ==========================================
-    // Mobile QR Scanner & Quick Actions
-    // ==========================================
+    async function submitAdminDecisionWithAsset(reqId, isApproved) {
+      let assetCode = document.getElementById(`assign_asset_${reqId}`)?.value || '';
+      if (!confirm(`ยืนยันการ${isApproved?'อนุมัติ':'ปฏิเสธ'}คำร้องรหัส ${reqId} ใช่หรือไม่ครับ?`)) return;
+
+      try {
+        const resMsg = await callGASApi('processAdminAction', { reqId: reqId, isApproved: isApproved, assetCode: assetCode }, sessionPassword);
+        alert(resMsg);
+        executeAdminBackgroundRefresh();
+      } catch(err) { alert("เกิดข้อผิดพลาด: " + err.message); }
+    }
+
     function openQrScannerModal() {
       let qModal = new bootstrap.Modal(document.getElementById('qrScannerModal'));
       qModal.show();
       document.getElementById('scanResultCard').classList.add('d-none');
 
       setTimeout(() => {
-        if (!html5QrCodeScannerInstance) html5QrCodeScannerInstance = new Html5Qrcode("reader");
+        if (!html5QrCodeScannerInstance) {
+          html5QrCodeScannerInstance = new Html5Qrcode("reader");
+        }
+        
         html5QrCodeScannerInstance.start(
           { facingMode: "environment" },
           { fps: 10, qrbox: { width: 250, height: 250 } },
-          onQrScanSuccess,
-          onQrScanError
+          onQrScanSuccess, onQrScanError
         ).catch(err => {
-          document.getElementById('reader').innerHTML = `<div class="alert alert-warning p-2 small">ไม่สามารถเปิดกล้องได้: โปรดอนุญาตการเข้าถึงกล้อง</div>`;
+          document.getElementById('reader').innerHTML = `<div class="alert alert-warning p-2 small">ไม่สามารถเปิดกล้องได้: โปรดอนุญาตการเข้าถึงกล้องบนเบราว์เซอร์</div>`;
         });
       }, 300);
     }
 
     function stopQrScanner() {
       if (html5QrCodeScannerInstance && html5QrCodeScannerInstance.isScanning) {
-        html5QrCodeScannerInstance.stop().then(() => {
-          document.getElementById('reader').innerHTML = "";
-        }).catch(() => {});
+        html5QrCodeScannerInstance.stop().then(() => { document.getElementById('reader').innerHTML = ""; }).catch(() => {});
       }
     }
 
@@ -1357,7 +1619,7 @@
         if (tracker) {
           html += `
             <div class="p-2 bg-light rounded border mb-3 small">
-              <div><b>ผู้ถือครอง:</b> ${tracker.borrowerName}</div>
+              <div><b>ผู้ถือครองปัจจุบัน:</b> ${tracker.borrowerName}</div>
               <div><b>เบอร์โทร:</b> ${tracker.phone}</div>
               <div><b>วันกำหนดคืน:</b> <span class="text-danger fw-bold">${tracker.dueDate}</span></div>
             </div>`;
@@ -1365,8 +1627,8 @@
           if (sessionPassword) {
             html += `
               <div class="d-grid gap-2">
-                <button class="btn btn-warning btn-sm text-dark fw-bold" onclick="executeQuickRenew('${asset.assetCode}')"><i class="bi bi-arrow-repeat me-1"></i> ยืมต่อ (+90 วัน)</button>
-                <button class="btn btn-success btn-sm fw-bold" onclick="executeQuickReturn('${asset.assetCode}')"><i class="bi bi-box-arrow-in-down me-1"></i> รับคืนเข้าคลัง</button>
+                <button class="btn btn-success btn-sm fw-bold" onclick="executeQuickReturnAction('${asset.assetCode}')"><i class="bi bi-box-arrow-in-down me-1"></i> รับคืนเข้าคลัง</button>
+                <button class="btn btn-warning btn-sm text-dark fw-bold" onclick="executeQuickRenewAction('${asset.assetCode}')"><i class="bi bi-arrow-repeat me-1"></i> ขยายเวลายืมต่อ (+90 วัน)</button>
               </div>`;
           }
         } else {
@@ -1380,215 +1642,41 @@
       }
     }
 
-    function onQrScanError(err) {}
-
-    async function executeQuickReturn(assetCode) {
-      if (!confirm(`ยืนยันรับคืนอุปกรณ์ ${assetCode} กลับเข้าคลังทันที?`)) return;
+    async function executeQuickReturnAction(assetCode) {
+      if (!confirm(`ยืนยันรับคืนอุปกรณ์รหัส ${assetCode} กลับเข้าคลังใช่หรือไม่?`)) return;
       try {
-        const msg = await callGASApi('quickReturnAsset', { assetCode: assetCode }, sessionPassword);
-        alert(msg);
+        const resMsg = await callGASApi('quickReturnAsset', { assetCode: assetCode }, sessionPassword);
+        alert(resMsg);
         bootstrap.Modal.getInstance(document.getElementById('qrScannerModal')).hide();
         executeAdminBackgroundRefresh();
-      } catch(err) {
-        alert("เกิดข้อผิดพลาด: " + err.message);
-      }
+      } catch(err) { alert("เกิดข้อผิดพลาด: " + err.message); }
     }
 
-    async function executeQuickRenew(assetCode) {
-      if (!confirm(`ยืนยันขยายเวลายืมต่อของอุปกรณ์ ${assetCode} (+90 วัน)?`)) return;
+    async function executeQuickRenewAction(assetCode) {
+      if (!confirm(`ยืนยันขยายเวลายืมต่ออีก 90 วัน สำหรับอุปกรณ์รหัส ${assetCode} ใช่หรือไม่?`)) return;
       try {
-        const msg = await callGASApi('quickRenewAsset', { assetCode: assetCode }, sessionPassword);
-        alert(msg);
+        const resMsg = await callGASApi('quickRenewAsset', { assetCode: assetCode }, sessionPassword);
+        alert(resMsg);
         bootstrap.Modal.getInstance(document.getElementById('qrScannerModal')).hide();
         executeAdminBackgroundRefresh();
-      } catch(err) {
-        alert("เกิดข้อผิดพลาด: " + err.message);
-      }
+      } catch(err) { alert("เกิดข้อผิดพลาด: " + err.message); }
     }
 
-    // ==========================================
-    // Admin Subviews UI Renderers
-    // ==========================================
-    function refreshAdminSubViewsUI() {
-      if(!masterAdminCachedData) return;
-      document.getElementById('lastUpdatedTimestampDisplay').textContent = "อัปเดตล่าสุด: " + new Date().toLocaleTimeString('th-TH') + " น.";
-      refreshDashboardVisualCharts();
-      renderAssetItemsTable();
+    function onQrScanError(errorMessage) {}
 
-      // ตารางคำขอรอพิจารณา (Requests)
-      const pTable = document.getElementById('tablePendingBody');
-      let pFilter = masterAdminCachedData.requests.filter(r => r['Status'] === 'Pending');
-      let pHtml = "";
-
-      pFilter.forEach(r => {
-        let fullName = (r['Title'] || '') + r['Name'];
-        let dispPhone = r['Phone'].toString().replace(/^'/, '');
-        let reqEquip = r['Equipment Name'].toString().trim();
-
-        // ตัวเลือกอุปกรณ์รายชิ้นที่สถานะ Available
-        let availAssets = (masterAdminCachedData.assets || []).filter(a => a['Equipment Name'] === reqEquip && a['Status'] === 'Available');
-        let assetSelectHtml = `<select class="form-select form-select-sm" id="assign_asset_${r['Request ID']}">`;
-        if (availAssets.length > 0) {
-          availAssets.forEach(a => assetSelectHtml += `<option value="${a['Asset Code']}">${a['Asset Code']}</option>`);
-        } else {
-          assetSelectHtml += `<option value="">(ไม่มีของว่างในคลัง)</option>`;
-        }
-        assetSelectHtml += `</select>`;
-
-        pHtml += `<tr>
-          <td><code>${r['Request ID']}</code></td>
-          <td><span class="badge bg-secondary">${r['Action Type']}</span></td>
-          <td class="fw-bold">${fullName}</td>
-          <td class="text-primary fw-semibold">${r['Equipment Name']}</td>
-          <td class="text-center fw-bold">${r['Qty']}</td>
-          <td class="small text-muted">${r['Relevant Date'] || '-'}</td>
-          <td>${assetSelectHtml}</td>
-          <td>${dispPhone}</td>
-          <td class="text-center">
-            <button class="btn btn-sm btn-success me-1 py-1" onclick="submitAdminDecisionWithAsset('${r['Request ID']}', true)"><i class="bi bi-check-lg"></i> อนุมัติ</button>
-            <button class="btn btn-sm btn-outline-danger py-1" onclick="submitAdminDecisionWithAsset('${r['Request ID']}', false)"><i class="bi bi-x-lg"></i> ปฏิเสธ</button>
-          </td>
-        </tr>`;
-      });
-      pTable.innerHTML = pHtml || '<tr><td colspan="9" class="text-center text-muted py-3">ไม่มีรายการค้างรอดำเนินการครับ</td></tr>';
-
-      // ตารางผู้ครองสิทธิ์ (Tracker)
-      const tTable = document.getElementById('tableTrackerBody');
-      let tHtml = "";
-      masterAdminCachedData.tracker.forEach(t => {
-        let fullName = (t['Title'] || '') + t['Name'];
-        let dispPhone = t['Phone'].toString().replace(/^'/, '');
-        let assignedAssets = t['Assigned Assets'] || '-';
-
-        tHtml += `<tr>
-          <td><code>${t['Tracker ID']}</code></td>
-          <td class="fw-bold text-success">${fullName}</td>
-          <td>${dispPhone}</td>
-          <td class="small">ม.${t['Moo']} ${t['Village']}</td>
-          <td class="fw-bold">${t['Equipment Name']}</td>
-          <td><span class="badge bg-dark">${assignedAssets}</span></td>
-          <td class="text-center fw-bold fs-6">${t['Qty']}</td>
-          <td class="text-danger fw-bold">${t['Due Date']}</td>
-          <td><span class="badge bg-success">ใช้งานปกติ</span></td>
-          <td class="text-center">
-            <button class="btn btn-sm btn-warning text-dark py-1 me-1 shadow-sm" onclick="processDirectTrackerRenew('${t['Tracker ID']}')">ยืมต่อ</button>
-            <button class="btn btn-sm btn-success py-1 shadow-sm" onclick="processDirectTrackerReturn('${t['Tracker ID']}')">รับคืน</button>
-          </td>
-        </tr>`;
-      });
-      tTable.innerHTML = tHtml || '<tr><td colspan="10" class="text-center text-muted py-4">ไม่มีรายการค้างส่งคืนในระบบครับ</td></tr>';
-
-      // การ์ดคลังอุปกรณ์รวม
-      const invContainer = document.getElementById('inventoryCardsContainer');
-      let invHtml = "";
-      masterAdminCachedData.stock.forEach(s => {
-        invHtml += `
-          <div class="col-md-6 col-xl-4">
-            <div class="card card-custom h-100 border-top border-4 border-info shadow-sm hover-elevate">
-              <div class="card-body p-3">
-                <h6 class="fw-bold text-dark mb-3">${s['Name']}</h6>
-                <div class="row text-center g-1">
-                  <div class="col-4"><div class="text-muted small">ทั้งหมด</div><div class="fw-bold fs-4 text-dark">${s['Total Qty']}</div></div>
-                  <div class="col-4 border-start border-end"><div class="text-muted small">ถูกยืม</div><div class="fw-bold fs-4 text-warning">${s['Borrowed Qty']}</div></div>
-                  <div class="col-4"><div class="text-muted small">คงเหลือ</div><div class="fw-bold fs-4 text-success">${s['Available Qty']}</div></div>
-                </div>
-              </div>
-            </div>
-          </div>`;
-      });
-      invContainer.innerHTML = invHtml;
-
-      // ตารางประวัติ (History Log)
-      const hTable = document.getElementById('tableHistoryBody');
-      let hHtml = "";
-      masterAdminCachedData.history.slice().reverse().forEach(h => {
-        hHtml += `<tr>
-          <td class="small text-muted">${h['Timestamp']}</td>
-          <td><code>${h['Request ID']}</code></td>
-          <td class="fw-bold">${(h['Title']||'')+h['Name']}</td>
-          <td>${h['Phone'].toString().replace(/^'/,'')}</td>
-          <td class="small">ม.${h['Moo']} ${h['Village']}</td>
-          <td><span class="badge bg-secondary">${h['Action Type']}</span></td>
-          <td>${h['Equipment Name']}</td>
-          <td><code>${h['Assigned Assets'] || '-'}</code></td>
-          <td class="text-center">${h['Qty']}</td>
-          <td class="small">${h['Relevant Date']}</td>
-          <td class="fw-bold">${h['Status']}</td>
-          <td class="text-center"><button class="btn btn-sm btn-outline-danger py-0 px-2" onclick="executeAdminDeleteRowAction('History_Log', '${h['Log ID']}')"><i class="bi bi-trash"></i></button></td>
-        </tr>`;
-      });
-      hTable.innerHTML = hHtml || '<tr><td colspan="12" class="text-center py-4 text-muted">ไม่มีข้อมูลประวัติ</td></tr>';
-    }
-
-    async function submitAdminDecisionWithAsset(reqId, isApproved) {
-      if(!confirm(`ยืนยันการ${isApproved?'อนุมัติ':'ปฏิเสธ'}คำร้องรหัส ${reqId} ใช่หรือไม่ครับ?`)) return;
-      let assetCode = "";
-      if (isApproved) {
-        const sel = document.getElementById(`assign_asset_${reqId}`);
-        assetCode = sel ? sel.value : "";
-      }
-      try {
-        const resMsg = await callGASApi('processAdminAction', { reqId: reqId, isApproved: isApproved, assetCodes: assetCode ? [assetCode] : [] }, sessionPassword);
-        alert(resMsg);
-        executeAdminBackgroundRefresh();
-      } catch(err) {
-        alert("เกิดข้อผิดพลาด: " + err.message);
-      }
-    }
-
-    async function processDirectTrackerRenew(trackerId) {
-      if(!confirm("ยืนยันขยายเวลายืมต่ออีก 90 วัน สำหรับรายการนี้ใช่หรือไม่ครับ?")) return;
-      try {
-        const resMsg = await callGASApi('renewEquipmentFromTracker', { trackerId: trackerId }, sessionPassword);
-        alert(resMsg);
-        executeAdminBackgroundRefresh();
-      } catch(err) {
-        alert("เกิดข้อผิดพลาด: " + err.message);
-      }
-    }
-
-    async function processDirectTrackerReturn(trackerId) {
-      if(!confirm("ยืนยันรับอุปกรณ์ชิ้นนี้คืนเข้าคลังใช่หรือไม่ครับ?")) return;
-      try {
-        const resMsg = await callGASApi('returnEquipmentFromTracker', { trackerId: trackerId }, sessionPassword);
-        alert(resMsg);
-        executeAdminBackgroundRefresh();
-      } catch(err) {
-        alert("เกิดข้อผิดพลาด: " + err.message);
-      }
-    }
-
-    async function executeAdminDeleteRowAction(sheetName, id) {
-      if(!confirm("ต้องการลบข้อมูลแถวนี้ออกจากระบบใช่หรือไม่?")) return;
-      try {
-        const resMsg = await callGASApi('deleteAdminData', { targetSheetName: sheetName, uniqueId: id }, sessionPassword);
-        alert(resMsg);
-        executeAdminBackgroundRefresh();
-      } catch(err) {
-        alert("เกิดข้อผิดพลาด: " + err.message);
-      }
-    }
-
-    // ==========================================
-    // Analytics Visual Charts
-    // ==========================================
     function refreshDashboardVisualCharts() {
       if(!masterAdminCachedData) return;
       const selectedFY = document.getElementById('analyticsFiscalYearFilter').value;
-      
       let rFilter = masterAdminCachedData.requests.filter(r => r['Fiscal Year'] === selectedFY);
       let hFilter = masterAdminCachedData.history.filter(h => h['Fiscal Year'] === selectedFY && (h['Status'] === 'Approved' || h['Status'] === 'Returned'));
       
       document.getElementById('cardStatPending').textContent = masterAdminCachedData.requests.filter(r => r['Status'] === 'Pending').length;
       document.getElementById('cardStatActive').textContent = masterAdminCachedData.tracker.length;
-      document.getElementById('cardStatReturned').textContent = masterAdminCachedData.history.filter(h => h['Action Type'] === 'คืน' || h['Action Type'].includes('คืน')).length;
+      document.getElementById('cardStatReturned').textContent = masterAdminCachedData.history.filter(h => h['Action Type'] === 'คืน').length;
 
-      let sumApproved = 0;
-      hFilter.forEach(h => {
-        let act = (h['Action Type'] || '').trim();
-        if (act === 'ยืม' || act === 'ยืมต่อ') sumApproved += (Number(h['Qty']) || 0);
-      });
-      document.getElementById('cardStatTotalBorrowedAccum').textContent = sumApproved;
+      let sumApprovedBorrowedPieces = 0;
+      hFilter.forEach(h => { if ((h['Action Type'] || '').trim() === 'ยืม') sumApprovedBorrowedPieces += (Number(h['Qty']) || 0); });
+      document.getElementById('cardStatTotalBorrowedAccum').textContent = sumApprovedBorrowedPieces;
 
       let genderCounts = { 'ชาย': 0, 'หญิง': 0 };
       let statusCounts = { 'บุคคลทั่วไป': 0, 'เด็ก': 0, 'ผู้สูงอายุ': 0, 'ผู้พิการ': 0, 'บุคคลไม่มีสัญชาติ/ไม่มีสถานะทางทะเบียน': 0 };
@@ -1615,35 +1703,12 @@
       Object.keys(mooCounts).forEach(k => { if(mooCounts[k] > 0) { activeMooLabels.push(k); activeMooValues.push(mooCounts[k]); } }); 
       renderChartNode('chartMoo', 'bar', activeMooLabels, activeMooValues, 'คำร้องขอรายหมู่', ['#ff5722']);
 
-      let equipmentLabels = masterAdminCachedData.stock.map(s => s['Name']).filter(name => name !== "");
-      let equipMatrix = {};
-      equipmentLabels.forEach(label => { equipMatrix[label] = { 'borrow': 0, 'return': 0, 'renew': 0, 'donate': 0 }; });
-
-      hFilter.forEach(h => {
-        let eName = h['Equipment Name'] ? h['Equipment Name'].toString().trim() : "";
-        let action = h['Action Type'] ? h['Action Type'].toString().trim() : "";
-        if (equipMatrix[eName] !== undefined) {
-          if (action === 'ยืม') equipMatrix[eName]['borrow'] += (Number(h['Qty']) || 0);
-          else if (action === 'คืน' || action.includes('คืน')) equipMatrix[eName]['return'] += (Number(h['Qty']) || 0);
-          else if (action === 'ยืมต่อ') equipMatrix[eName]['renew'] += (Number(h['Qty']) || 0);
-          else if (action === 'บริจาค') equipMatrix[eName]['donate'] += (Number(h['Qty']) || 0);
-        }
-      });
-
-      let datasetsUsage = [
-        { label: 'ยืม (ชิ้น)', data: equipmentLabels.map(l => equipMatrix[l]['borrow']), backgroundColor: '#0d6efd' },
-        { label: 'ยืมต่อ/ขยายเวลา (ชิ้น)', data: equipmentLabels.map(l => equipMatrix[l]['renew']), backgroundColor: '#ff9800' },
-        { label: 'ส่งคืนแล้ว (ชิ้น)', data: equipmentLabels.map(l => equipMatrix[l]['return']), backgroundColor: '#198754' },
-        { label: 'บริจาคเข้าคลัง (ชิ้น)', data: equipmentLabels.map(l => equipMatrix[l]['donate']), backgroundColor: '#0dcaf0' }
-      ];
-      renderStackedChartNode('chartEquipmentUsage', equipmentLabels, datasetsUsage);
       renderSummaryInventoryMatrixTable(selectedFY);
     }
 
     function renderSummaryInventoryMatrixTable(selectedFY) {
       const tbody = document.getElementById('tableInventoryMatrixBody');
       if (!tbody || !masterAdminCachedData) return;
-
       let hYearFilter = masterAdminCachedData.history.filter(h => h['Fiscal Year'] === selectedFY && (h['Status'] === 'Approved' || h['Status'] === 'Returned'));
       let matrixHtml = "";
 
@@ -1658,27 +1723,29 @@
           let act = (h['Action Type'] || '').trim();
           if (hEquip === eName) {
             if (act === 'ยืม' || act === 'ยืมต่อ') accumBorrowed += qty;
-            else if (act === 'คืน' || act.includes('คืน')) accumReturned += qty;
+            else if (act === 'คืน') accumReturned += qty;
             else if (act === 'บริจาค') accumDonated += qty;
           }
         });
 
         let activeInFY = Math.max(0, accumBorrowed - accumReturned);
         let usagePercent = total > 0 ? ((activeInFY / total) * 100).toFixed(1) : 0;
+        let usageBadgeColor = usagePercent > 70 ? 'bg-danger' : (usagePercent >= 30 ? 'bg-warning text-dark' : 'bg-success');
         let accumTurnoverPercent = total > 0 ? ((accumBorrowed / total) * 100).toFixed(1) : 0;
+        let turnoverBadgeColor = accumTurnoverPercent >= 100 ? 'bg-primary' : (accumTurnoverPercent >= 50 ? 'bg-info text-dark' : 'bg-secondary');
 
         matrixHtml += `<tr>
           <td class="fw-bold text-dark">${eName}</td>
           <td class="text-center fw-semibold">${total}</td>
           <td class="text-center text-danger fw-bold">${activeInFY}</td>
-          <td class="text-center"><span class="badge bg-primary px-2 py-1">${usagePercent}%</span></td>
+          <td class="text-center"><span class="badge ${usageBadgeColor} px-2 py-1 fs-6">${usagePercent}%</span></td>
           <td class="text-center text-primary fw-bold">${accumBorrowed}</td>
           <td class="text-center text-success fw-bold">${accumReturned}</td>
           <td class="text-center text-info fw-bold">${accumDonated}</td>
-          <td class="text-center"><span class="badge bg-secondary px-2 py-1">${accumTurnoverPercent}%</span></td>
+          <td class="text-center"><span class="badge ${turnoverBadgeColor} px-2 py-1 fs-6">${accumTurnoverPercent}%</span></td>
         </tr>`;
       });
-      tbody.innerHTML = matrixHtml;
+      tbody.innerHTML = matrixHtml || '<tr><td colspan="8" class="text-center text-muted">ไม่มีข้อมูลคลังอุปกรณ์สำหรับปีงบประมาณนี้</td></tr>';
     }
 
     function renderPieChartWithLabels(canvasId, type, labels, data, labelTitle, colors) {
@@ -1691,7 +1758,11 @@
           responsive: true, maintainAspectRatio: false, 
           plugins: { 
             legend: { display: true, position: 'top', labels: { font: { family: 'Prompt', size: 11 } } },
-            datalabels: { display: ctx => ctx.dataset.data[ctx.dataIndex] > 0, color: '#fff', font: { family: 'Prompt', weight: 'bold' } }
+            datalabels: {
+              display: function(context) { return context.dataset.data[context.dataIndex] > 0; },
+              color: '#fff', font: { family: 'Prompt', weight: 'bold', size: 11 },
+              formatter: function(value) { return value + ' คน'; }
+            }
           } 
         } 
       });
@@ -1707,37 +1778,75 @@
       });
     }
 
-    function renderStackedChartNode(canvasId, labels, datasets) {
-      if(chartInstances[canvasId]) chartInstances[canvasId].destroy();
-      const ctx = document.getElementById(canvasId).getContext('2d');
-      chartInstances[canvasId] = new Chart(ctx, {
-        type: 'bar',
-        data: { labels: labels, datasets: datasets },
-        options: {
-          responsive: true, maintainAspectRatio: false, indexAxis: 'y',
-          plugins: { legend: { display: true, position: 'top' }, datalabels: { display: false } },
-          scales: { x: { stacked: true, beginAtZero: true }, y: { stacked: true, grid: { display: false } } }
+    function evaluateOverdueSchedules(dataset) {
+      let pendingItems = dataset.requests.filter(r => r['Status'] === 'Pending');
+      let overdueItems = []; let today = new Date(); today.setHours(0,0,0,0);
+      dataset.tracker.forEach(t => { if(t['Due Date'] && t['Due Date'] !== '-') { let due = new Date(t['Due Date']); if(!isNaN(due.getTime())) { due.setHours(0,0,0,0); let diff = Math.ceil((due.getTime() - today.getTime()) / (1000 * 3600 * 24)); if(diff <= 3) overdueItems.push(t); } } });
+      let currentPendingStr = pendingItems.map(p => p['Name'] + p['Equipment Name']).join('|'); let currentOverdueStr = overdueItems.map(o => o['Name'] + o['Equipment Name']).join('|');
+      if(currentPendingStr !== lastToastPendingStr || currentOverdueStr !== lastToastOverdueStr) {
+        lastToastPendingStr = currentPendingStr; lastToastOverdueStr = currentOverdueStr; let toastContent = "";
+        if(pendingItems.length > 0) {
+           toastContent += `<div class="mb-2"><strong class="text-primary"><i class="bi bi-star-fill"></i> คำร้องใหม่ (${pendingItems.length})</strong><ul class="mb-1 ps-3 small text-dark">`;
+           pendingItems.forEach(p => { toastContent += `<li><b>${p['Name']}</b><br><span class="text-muted">${p['Equipment Name']}</span></li>`; }); toastContent += `</ul></div>`;
         }
-      });
+        if(overdueItems.length > 0) {
+           toastContent += `<div><strong class="text-danger"><i class="bi bi-exclamation-triangle-fill"></i> ใกล้/เลยกำหนดส่งคืน (${overdueItems.length})</strong><ul class="mb-0 ps-3 small text-dark">`;
+           overdueItems.forEach(o => { toastContent += `<li><b>${o['Name']}</b><br><span class="text-muted">${o['Equipment Name']}</span></li>`; }); toastContent += `</ul></div>`;
+        }
+        if(toastContent !== "") { document.getElementById('toastMessageContent').innerHTML = toastContent; new bootstrap.Toast(document.getElementById('liveNotificationToast')).show(); }
+      }
     }
 
-    async function loadCustomSystemCalendar() {
-      if(!sessionPassword) return;
-      const calendarNode = document.getElementById('systemFullCalendarNode');
-      calendarNode.innerHTML = '<div class="text-center py-5 text-muted"><div class="spinner-border spinner-border-sm text-primary me-2"></div>กำลังโหลดปฏิทิน...</div>';
+    async function processDirectTrackerRenew(trackerId) {
+      if(!confirm("ยืนยันขยายเวลายืมต่ออีก 90 วัน สำหรับรายการนี้ใช่หรือไม่ครับ?")) return;
       try {
-        const eventsArr = await callGASApi('getCalendarEventsData', {}, sessionPassword);
-        calendarNode.innerHTML = "";
-        if(globalFullCalendarInstance) globalFullCalendarInstance.destroy();
-        globalFullCalendarInstance = new FullCalendar.Calendar(calendarNode, {
-          initialView: 'dayGridMonth', locale: 'th',
-          headerToolbar: { left: 'prev,next today', center: 'title', right: 'dayGridMonth,timeGridWeek' },
-          events: eventsArr
-        });
-        globalFullCalendarInstance.render();
-      } catch(err) {
-        calendarNode.innerHTML = `<div class="alert alert-danger">${err.message}</div>`;
-      }
+        const resMsg = await callGASApi('renewEquipmentFromTracker', { trackerId: trackerId }, sessionPassword);
+        alert(resMsg); executeAdminBackgroundRefresh();
+      } catch(err) { alert("เกิดข้อผิดพลาด: " + err.message); }
+    }
+
+    async function processDirectTrackerReturn(trackerId) {
+      if(!confirm("ยืนยันรับอุปกรณ์ชิ้นนี้คืนเข้าคลังใช่หรือไม่ครับ?")) return;
+      try {
+        const resMsg = await callGASApi('returnEquipmentFromTracker', { trackerId: trackerId }, sessionPassword);
+        alert(resMsg); executeAdminBackgroundRefresh();
+      } catch(err) { alert("เกิดข้อผิดพลาด: " + err.message); }
+    }
+
+    function setupInventoryEditMode(id, name, total) {
+      document.getElementById('invFormTitle').innerHTML = '<i class="bi bi-pencil-square text-primary me-2"></i> แก้ไขคลังอุปกรณ์';
+      document.getElementById('invId').value = id;
+      document.getElementById('invName').value = name; 
+      document.getElementById('invTotal').value = total;
+      document.getElementById('btnCancelEditInv').classList.remove('d-none');
+    }
+
+    function resetInventoryFormState() {
+      document.getElementById('invFormTitle').innerHTML = '<i class="bi bi-plus-circle-fill text-primary me-2"></i> จัดการคลังอุปกรณ์';
+      document.getElementById('invId').value = "";
+      document.getElementById('inventoryCrudForm').reset(); 
+      document.getElementById('btnCancelEditInv').classList.add('d-none');
+    }
+
+    async function executeInventorySubmit(e) {
+      e.preventDefault();
+      const id = document.getElementById('invId').value; 
+      const typeAction = id ? 'edit' : 'add_new';
+      const name = document.getElementById('invName').value.trim(); 
+      const total = document.getElementById('invTotal').value;
+
+      try {
+        const resMsg = await callGASApi('manageEquipmentStock', { actionType: typeAction, itemId: id, name: name, totalQty: total }, sessionPassword);
+        alert(resMsg); resetInventoryFormState(); executeAdminBackgroundRefresh();
+      } catch(err) { alert("เกิดข้อผิดพลาด: " + err.message); }
+    }
+
+    async function executeAdminDeleteRowAction(sheetName, id) {
+      if(!confirm("ต้องการลบแถวข้อมูลนี้ออกจากระบบใช่หรือไม่?")) return;
+      try {
+        const resMsg = await callGASApi('deleteAdminData', { targetSheetName: sheetName, uniqueId: id }, sessionPassword);
+        alert(resMsg); executeAdminBackgroundRefresh();
+      } catch(err) { alert("เกิดข้อผิดพลาด: " + err.message); }
     }
 
     function executeTableFilter(inputId, tableBodyId) {

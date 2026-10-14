@@ -1249,6 +1249,53 @@
       }
     }
 
+    function openRowDetailModal(type, id) {
+      if (!masterAdminCachedData) return;
+      let titleElem = document.getElementById('rowDetailModalTitle');
+      let bodyElem = document.getElementById('rowDetailModalBody');
+      let row = null;
+
+      if (type === 'Requests') {
+        row = masterAdminCachedData.requests.find(r => r['Request ID'] === id);
+        if (row) {
+          titleElem.innerHTML = `<i class="bi bi-file-earmark-text text-info me-2"></i> รายละเอียดคำร้อง: ${id}`;
+          bodyElem.innerHTML = `
+            <div class="row g-3 small">
+              <div class="col-md-6"><b>ผู้ยื่นคำร้อง:</b> ${row['Title'] || ''}${row['Name']}</div>
+              <div class="col-md-6"><b>เลขบัตรประชาชน:</b> ${row['ID Card'].toString().replace(/^'/, '')}</div>
+              <div class="col-md-6"><b>อายุ/เพศ/สิทธิ์:</b> ${row['Age']} ปี / ${row['Gender']} / ${row['User Status']}</div>
+              <div class="col-md-6"><b>เบอร์โทรศัพท์:</b> ${row['Phone'].toString().replace(/^'/, '')}</div>
+              <div class="col-md-6"><b>ที่อยู่:</b> หมู่ที่ ${row['Moo']} ${row['Village']}</div>
+              <div class="col-md-6"><b>ประเภทการทำรายการ:</b> <span class="badge bg-secondary">${row['Action Type']}</span></div>
+              <div class="col-md-6"><b>อุปกรณ์ที่ขอ:</b> <span class="text-primary fw-bold">${row['Equipment Name']}</span> (${row['Qty']} ชิ้น)</div>
+              <div class="col-md-6"><b>วันกำหนดคืน/อ้างอิง:</b> ${row['Relevant Date']}</div>
+              <div class="col-md-6"><b>ปีงบประมาณ:</b> ${row['Fiscal Year']}</div>
+              <div class="col-md-6"><b>สถานะคำร้อง:</b> <span class="badge bg-warning text-dark">${row['Status']}</span></div>
+            </div>`;
+        }
+      } else if (type === 'Tracker') {
+        row = masterAdminCachedData.tracker.find(t => t['Tracker ID'] === id);
+        if (row) {
+          titleElem.innerHTML = `<i class="bi bi-person-check text-success me-2"></i> รายละเอียดผู้ครองสิทธิ์: ${id}`;
+          bodyElem.innerHTML = `
+            <div class="row g-3 small">
+              <div class="col-md-6"><b>ผู้ครองสิทธิ์:</b> ${row['Title'] || ''}${row['Name']}</div>
+              <div class="col-md-6"><b>รหัสครุภัณฑ์ (Asset Code):</b> <code class="text-primary fw-bold">${row['Asset Code'] || '-'}</code></div>
+              <div class="col-md-6"><b>เลขบัตรประชาชน:</b> ${row['ID Card'].toString().replace(/^'/, '')}</div>
+              <div class="col-md-6"><b>เบอร์โทรศัพท์:</b> ${row['Phone'].toString().replace(/^'/, '')}</div>
+              <div class="col-md-6"><b>ที่อยู่:</b> หมู่ที่ ${row['Moo']} ${row['Village']}</div>
+              <div class="col-md-6"><b>อุปกรณ์ประจำการ:</b> <span class="text-success fw-bold">${row['Equipment Name']}</span> (${row['Qty']} ชิ้น)</div>
+              <div class="col-md-6"><b>วันที่เริ่มยืม:</b> ${row['Relevant Date'] || row['Borrow Date'] || '-'}</div>
+              <div class="col-md-6"><b>วันกำหนดคืน:</b> <span class="text-danger fw-bold">${row['Due Date']}</span></div>
+            </div>`;
+        }
+      }
+
+      if (row) {
+        new bootstrap.Modal(document.getElementById('rowDetailModal')).show();
+      }
+    }
+
     function refreshAdminSubViewsUI() {
       if(!masterAdminCachedData) return;
       document.getElementById('lastUpdatedTimestampDisplay').textContent = "อัปเดตล่าสุด: " + new Date().toLocaleTimeString('th-TH') + " น.";
@@ -1892,4 +1939,50 @@
 
     function setupInventoryEditMode(id, name, total) {
       document.getElementById('invFormTitle').innerHTML = '<i class="bi bi-pencil-square text-primary me-2"></i> แก้ไขคลังอุปกรณ์';
-      document.getElementById('invId').value = id
+      document.getElementById('invId').value = id;
+      document.getElementById('invName').value = name; 
+      document.getElementById('invTotal').value = total;
+      document.getElementById('btnCancelEditInv').classList.remove('d-none');
+    }
+
+    function resetInventoryFormState() {
+      document.getElementById('invFormTitle').innerHTML = '<i class="bi bi-plus-circle-fill text-primary me-2"></i> จัดการคลังอุปกรณ์';
+      document.getElementById('invId').value = "";
+      document.getElementById('inventoryCrudForm').reset(); 
+      document.getElementById('btnCancelEditInv').classList.add('d-none');
+    }
+
+    async function executeInventorySubmit(e) {
+      e.preventDefault();
+      const id = document.getElementById('invId').value; 
+      const typeAction = id ? 'edit' : 'add_new';
+      const name = document.getElementById('invName').value.trim(); 
+      const total = document.getElementById('invTotal').value;
+
+      try {
+        const resMsg = await callGASApi('manageEquipmentStock', { actionType: typeAction, itemId: id, name: name, totalQty: total }, sessionPassword);
+        alert(resMsg); resetInventoryFormState(); executeAdminBackgroundRefresh();
+      } catch(err) { alert("เกิดข้อผิดพลาด: " + err.message); }
+    }
+
+    async function executeAdminDeleteRowAction(sheetName, id) {
+      if(!confirm("ต้องการลบแถวข้อมูลนี้ออกจากระบบใช่หรือไม่?")) return;
+      try {
+        const resMsg = await callGASApi('deleteAdminData', { targetSheetName: sheetName, uniqueId: id }, sessionPassword);
+        alert(resMsg); executeAdminBackgroundRefresh();
+      } catch(err) { alert("เกิดข้อผิดพลาด: " + err.message); }
+    }
+
+    function executeTableFilter(inputId, tableBodyId) {
+      let val = document.getElementById(inputId).value.toLowerCase();
+      let rows = document.getElementById(tableBodyId).getElementsByTagName('tr');
+      for (let i = 0; i < rows.length; i++) {
+        let match = false;
+        let cells = rows[i].getElementsByTagName('td');
+        for(let j=0; j<cells.length; j++) { if(cells[j] && cells[j].textContent.toLowerCase().indexOf(val) > -1) { match = true; break; } }
+        rows[i].style.display = match ? "" : "none";
+      }
+    }
+  </script>
+</body>
+</html>

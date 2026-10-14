@@ -81,7 +81,6 @@
     .card-arrow-btn { width: 44px; height: 44px; border-radius: 50%; background: white; color: #0f172a; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; align-self: flex-end; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
     .landing-card-white .card-arrow-btn { background: #f1f5f9; color: #0f172a; }
 
-    /* Mobile Only Floating Scan QR Button */
     .mobile-scan-floating-btn {
       position: fixed; bottom: 25px; right: 20px; z-index: 1050; background: #0288d1; color: white;
       border-radius: 50px; padding: 10px 18px; box-shadow: 0 8px 25px rgba(2, 136, 209, 0.4);
@@ -101,7 +100,6 @@
     .hover-elevate:hover { transform: translateY(-3px); box-shadow: 0 8px 18px rgba(0,0,0,0.1) !important; }
     #customCalendarWrapper { background: #fff; padding: 15px; border-radius: 10px; }
 
-    /* High-contrast Table Header for Asset Items */
     .table-asset-header th {
       background-color: #0d6efd !important;
       color: #ffffff !important;
@@ -109,7 +107,6 @@
       text-align: center;
     }
 
-    /* Thermal Print Sticker CSS Media Rules */
     @media print {
       body * { visibility: hidden; }
       #printableStickerArea, #printableStickerArea * { visibility: visible; }
@@ -151,7 +148,6 @@
     </div>
   </nav>
 
-  <!-- Mobile Only Floating QR Scanner Button (Hidden on Desktop) -->
   <div id="mobileFloatingQrWrapper" class="d-md-none">
     <div class="mobile-scan-floating-btn shadow-lg">
       <span onclick="openQrScannerModal()" class="d-flex align-items-center gap-2 cursor-pointer">
@@ -161,7 +157,6 @@
     </div>
   </div>
 
-  <!-- Live Toast Notification Container -->
   <div class="toast-container position-fixed bottom-0 end-0 p-3">
     <div id="liveNotificationToast" class="toast border-0 shadow-lg" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="10000">
       <div class="toast-header bg-primary text-white">
@@ -351,7 +346,6 @@
       </div>
 
       <div id="adminMainControlPanel" class="d-none">
-        <!-- Sub-Tabs เรียง 6 เมนูตามความต้องการ -->
         <ul class="nav nav-pills mb-4 bg-white p-2 rounded-3 shadow-sm border" id="adminSubTabs">
           <li class="nav-item"><button class="nav-link active" onclick="switchAdminSubTab('operations')"><i class="bi bi-list-check me-1"></i>ติดตามงานและอนุมัติ</button></li>
           <li class="nav-item"><button class="nav-link" onclick="switchAdminSubTab('analytics')"><i class="bi bi-pie-chart-fill me-1"></i>รายงานสถิติ</button></li>
@@ -528,7 +522,7 @@
           </div>
         </div>
 
-        <!-- Sub 4: ทะเบียนครุภัณฑ์รายชิ้น & ระบบพิมพ์สติ๊กเกอร์ QR Code (แยกเป็นแท็บเฉพาะ) -->
+        <!-- Sub 4: ทะเบียนครุภัณฑ์รายชิ้น & QR Code -->
         <div id="subViewAssetItems" class="admin-subview d-none">
           <div class="card card-custom p-4 border-top border-4 border-dark shadow-sm">
             <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
@@ -1033,7 +1027,7 @@
           res.active.forEach(t => {
              let name = (t['Title'] || '') + t['Name'];
              let phone = t['Phone'].toString().replace(/^'/, '');
-             let borrowDate = t['Borrow Date'] || t['Approve Date'] || t['Relevant Date'] || '-';
+             let borrowDate = t['Borrow Date'] || t['Approve Date'] || t['Relevant Date'] || t['BorrowDate'] || t['Timestamp'] || '-';
              let assetCode = t['Asset Code'] 
               ? `<button class="btn btn-sm btn-link p-0 text-decoration-none fw-bold" onclick="viewAssetLifecycleHistory('${t['Asset Code']}')"><code class="bg-light text-primary px-1 border rounded">${t['Asset Code']}</code></button>` 
               : '<span class="text-muted small">-</span>';
@@ -1195,8 +1189,10 @@
 
       masterAdminCachedData.stock.forEach(s => {
         let opt = document.createElement('option');
-        opt.value = s['Equipment ID'];
-        opt.textContent = `${s['Equipment ID']} - ${s['Name']}`;
+        let eqId = s['Equipment ID'] || s['ID'] || '';
+        let eqName = s['Name'] || s['Equipment Name'] || '';
+        opt.value = eqId;
+        opt.textContent = `${eqId} - ${eqName}`;
         sel.appendChild(opt);
       });
       if (currVal) sel.value = currVal;
@@ -1342,14 +1338,14 @@
       });
       pTable.innerHTML = pHtml || '<tr><td colspan="8" class="text-center text-muted py-3">ไม่มีรายการค้างรอดำเนินการครับ</td></tr>';
       
-      // 2. Tracker Table (ดึงค่าวันที่ยืม Borrow Date)
+      // 2. Tracker Table (ดึงค่าวันที่ยืม Borrow Date ทุกรูปแบบ)
       const tTable = document.getElementById('tableTrackerBody');
       let tHtml = "";
       masterAdminCachedData.tracker.forEach(t => {
         let fullName = (t['Title'] || '') + t['Name'];
         let dispIdCard = t['ID Card'].toString().replace(/^'/, '');
         let dispPhone = t['Phone'].toString().replace(/^'/, '');
-        let borrowDateStr = t['Borrow Date'] || t['Approve Date'] || t['Relevant Date'] || '-';
+        let borrowDateStr = t['Borrow Date'] || t['Approve Date'] || t['Relevant Date'] || t['BorrowDate'] || t['Timestamp'] || '-';
         
         let assetCodeDisp = t['Asset Code'] 
           ? `<button class="btn btn-sm btn-link p-0 text-decoration-none fw-bold" onclick="viewAssetLifecycleHistory('${t['Asset Code']}')"><code class="bg-light text-primary px-2 py-1 border rounded fw-bold">${t['Asset Code']}</code></button>` 
@@ -1375,22 +1371,28 @@
       });
       tTable.innerHTML = tHtml || '<tr><td colspan="11" class="text-center text-muted py-4">ไม่มีรายการค้างส่งคืนในระบบครับ</td></tr>';
 
-      // 3. Stock Cards
+      // 3. Stock Cards (รองรับ Dual Keys)
       const invContainer = document.getElementById('inventoryCardsContainer');
       let invHtml = "";
       masterAdminCachedData.stock.forEach(s => {
+        let eName = s['Name'] || s['Equipment Name'] || '';
+        let eId = s['Equipment ID'] || s['ID'] || '';
+        let total = s['Total Qty'] !== undefined ? s['Total Qty'] : (s['Total'] || 0);
+        let borrowed = s['Borrowed Qty'] !== undefined ? s['Borrowed Qty'] : (s['Borrowed'] || 0);
+        let available = s['Available Qty'] !== undefined ? s['Available Qty'] : (s['Available'] || 0);
+
         invHtml += `
           <div class="col-md-6 col-xl-4">
             <div class="card card-custom h-100 border-top border-4 border-info shadow-sm hover-elevate">
               <div class="card-body p-3">
                 <div class="d-flex justify-content-between align-items-start mb-3">
-                  <h6 class="fw-bold text-dark mb-0">${s['Name']}</h6>
-                  <button class="btn btn-sm btn-light border-0" onclick="setupInventoryEditMode('${s['Equipment ID']}', '${s['Name']}', ${s['Total Qty']})"><i class="bi bi-pencil-square text-primary"></i></button>
+                  <h6 class="fw-bold text-dark mb-0">${eName}</h6>
+                  <button class="btn btn-sm btn-light border-0" onclick="setupInventoryEditMode('${eId}', '${eName}', ${total})"><i class="bi bi-pencil-square text-primary"></i></button>
                 </div>
                 <div class="row text-center g-1">
-                  <div class="col-4"><div class="text-muted mb-1" style="font-size: 0.8rem;">ทั้งหมด</div><div class="fw-bold fs-4 text-dark">${s['Total Qty']}</div></div>
-                  <div class="col-4 border-start border-end"><div class="text-muted mb-1" style="font-size: 0.8rem;">ถูกยืม</div><div class="fw-bold fs-4 text-warning">${s['Borrowed Qty']}</div></div>
-                  <div class="col-4"><div class="text-muted mb-1" style="font-size: 0.8rem;">คงเหลือ</div><div class="fw-bold fs-4 text-success">${s['Available Qty']}</div></div>
+                  <div class="col-4"><div class="text-muted mb-1" style="font-size: 0.8rem;">ทั้งหมด</div><div class="fw-bold fs-4 text-dark">${total}</div></div>
+                  <div class="col-4 border-start border-end"><div class="text-muted mb-1" style="font-size: 0.8rem;">ถูกยืม</div><div class="fw-bold fs-4 text-warning">${borrowed}</div></div>
+                  <div class="col-4"><div class="text-muted mb-1" style="font-size: 0.8rem;">คงเหลือ</div><div class="fw-bold fs-4 text-success">${available}</div></div>
                 </div>
               </div>
             </div>
@@ -1407,7 +1409,6 @@
       let hHtml = "";
       let filteredHistory = masterAdminCachedData.history.slice().reverse();
       
-      // Exact Match Filter: ยืม แสดงเฉพาะ ยืม, ยืมต่อ แสดงเฉพาะ ยืมต่อ
       if (actionFilter) {
         filteredHistory = filteredHistory.filter(h => (h['Action Type'] || '').trim() === actionFilter);
       }
@@ -1446,8 +1447,8 @@
       
       let items = masterAdminCachedData.assetItems || [];
       if (catVal) {
-        let stockMatch = masterAdminCachedData.stock.find(s => s['Equipment ID'] === catVal);
-        let matchName = stockMatch ? stockMatch['Name'].trim().toLowerCase() : '';
+        let stockMatch = masterAdminCachedData.stock.find(s => (s['Equipment ID'] || s['ID']) === catVal);
+        let matchName = stockMatch ? (stockMatch['Name'] || stockMatch['Equipment Name'] || '').trim().toLowerCase() : '';
         items = items.filter(a => {
           let aEquipId = (a['Equipment ID'] || '').trim().toLowerCase();
           let aEquipName = (a['Equipment Name'] || '').trim().toLowerCase();
@@ -1488,8 +1489,8 @@
 
       const count = document.getElementById('quickAddAssetCount').value;
       const note = document.getElementById('quickAddAssetNote').value.trim();
-      const matchStock = masterAdminCachedData.stock.find(s => s['Equipment ID'] === equipId);
-      const equipName = matchStock ? matchStock['Name'] : '';
+      const matchStock = masterAdminCachedData.stock.find(s => (s['Equipment ID'] || s['ID']) === equipId);
+      const equipName = matchStock ? (matchStock['Name'] || matchStock['Equipment Name']) : '';
 
       try {
         const resMsg = await callGASApi('generateAssetItems', {
@@ -1751,7 +1752,11 @@
       if(!masterAdminCachedData) return;
       const selectedFY = document.getElementById('analyticsFiscalYearFilter').value;
       let rFilter = masterAdminCachedData.requests.filter(r => r['Fiscal Year'] === selectedFY);
-      let hFilter = masterAdminCachedData.history.filter(h => h['Fiscal Year'] === selectedFY && (h['Status'] === 'อนุมัติแล้ว' || h['Status'] === 'Approved' || h['Status'] === 'Returned' || h['Status'] === 'รับคืนเรียบร้อย'));
+      
+      // Flexible Filter: รองรับทั้งคำภาษาไทยและภาษาอังกฤษ
+      let hFilter = masterAdminCachedData.history.filter(h => h['Fiscal Year'] === selectedFY && 
+        (h['Status'] === 'อนุมัติแล้ว' || h['Status'] === 'Approved' || h['Status'] === 'Returned' || h['Status'] === 'รับคืนเรียบร้อย')
+      );
       
       document.getElementById('cardStatPending').textContent = masterAdminCachedData.requests.filter(r => r['Status'] === 'Pending').length;
       document.getElementById('cardStatActive').textContent = masterAdminCachedData.tracker.length;
@@ -1786,7 +1791,7 @@
       Object.keys(mooCounts).forEach(k => { if(mooCounts[k] > 0) { activeMooLabels.push(k); activeMooValues.push(mooCounts[k]); } }); 
       renderChartNode('chartMoo', 'bar', activeMooLabels, activeMooValues, 'คำร้องขอรายหมู่', ['#ff5722']);
 
-      let equipmentLabels = masterAdminCachedData.stock.map(s => s['Name']).filter(name => name !== "");
+      let equipmentLabels = masterAdminCachedData.stock.map(s => s['Name'] || s['Equipment Name'] || '').filter(name => name !== "");
       let equipMatrix = {};
       equipmentLabels.forEach(label => { equipMatrix[label] = { 'borrow': 0, 'return': 0, 'renew': 0, 'donate': 0 }; });
 
@@ -1844,12 +1849,14 @@
     function renderSummaryInventoryMatrixTable(selectedFY) {
       const tbody = document.getElementById('tableInventoryMatrixBody');
       if (!tbody || !masterAdminCachedData) return;
-      let hYearFilter = masterAdminCachedData.history.filter(h => h['Fiscal Year'] === selectedFY && (h['Status'] === 'อนุมัติแล้ว' || h['Status'] === 'Approved' || h['Status'] === 'Returned' || h['Status'] === 'รับคืนเรียบร้อย'));
+      let hYearFilter = masterAdminCachedData.history.filter(h => h['Fiscal Year'] === selectedFY && 
+        (h['Status'] === 'อนุมัติแล้ว' || h['Status'] === 'Approved' || h['Status'] === 'Returned' || h['Status'] === 'รับคืนเรียบร้อย')
+      );
       let matrixHtml = "";
 
       masterAdminCachedData.stock.forEach(stock => {
-        let eName = stock['Name'].trim();
-        let total = Number(stock['Total Qty']) || 0;
+        let eName = (stock['Name'] || stock['Equipment Name'] || '').trim();
+        let total = Number(stock['Total Qty'] || stock['Total']) || 0;
         let accumBorrowed = 0, accumReturned = 0, accumDonated = 0;
 
         hYearFilter.forEach(h => {

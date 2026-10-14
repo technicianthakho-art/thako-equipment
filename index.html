@@ -101,19 +101,31 @@
     .hover-elevate:hover { transform: translateY(-3px); box-shadow: 0 8px 18px rgba(0,0,0,0.1) !important; }
     #customCalendarWrapper { background: #fff; padding: 15px; border-radius: 10px; }
 
+    /* High-contrast Table Header for Asset Items */
+    .table-asset-header th {
+      background-color: #0d6efd !important;
+      color: #ffffff !important;
+      font-weight: 600;
+      text-align: center;
+    }
+
     /* Thermal Print Sticker CSS Media Rules */
     @media print {
       body * { visibility: hidden; }
       #printableStickerArea, #printableStickerArea * { visibility: visible; }
-      #printableStickerArea { position: absolute; left: 0; top: 0; width: 100%; }
-      .sticker-label-card {
-        width: 50mm; height: 30mm; border: 1px dashed #000; padding: 2mm; box-sizing: border-box;
-        display: flex; flex-direction: column; align-items: center; justify-content: space-between;
-        page-break-after: always; text-align: center; font-family: 'Prompt', sans-serif;
+      #printableStickerArea {
+        position: absolute; left: 0; top: 0; width: 100%;
+        display: flex; flex-wrap: wrap; gap: 5mm; justify-content: flex-start;
       }
-      .sticker-header { font-size: 7pt; font-weight: bold; line-height: 1; }
-      .sticker-qr { width: 16mm; height: 16mm; margin: 1mm 0; }
-      .sticker-footer { font-size: 7pt; font-weight: bold; line-height: 1.1; }
+      .sticker-label-card {
+        width: 55mm; height: 38mm; border: 1px solid #000; padding: 2mm; box-sizing: border-box;
+        display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+        page-break-after: always; text-align: center; font-family: 'Prompt', sans-serif; background: #fff;
+      }
+      .sticker-header { font-size: 8pt; font-weight: bold; color: #000; line-height: 1.1; }
+      .sticker-qr { width: 20mm; height: 20mm; margin: 1mm 0; display: flex; justify-content: center; align-items: center; }
+      .sticker-qr img { width: 100% !important; height: 100% !important; }
+      .sticker-footer { font-size: 8pt; font-weight: bold; color: #000; line-height: 1.1; }
     }
   </style>
 </head>
@@ -393,6 +405,7 @@
                     <th>ข้อมูลส่วนตัว/ที่อยู่</th>
                     <th>อุปกรณ์</th>
                     <th class="text-center">จำนวน</th>
+                    <th>วันที่ยืม</th>
                     <th>วันกำหนดคืน</th>
                     <th>สถานะ</th>
                     <th class="text-center">จัดการ/การกระทำ</th>
@@ -543,7 +556,7 @@
 
             <div class="table-responsive bg-white rounded border" style="max-height: 400px;">
               <table class="table table-hover align-middle mb-0 text-nowrap">
-                <thead class="table-dark table-sticky-header">
+                <thead class="table-asset-header table-sticky-header">
                   <tr>
                     <th class="text-center" style="width: 40px;"><input type="checkbox" id="selectAllAssetCheck" onchange="toggleSelectAllAssets(this)"></th>
                     <th>รหัสครุภัณฑ์ (Asset Code)</th>
@@ -679,12 +692,12 @@
     </div>
   </div>
 
-  <!-- Modal แสดงประวัติวงจรชีวิตครุภัณฑ์ (Asset Lifecycle Timeline Modal) -->
+  <!-- Modal แสดงประวัติการใช้งานกายอุปกรณ์ (Asset History Modal) -->
   <div class="modal fade" id="assetLifecycleModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content modal-frosted border-0 shadow-lg">
         <div class="modal-header bg-primary text-white py-3" style="border-top-left-radius: 20px; border-top-right-radius: 20px;">
-          <h5 class="modal-title fw-bold" id="assetLifecycleTitle"><i class="bi bi-journal-check me-2"></i> ประวัติวงจรชีวิตครุภัณฑ์</h5>
+          <h5 class="modal-title fw-bold" id="assetLifecycleTitle"><i class="bi bi-journal-check me-2"></i> ประวัติการใช้งานกายอุปกรณ์</h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body p-4" id="assetLifecycleBody"></div>
@@ -706,9 +719,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <script>
-    // ==========================================
-    // Configuration & State Anchor
-    // ==========================================
     const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxbbbbJQnA4CAWgXWwhpwbiJTxwAhBJn1FS2BTpoePGIiHrFTr1oS_-48ZIgVpz0nL0/exec";
     
     const VILLAGE_MAP = {
@@ -933,7 +943,6 @@
 
     async function submitFormUser(e) {
       e.preventDefault();
-      
       let itemsArray = [];
       Object.keys(userSelectedItemsMap).forEach(name => {
         if (userSelectedItemsMap[name] > 0) {
@@ -941,9 +950,7 @@
         }
       });
 
-      if(itemsArray.length === 0) {
-        return alert("โปรดกดปุ่ม + เลือกจำนวนอุปกรณ์อย่างน้อย 1 รายการก่อนส่งคำร้องครับ");
-      }
+      if(itemsArray.length === 0) return alert("โปรดกดปุ่ม + เลือกจำนวนอุปกรณ์อย่างน้อย 1 รายการก่อนส่งคำร้องครับ");
       
       const btn = document.getElementById('btnSubmitUser'); 
       btn.disabled = true; 
@@ -969,8 +976,7 @@
       try {
         const responseText = await callGASApi('submitRequest', payload);
         document.getElementById('submitSuccessMsg').innerHTML = `ท่านได้ส่งข้อมูลคำขอแล้ว กรุณารอการอนุมัติ<br><br><small class="text-primary">${responseText}</small>`;
-        let sModal = new bootstrap.Modal(document.getElementById('submitSuccessModal'));
-        sModal.show();
+        new bootstrap.Modal(document.getElementById('submitSuccessModal')).show();
 
         document.getElementById('requestForm').reset(); 
         document.getElementById('uTitleCustom').classList.add('d-none');
@@ -1023,7 +1029,9 @@
           res.active.forEach(t => {
              let name = (t['Title'] || '') + t['Name'];
              let phone = t['Phone'].toString().replace(/^'/, '');
-             let assetCode = t['Asset Code'] ? `<code class="bg-light text-primary px-1 border rounded">${t['Asset Code']}</code>` : '<span class="text-muted small">-</span>';
+             let assetCode = t['Asset Code'] 
+              ? `<button class="btn btn-sm btn-link p-0 text-decoration-none fw-bold" onclick="viewAssetLifecycleHistory('${t['Asset Code']}')"><code class="bg-light text-primary px-1 border rounded">${t['Asset Code']}</code></button>` 
+              : '<span class="text-muted small">-</span>';
              html += `<tr><td><code class="text-dark bg-light px-1 rounded">${t['Tracker ID']}</code></td><td>${assetCode}</td><td class="fw-medium">${name}</td><td>${phone}</td><td class="text-accent fw-bold">${t['Equipment Name']}</td><td class="text-center">${t['Qty']}</td><td class="text-danger fw-bold"><i class="bi bi-calendar-x"></i> ${t['Due Date']}</td><td><span class="badge bg-success">ใช้งานอยู่</span></td></tr>`;
           });
           html += `</tbody></table></div></div>`;
@@ -1038,8 +1046,10 @@
              let name = (h['Title'] || '') + h['Name'];
              let phone = h['Phone'].toString().replace(/^'/, '');
              let stColor = h['Status'] === 'Rejected' ? 'text-danger' : (h['Status'] === 'Pending' ? 'text-warning' : 'text-success');
-             let badgeColor = h['Action Type'] === 'คืนอุปกรณ์' || h['Action Type'] === 'คืน' ? 'bg-info text-dark' : (h['Action Type'] === 'บริจาค' ? 'bg-primary' : 'bg-dark');
-             let assetCode = h['Asset Code'] ? `<code class="bg-light text-secondary px-1 border rounded">${h['Asset Code']}</code>` : '-';
+             let badgeColor = h['Action Type'] === 'คืน' ? 'bg-info text-dark' : (h['Action Type'] === 'บริจาค' ? 'bg-primary' : 'bg-dark');
+             let assetCode = h['Asset Code'] 
+              ? `<button class="btn btn-sm btn-link p-0 text-decoration-none" onclick="viewAssetLifecycleHistory('${h['Asset Code']}')"><code class="bg-light text-secondary px-1 border rounded">${h['Asset Code']}</code></button>` 
+              : '-';
              html += `<tr><td class="small">${h['Timestamp']}</td><td><code class="text-dark bg-light px-1 rounded">${h['Request ID']}</code></td><td>${assetCode}</td><td class="fw-medium">${name}</td><td>${phone}</td><td><span class="badge ${badgeColor}">${h['Action Type']}</span></td><td class="fw-medium">${h['Equipment Name']}</td><td class="text-center">${h['Qty']}</td><td class="${stColor} fw-bold">${h['Status']}</td></tr>`;
           });
           html += `</tbody></table></div></div>`;
@@ -1244,18 +1254,18 @@
       document.getElementById('lastUpdatedTimestampDisplay').textContent = "อัปเดตล่าสุด: " + new Date().toLocaleTimeString('th-TH') + " น.";
       refreshDashboardVisualCharts();
       
-      // 1. Requests Table (Pending)
+      // 1. Requests Table
       const pTable = document.getElementById('tablePendingBody');
       let pFilter = masterAdminCachedData.requests.filter(r => r['Status'] === 'Pending');
       let pHtml = "";
 
-      pFilter.forEach((r, idx) => {
+      pFilter.forEach((r) => {
         let fullName = (r['Title'] || '') + r['Name'];
         let dispPhone = r['Phone'].toString().replace(/^'/, '');
         let dispIdCard = r['ID Card'].toString().replace(/^'/, '');
         let reqEquip = r['Equipment Name'].toString().trim();
 
-        let availableAssets = masterAdminCachedData.assetItems.filter(a => a['Equipment Name'].trim() === reqEquip && a['Status'] === 'Available');
+        let availableAssets = masterAdminCachedData.assetItems.filter(a => a['Equipment Name'].trim().toLowerCase() === reqEquip.toLowerCase() && a['Status'] === 'Available');
         let selectHtml = `<select class="form-select form-select-sm" id="assign_asset_${r['Request ID']}">
           <option value="">-- สุ่ม/ระบุอัตโนมัติ --</option>`;
         availableAssets.forEach(a => {
@@ -1279,15 +1289,17 @@
       });
       pTable.innerHTML = pHtml || '<tr><td colspan="8" class="text-center text-muted py-3">ไม่มีรายการค้างรอดำเนินการครับ</td></tr>';
       
-      // 2. Tracker Table
+      // 2. Tracker Table (Restored Borrow Date Column)
       const tTable = document.getElementById('tableTrackerBody');
       let tHtml = "";
       masterAdminCachedData.tracker.forEach(t => {
         let fullName = (t['Title'] || '') + t['Name'];
         let dispIdCard = t['ID Card'].toString().replace(/^'/, '');
         let dispPhone = t['Phone'].toString().replace(/^'/, '');
+        let startDate = t['Relevant Date'] || t['Borrow Date'] || '-';
+        
         let assetCodeDisp = t['Asset Code'] 
-          ? `<code class="bg-light text-primary px-2 py-1 border rounded fw-bold">${t['Asset Code']}</code>` 
+          ? `<button class="btn btn-sm btn-link p-0 text-decoration-none fw-bold" onclick="viewAssetLifecycleHistory('${t['Asset Code']}')"><code class="bg-light text-primary px-2 py-1 border rounded fw-bold">${t['Asset Code']}</code></button>` 
           : `<button class="btn btn-sm btn-outline-primary py-0 px-2" onclick="openLinkAssetModal('${t['Tracker ID']}', '${fullName}', '${t['Equipment Name']}')"><i class="bi bi-link-45deg"></i> ผูกรหัส</button>`;
         
         tHtml += `<tr class="clickable-row" onclick="openRowDetailModal('Tracker', '${t['Tracker ID']}')">
@@ -1298,6 +1310,7 @@
           <td class="small">อายุ: ${t['Age']} ปี | ${t['Gender']}<br><span class="badge bg-info text-dark">${t['User Status']}</span> ม.${t['Moo']} ${t['Village']}</td>
           <td class="text-accent fw-bold">${t['Equipment Name']}</td>
           <td class="text-center fw-bold text-dark fs-5">${t['Qty']}</td>
+          <td class="small text-muted">${startDate}</td>
           <td class="text-danger fw-bold"><i class="bi bi-calendar-x"></i> ${t['Due Date']}</td>
           <td><span class="badge bg-success rounded-pill px-3 py-2">ใช้งานปกติ</span></td>
           <td class="text-center" onclick="event.stopPropagation();">
@@ -1307,7 +1320,7 @@
           </td>
         </tr>`;
       });
-      tTable.innerHTML = tHtml || '<tr><td colspan="10" class="text-center text-muted py-4">ไม่มีรายการค้างส่งคืนในระบบครับ</td></tr>';
+      tTable.innerHTML = tHtml || '<tr><td colspan="11" class="text-center text-muted py-4">ไม่มีรายการค้างส่งคืนในระบบครับ</td></tr>';
 
       // 3. Stock Cards
       const invContainer = document.getElementById('inventoryCardsContainer');
@@ -1346,7 +1359,9 @@
         let stColor = h['Status'] === 'Rejected' ? 'text-danger' : (h['Status'] === 'Pending' ? 'text-warning' : 'text-success');
         let badgeColor = h['Action Type'] === 'คืน' ? 'bg-info text-dark' : (h['Action Type'] === 'บริจาค' ? 'bg-primary' : 'bg-dark');
         let fullName = (h['Title'] || '') + h['Name'];
-        let assetCodeDisp = h['Asset Code'] ? `<code class="bg-light text-secondary px-1 border rounded">${h['Asset Code']}</code>` : '-';
+        let assetCodeDisp = h['Asset Code'] 
+          ? `<button class="btn btn-sm btn-link p-0 text-decoration-none" onclick="viewAssetLifecycleHistory('${h['Asset Code']}')"><code class="bg-light text-secondary px-1 border rounded">${h['Asset Code']}</code></button>` 
+          : '-';
    
         hHtml += `<tr>
           <td class="small text-muted">${h['Timestamp']}</td>
@@ -1369,10 +1384,18 @@
     function filterAssetItemsTable() {
       const tbody = document.getElementById('tableAssetItemsBody');
       if (!tbody || !masterAdminCachedData) return;
-      const catVal = document.getElementById('assetItemCategoryFilter').value;
+      const catVal = document.getElementById('assetItemCategoryFilter').value.trim();
       
       let items = masterAdminCachedData.assetItems || [];
-      if (catVal) items = items.filter(a => a['Equipment ID'] === catVal);
+      if (catVal) {
+        let stockMatch = masterAdminCachedData.stock.find(s => s['Equipment ID'] === catVal);
+        let matchName = stockMatch ? stockMatch['Name'].trim().toLowerCase() : '';
+        items = items.filter(a => {
+          let aEquipId = (a['Equipment ID'] || '').trim().toLowerCase();
+          let aEquipName = (a['Equipment Name'] || '').trim().toLowerCase();
+          return aEquipId === catVal.toLowerCase() || (matchName && aEquipName === matchName);
+        });
+      }
 
       let html = "";
       items.forEach(a => {
@@ -1427,7 +1450,7 @@
       
       const sel = document.getElementById('linkAssetSelect');
       sel.innerHTML = "";
-      let availableAssets = masterAdminCachedData.assetItems.filter(a => a['Equipment Name'].trim() === equipName.trim() && a['Status'] === 'Available');
+      let availableAssets = masterAdminCachedData.assetItems.filter(a => a['Equipment Name'].trim().toLowerCase() === equipName.trim().toLowerCase() && a['Status'] === 'Available');
       
       if (availableAssets.length === 0) {
         sel.innerHTML = '<option value="">-- ไม่มีอุปกรณ์รหัสว่างในคลัง --</option>';
@@ -1458,7 +1481,7 @@
 
     async function viewAssetLifecycleHistory(assetCode) {
       const modalBody = document.getElementById('assetLifecycleBody');
-      document.getElementById('assetLifecycleTitle').innerHTML = `<i class="bi bi-journal-check me-2"></i> วงจรชีวิตครุภัณฑ์: ${assetCode}`;
+      document.getElementById('assetLifecycleTitle').innerHTML = `<i class="bi bi-journal-check me-2"></i> ประวัติการใช้งานกายอุปกรณ์: ${assetCode}`;
       modalBody.innerHTML = '<div class="text-center py-4"><div class="spinner-border text-primary"></div> กำลังดึงประวัติ...</div>';
       
       let lifecycleModal = new bootstrap.Modal(document.getElementById('assetLifecycleModal'));
@@ -1478,7 +1501,7 @@
               <div class="col-md-6 mt-1"><b>สถานะปัจจุบัน:</b> <span class="badge bg-primary">${cur ? cur.status : '-'}</span></div>
             </div>
           </div>
-          <h6 class="fw-bold text-dark mb-2"><i class="bi bi-clock-history me-1"></i> ไทม์ไลน์ประวัติการใช้งานย้อนหลัง (${hist.length} รายการ)</h6>
+          <h6 class="fw-bold text-dark mb-2"><i class="bi bi-clock-history me-1"></i> ประวัติการยืม-คืนย้อนหลัง (${hist.length} รายการ)</h6>
           <div class="table-responsive" style="max-height: 300px;">
             <table class="table table-sm table-hover align-middle mb-0 text-nowrap">
               <thead class="table-dark"><tr><th>วัน/เวลา</th><th>กิจกรรม</th><th>ผู้ยืม/ผู้ทำรายการ</th><th>เบอร์ติดต่อ</th><th>สถานะ</th></tr></thead>
@@ -1547,7 +1570,9 @@
         area.appendChild(cardDiv);
 
         new QRCode(qrDiv, {
-          text: item.assetCode, width: 64, height: 64,
+          text: item.assetCode,
+          width: 80,
+          height: 80,
           correctLevel: QRCode.CorrectLevel.M
         });
       });
@@ -1583,7 +1608,7 @@
           { facingMode: "environment" },
           { fps: 10, qrbox: { width: 250, height: 250 } },
           onQrScanSuccess, onQrScanError
-        ).catch(err => {
+        ).catch(() => {
           document.getElementById('reader').innerHTML = `<div class="alert alert-warning p-2 small">ไม่สามารถเปิดกล้องได้: โปรดอนุญาตการเข้าถึงกล้องบนเบราว์เซอร์</div>`;
         });
       }, 300);
@@ -1602,7 +1627,7 @@
       resultCard.innerHTML = '<div class="spinner-border spinner-border-sm text-info me-2"></div> กำลังตรวจสอบรหัสอุปกรณ์...';
 
       try {
-        const resData = await callGASApi('scanAssetItem', { assetCode: decodedText });
+        const resData = await callGASApi('scanAssetItem', { assetCode: decodedText.trim() });
         if (!resData.found) {
           resultCard.innerHTML = `<div class="alert alert-danger mb-0">${resData.message}</div>`;
           return;
@@ -1662,7 +1687,7 @@
       } catch(err) { alert("เกิดข้อผิดพลาด: " + err.message); }
     }
 
-    function onQrScanError(errorMessage) {}
+    function onQrScanError() {}
 
     function refreshDashboardVisualCharts() {
       if(!masterAdminCachedData) return;
@@ -1703,7 +1728,59 @@
       Object.keys(mooCounts).forEach(k => { if(mooCounts[k] > 0) { activeMooLabels.push(k); activeMooValues.push(mooCounts[k]); } }); 
       renderChartNode('chartMoo', 'bar', activeMooLabels, activeMooValues, 'คำร้องขอรายหมู่', ['#ff5722']);
 
+      let equipmentLabels = masterAdminCachedData.stock.map(s => s['Name']).filter(name => name !== "");
+      let equipMatrix = {};
+      equipmentLabels.forEach(label => { equipMatrix[label] = { 'borrow': 0, 'return': 0, 'renew': 0, 'donate': 0 }; });
+
+      hFilter.forEach(h => {
+        let eName = h['Equipment Name'] ? h['Equipment Name'].toString().trim() : "";
+        let action = h['Action Type'] ? h['Action Type'].toString().trim() : "";
+        
+        if (equipMatrix[eName] !== undefined) {
+          if (action === 'ยืม') equipMatrix[eName]['borrow'] += (Number(h['Qty']) || 0);
+          else if (action === 'คืน') equipMatrix[eName]['return'] += (Number(h['Qty']) || 0);
+          else if (action === 'ยืมต่อ') equipMatrix[eName]['renew'] += (Number(h['Qty']) || 0);
+          else if (action === 'บริจาค') equipMatrix[eName]['donate'] += (Number(h['Qty']) || 0);
+        }
+      });
+
+      let datasetsUsage = [
+        { label: 'ยืม (ชิ้น)', data: equipmentLabels.map(l => equipMatrix[l]['borrow']), backgroundColor: '#0d6efd' },
+        { label: 'ยืมต่อ/ขยายเวลา (ชิ้น)', data: equipmentLabels.map(l => equipMatrix[l]['renew']), backgroundColor: '#ff9800' },
+        { label: 'ส่งคืนแล้ว (ชิ้น)', data: equipmentLabels.map(l => equipMatrix[l]['return']), backgroundColor: '#198754' },
+        { label: 'บริจาคเข้าคลัง (ชิ้น)', data: equipmentLabels.map(l => equipMatrix[l]['donate']), backgroundColor: '#0dcaf0' }
+      ];
+      
+      renderStackedChartNode('chartEquipmentUsage', equipmentLabels, datasetsUsage);
       renderSummaryInventoryMatrixTable(selectedFY);
+    }
+
+    function renderStackedChartNode(canvasId, labels, datasets) {
+      if(chartInstances[canvasId]) chartInstances[canvasId].destroy();
+      const ctx = document.getElementById(canvasId).getContext('2d');
+      chartInstances[canvasId] = new Chart(ctx, {
+        type: 'bar',
+        data: { labels: labels, datasets: datasets },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          indexAxis: 'y',
+          plugins: {
+            legend: { display: true, position: 'top', labels: { font: { family: 'Prompt', size: 11 } } },
+            datalabels: {
+              display: function(context) { return context.dataset.data[context.dataIndex] > 0; },
+              color: '#fff',
+              font: { family: 'Prompt', weight: 'bold', size: 10 },
+              formatter: function(value) { return value + ' ชิ้น'; },
+              anchor: 'center', align: 'center'
+            }
+          },
+          scales: {
+            x: { stacked: true, beginAtZero: true },
+            y: { stacked: true, grid: { display: false } }
+          }
+        }
+      });
     }
 
     function renderSummaryInventoryMatrixTable(selectedFY) {
@@ -1815,50 +1892,4 @@
 
     function setupInventoryEditMode(id, name, total) {
       document.getElementById('invFormTitle').innerHTML = '<i class="bi bi-pencil-square text-primary me-2"></i> แก้ไขคลังอุปกรณ์';
-      document.getElementById('invId').value = id;
-      document.getElementById('invName').value = name; 
-      document.getElementById('invTotal').value = total;
-      document.getElementById('btnCancelEditInv').classList.remove('d-none');
-    }
-
-    function resetInventoryFormState() {
-      document.getElementById('invFormTitle').innerHTML = '<i class="bi bi-plus-circle-fill text-primary me-2"></i> จัดการคลังอุปกรณ์';
-      document.getElementById('invId').value = "";
-      document.getElementById('inventoryCrudForm').reset(); 
-      document.getElementById('btnCancelEditInv').classList.add('d-none');
-    }
-
-    async function executeInventorySubmit(e) {
-      e.preventDefault();
-      const id = document.getElementById('invId').value; 
-      const typeAction = id ? 'edit' : 'add_new';
-      const name = document.getElementById('invName').value.trim(); 
-      const total = document.getElementById('invTotal').value;
-
-      try {
-        const resMsg = await callGASApi('manageEquipmentStock', { actionType: typeAction, itemId: id, name: name, totalQty: total }, sessionPassword);
-        alert(resMsg); resetInventoryFormState(); executeAdminBackgroundRefresh();
-      } catch(err) { alert("เกิดข้อผิดพลาด: " + err.message); }
-    }
-
-    async function executeAdminDeleteRowAction(sheetName, id) {
-      if(!confirm("ต้องการลบแถวข้อมูลนี้ออกจากระบบใช่หรือไม่?")) return;
-      try {
-        const resMsg = await callGASApi('deleteAdminData', { targetSheetName: sheetName, uniqueId: id }, sessionPassword);
-        alert(resMsg); executeAdminBackgroundRefresh();
-      } catch(err) { alert("เกิดข้อผิดพลาด: " + err.message); }
-    }
-
-    function executeTableFilter(inputId, tableBodyId) {
-      let val = document.getElementById(inputId).value.toLowerCase();
-      let rows = document.getElementById(tableBodyId).getElementsByTagName('tr');
-      for (let i = 0; i < rows.length; i++) {
-        let match = false;
-        let cells = rows[i].getElementsByTagName('td');
-        for(let j=0; j<cells.length; j++) { if(cells[j] && cells[j].textContent.toLowerCase().indexOf(val) > -1) { match = true; break; } }
-        rows[i].style.display = match ? "" : "none";
-      }
-    }
-  </script>
-</body>
-</html>
+      document.getElementById('invId').value = id

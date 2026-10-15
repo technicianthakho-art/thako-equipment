@@ -449,7 +449,7 @@
           <div class="row g-4 mt-1">
             <div class="col-12">
               <div class="card card-custom p-4 border-top border-4 border-primary">
-                <h6 class="fw-bold text-dark mb-1"><i class="bi bi-bar-chart-fill text-primary me-2"></i> สถิติจำนวนครั้งกิจกรรมการใช้งาน แยกตามประเภทกายอุปกรณ์</h6>
+                <h6 class="fw-bold text-dark mb-1"><i class="bi bi-bar-chart-fill text-primary me-2"></i> สถิติจำนวนยืมสะสม ประจำปีงบประมาณ แยกตามประเภทกายอุปกรณ์</h6>
                 <div style="height: 380px; position: relative;"><canvas id="chartEquipmentUsage"></canvas></div>
               </div>
             </div>
@@ -1788,7 +1788,7 @@
           <td><span class="fw-medium text-dark"><i class="bi bi-telephone-fill text-success"></i> ${dispPhone}</span></td>
           <td class="small">อายุ: ${h['Age']} ปี | ${h['Gender']}<br><span class="badge bg-secondary">${h['User Status']}</span> ม.${h['Moo']} ${h['Village']}</td>
           <td><span class="badge ${badgeColor}">${h['Action Type']}</span></td>
-          <td class="fw-medium">${h['Equipment Name']}${assetTag}</td>
+          <td><span class="fw-medium">${h['Equipment Name']}</span>${assetTag}</td>
           <td class="text-center fw-bold fs-6">${h['Qty']}</td>
           <td class="text-muted small"><i class="bi bi-calendar-check"></i> ${cleanDateDisplay(h['Relevant Date'])}</td>
           <td class="${stColor} fw-bold">${h['Status']}</td>
@@ -2536,13 +2536,12 @@
       
       document.getElementById('cardStatPending').textContent = masterAdminCachedData.requests.filter(r => r['Status'] === 'Pending').length;
       document.getElementById('cardStatActive').textContent = masterAdminCachedData.tracker.length;
-      document.getElementById('cardStatReturned').textContent = masterAdminCachedData.history.filter(h => h['Action Type'] === 'คืน' || h['Action Type'].includes('คืน')).length;
+      document.getElementById('cardStatReturned').textContent = masterAdminCachedData.history.filter(h => (h['Action Type'] || '').trim().includes('คืน') && h['Fiscal Year'] === selectedFY).length;
 
       let sumApprovedBorrowedPieces = 0;
       hFilter.forEach(h => {
         let act = (h['Action Type'] || '').trim();
-        // คำนวณยอดสะสมเฉพาะ Action 'ยืม' เท่านั้น (ไม่รวมรายการยืมต่อ)
-        if (act === 'ยืม') {
+        if (act === 'ยืม' || act === 'ยืมต่อ') {
           sumApprovedBorrowedPieces += (Number(h['Qty']) || 0);
         }
       });
@@ -2578,25 +2577,22 @@
 
       let equipmentLabels = masterAdminCachedData.stock.map(s => s['Name']).filter(name => name !== "");
       let equipMatrix = {};
-      equipmentLabels.forEach(label => { equipMatrix[label] = { 'borrow': 0, 'return': 0, 'renew': 0, 'donate': 0 }; });
+      equipmentLabels.forEach(label => { equipMatrix[label] = { 'borrowAccum': 0 }; });
 
+      // คำนวณยอดบริการยืมสะสมจาก History_Log โดยตรงเพื่อให้ตัวเลขสถิติต่างๆ เท่ากันและสอดคล้องกัน
       hFilter.forEach(h => {
         let eName = h['Equipment Name'] ? h['Equipment Name'].toString().trim() : "";
         let action = h['Action Type'] ? h['Action Type'].toString().trim() : "";
         
         if (equipMatrix[eName] !== undefined) {
-          if (action === 'ยืม') equipMatrix[eName]['borrow'] += (Number(h['Qty']) || 0);
-          else if (action === 'คืน' || action.includes('คืน')) equipMatrix[eName]['return'] += (Number(h['Qty']) || 0);
-          else if (action === 'ยืมต่อ') equipMatrix[eName]['renew'] += (Number(h['Qty']) || 0);
-          else if (action === 'บริจาค') equipMatrix[eName]['donate'] += (Number(h['Qty']) || 0);
+          if (action === 'ยืม' || action === 'ยืมต่อ') {
+            equipMatrix[eName]['borrowAccum'] += (Number(h['Qty']) || 0);
+          }
         }
       });
 
       let datasetsUsage = [
-        { label: 'ยืม (ชิ้น)', data: equipmentLabels.map(l => equipMatrix[l]['borrow']), backgroundColor: '#0d6efd' },
-        { label: 'ยืมต่อ/ขยายเวลา (ชิ้น)', data: equipmentLabels.map(l => equipMatrix[l]['renew']), backgroundColor: '#ff9800' },
-        { label: 'ส่งคืนแล้ว (ชิ้น)', data: equipmentLabels.map(l => equipMatrix[l]['return']), backgroundColor: '#198754' },
-        { label: 'บริจาคเข้าคลัง (ชิ้น)', data: equipmentLabels.map(l => equipMatrix[l]['donate']), backgroundColor: '#0dcaf0' }
+        { label: 'ยืมสะสม (ชิ้น)', data: equipmentLabels.map(l => equipMatrix[l]['borrowAccum']), backgroundColor: '#0d6efd' }
       ];
       
       renderStackedChartNode('chartEquipmentUsage', equipmentLabels, datasetsUsage);
@@ -2608,20 +2604,18 @@
       const tbody = document.getElementById('tableInventoryMatrixBody');
       if (!tbody || !masterAdminCachedData) return;
 
-      // กรองเฉพาะ History Log ประจำปีงบประมาณที่เลือก (ทั้งสถานะ Approved และ Returned)
-      let hYearFilter = masterAdminCachedData.history.filter(h => h['Fiscal Year'] === selectedFY && (h['Status'] === 'Approved' || h['Status'] === 'Returned' || h['Status'] === 'Pending'));
+      let hYearFilter = masterAdminCachedData.history.filter(h => h['Fiscal Year'] === selectedFY && (h['Status'] === 'Approved' || h['Status'] === 'Returned'));
       let matrixHtml = "";
 
       masterAdminCachedData.stock.forEach(stock => {
         let eName = stock['Name'].trim();
         let total = Number(stock['Total Qty']) || 0;
-
         let currentActiveBorrowed = Number(stock['Borrowed Qty']) || 0;
 
         let usagePercent = total > 0 ? ((currentActiveBorrowed / total) * 100).toFixed(1) : "0.0";
         let usageBadgeColor = usagePercent > 70 ? 'bg-danger' : (usagePercent >= 30 ? 'bg-warning text-dark' : 'bg-success');
 
-        let newBorrowedInFY = 0;
+        let accumBorrowedTotal = 0;
         let accumReturned = 0;
         let accumDonated = 0;
 
@@ -2631,17 +2625,15 @@
           let act = (h['Action Type'] || '').trim();
 
           if (hEquip === eName) {
-            if (act === 'ยืม') {
-              newBorrowedInFY += qty; // นับเฉพาะ 'ยืม' ไม่รวม 'ยืมต่อ'
+            if (act === 'ยืม' || act === 'ยืมต่อ') {
+              accumBorrowedTotal += qty;
             } else if (act === 'คืน' || act.includes('คืน')) {
-              accumReturned += qty; // นับสถิติคืนสะสม
+              accumReturned += qty;
             } else if (act === 'บริจาค') {
               accumDonated += qty;
             }
           }
         });
-
-        let accumBorrowedTotal = newBorrowedInFY;
 
         let accumTurnoverPercent = total > 0 ? ((accumBorrowedTotal / total) * 100).toFixed(1) : "0.0";
         let turnoverBadgeColor = accumTurnoverPercent >= 100 ? 'bg-primary' : (accumTurnoverPercent >= 50 ? 'bg-info text-dark' : 'bg-secondary');

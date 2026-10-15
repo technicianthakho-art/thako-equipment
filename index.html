@@ -55,10 +55,11 @@
     .welcome-subtitle { color: #64748b; text-align: center; font-size: 1.1rem; margin-bottom: 40px; position: relative; word-break: keep-all; }
     .welcome-subtitle::after { content: ''; display: block; width: 40px; height: 3px; background: #0288d1; margin: 10px auto 0; border-radius: 2px; }
 
+    /* Landing Cards Equal Height Fit Fix */
     .landing-card {
       border-radius: 24px; padding: 32px 24px; color: white; position: relative; overflow: hidden; cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 10px 25px rgba(0,0,0,0.08); min-height: 280px;
-      display: flex; flex-direction: column; justify-content: space-between;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      height: 100%; min-height: 280px; display: flex; flex-direction: column; justify-content: space-between;
     }
     .landing-card:hover { transform: translateY(-8px); box-shadow: 0 18px 35px rgba(0,0,0,0.15); }
 
@@ -74,6 +75,7 @@
     }
     .landing-card-blue { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); }
     .landing-card-teal { background: linear-gradient(135deg, #0d9488 0%, #06b6d4 100%); }
+    .landing-card-purple { background: linear-gradient(135deg, #0288d1 0%, #0369a1 100%); }
     .landing-card-white { background: #ffffff; color: #0f172a; border: 1px solid #e2e8f0; }
 
     .icon-circle { width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; margin-bottom: 20px; }
@@ -83,18 +85,14 @@
     .card-arrow-btn { width: 44px; height: 44px; border-radius: 50%; background: white; color: #0f172a; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; align-self: flex-end; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
     .landing-card-white .card-arrow-btn { background: #f1f5f9; color: #0f172a; }
 
-    .mobile-scan-floating-btn {
-      position: fixed; bottom: 25px; right: 20px; z-index: 1050; background: #0288d1; color: white;
-      border-radius: 50px; padding: 10px 18px; box-shadow: 0 8px 25px rgba(2, 136, 209, 0.4);
-      display: flex; align-items: center; gap: 8px; font-weight: 600;
-    }
-
     .equip-counter-card { border: 1px solid #e2e8f0; border-radius: 12px; transition: all 0.2s ease; background-color: #fff; }
     .equip-counter-card:hover { border-color: #0288d1; box-shadow: 0 4px 12px rgba(2, 136, 209, 0.1); }
     .btn-counter { width: 38px; height: 38px; border-radius: 8px; font-weight: bold; display: flex; align-items: center; justify-content: center; }
     .counter-input { width: 50px; text-align: center; font-weight: bold; font-size: 1.1rem; border: none; background: transparent; }
     
-    .modal-frosted { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.3); }
+    /* Modern Modal Styling */
+    .modal-frosted { background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-radius: 20px; border: 1px solid rgba(0,0,0,0.08); }
+    .modal-content { border-radius: 20px; border: 1px solid rgba(0,0,0,0.08); overflow: hidden; }
 
     #reader { width: 100%; border-radius: 12px; overflow: hidden; }
     .toast-container { z-index: 2000; }
@@ -142,16 +140,6 @@
     </div>
   </nav>
 
-  <!-- Mobile Only Floating QR Scanner Button -->
-  <div id="mobileFloatingQrWrapper" class="d-md-none">
-    <div class="mobile-scan-floating-btn shadow-lg">
-      <span onclick="openQrScannerModal()" class="d-flex align-items-center gap-2 cursor-pointer">
-        <i class="bi bi-qr-code-scan fs-5"></i> สแกน QR
-      </span>
-      <button type="button" class="btn-close btn-close-white ms-2" style="font-size: 0.65rem;" onclick="hideMobileFloatingQrBtn()" title="ปิดปุ่มสแกน"></button>
-    </div>
-  </div>
-
   <!-- Live Toast Notification Container -->
   <div class="toast-container position-fixed bottom-0 end-0 p-3">
     <div id="liveNotificationToast" class="toast border-0 shadow-lg" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="10000">
@@ -165,14 +153,14 @@
 
   <div class="container-fluid px-3 px-lg-5 mb-5">
 
-    <!-- 0. WELCOME VIEW -->
+    <!-- 0. WELCOME VIEW (4 Embedded Cards with Equal Height & Embedded Mobile Scanner) -->
     <div id="welcomeView">
       <div class="welcome-container">
         <h1 class="welcome-title">ยินดีต้อนรับสู่ระบบบริการออนไลน์</h1>
         <p class="welcome-subtitle">ระบบจัดการกายอุปกรณ์ขององค์กรตำบลท่าก๊อ</p>
 
-        <div class="row g-4 justify-content-center">
-          <div class="col-12 col-md-4">
+        <div class="row g-4 justify-content-center align-items-stretch">
+          <div class="col-12 col-sm-6 col-lg-3">
             <div class="landing-card landing-card-blue" onclick="switchView('user')">
               <div>
                 <div class="icon-circle icon-circle-white-bg"><i class="bi bi-pencil-square"></i></div>
@@ -183,7 +171,7 @@
             </div>
           </div>
 
-          <div class="col-12 col-md-4">
+          <div class="col-12 col-sm-6 col-lg-3">
             <div class="landing-card landing-card-teal" onclick="switchView('track')">
               <div>
                 <div class="icon-circle icon-circle-white-bg"><i class="bi bi-file-earmark-check"></i></div>
@@ -194,7 +182,19 @@
             </div>
           </div>
 
-          <div class="col-12 col-md-4">
+          <!-- Embedded QR Scanner Card (Fix Floating Button) -->
+          <div class="col-12 col-sm-6 col-lg-3">
+            <div class="landing-card landing-card-purple" onclick="openQrScannerModal()">
+              <div>
+                <div class="icon-circle icon-circle-white-bg"><i class="bi bi-qr-code-scan"></i></div>
+                <h3 class="fw-bold mb-2">สแกน QR Code</h3>
+                <p class="opacity-90 small mb-0">ตรวจสอบข้อมูลครุภัณฑ์ผ่านกล้องทันที</p>
+              </div>
+              <div class="card-arrow-btn"><i class="bi bi-arrow-right"></i></div>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-6 col-lg-3">
             <div class="landing-card landing-card-white" onclick="switchView('admin')">
               <div>
                 <div class="icon-circle icon-circle-slate-bg"><i class="bi bi-shield-check"></i></div>
@@ -302,14 +302,14 @@
     <!-- Modal Submit Success -->
     <div class="modal fade" id="submitSuccessModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
       <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
+        <div class="modal-content modal-frosted border-0 shadow-lg" style="border-radius: 20px;">
           <div class="modal-body text-center p-5">
             <div class="mb-4"><i class="bi bi-check-circle-fill text-success" style="font-size: 4.5rem;"></i></div>
             <h4 class="fw-bold mb-2 text-dark">บันทึกข้อมูลเรียบร้อย</h4>
             <p class="text-muted small mb-4" id="submitSuccessMsg"></p>
             <div class="d-flex justify-content-center gap-2">
-              <button type="button" class="btn btn-outline-secondary px-4 rounded-pill" data-bs-dismiss="modal">ปิดหน้าต่าง</button>
-              <button type="button" class="btn btn-primary px-4 rounded-pill shadow-sm" data-bs-dismiss="modal" onclick="resetUserFormFocus()">บันทึกคำร้องต่อไป</button>
+              <button type="button" class="btn btn-outline-secondary px-4 rounded-pill fw-bold" data-bs-dismiss="modal">ปิดหน้าต่าง</button>
+              <button type="button" class="btn btn-primary px-4 rounded-pill fw-bold shadow-sm" data-bs-dismiss="modal" onclick="resetUserFormFocus()">บันทึกคำร้องต่อไป</button>
             </div>
           </div>
         </div>
@@ -520,10 +520,10 @@
           </div>
         </div>
 
-        <!-- SUB VIEW 3.5: คลังรหัสครุภัณฑ์และระบบจัดพิมพ์ สติ๊กเกอร์ QR (Full Width Asset Hub) -->
+        <!-- SUB VIEW 3.5: คลังรหัสครุภัณฑ์และระบบจัดพิมพ์ สติ๊กเกอร์ QR (Expanded Full-Height Asset Hub) -->
         <div id="subViewAssetQr" class="admin-subview d-none">
           <div class="card card-custom p-4 border-top border-4 border-dark shadow-sm">
-            <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+            <div class="d-flex justify-content-between align-items-center mb-2 flex-wrap gap-2">
               <div>
                 <h5 class="fw-bold text-dark mb-0"><i class="bi bi-qr-code-scan text-primary me-2"></i> คลังรหัสครุภัณฑ์และระบบจัดพิมพ์ สติ๊กเกอร์ QR</h5>
                 <small class="text-muted">ระบบบริหารจัดการครุภัณฑ์รายชิ้น ออกรหัสใหม่ และพิมพ์สติ๊กเกอร์ขนาด 55mm x 38mm</small>
@@ -540,6 +540,9 @@
                 </button>
               </div>
             </div>
+
+            <!-- Verification Alert Container -->
+            <div id="stockMismatchAlertArea" class="mb-2 d-none"></div>
 
             <!-- Advanced Filter Toolbar -->
             <div class="row g-2 mb-3 bg-light p-2.5 rounded-3 border">
@@ -565,7 +568,7 @@
               </div>
             </div>
 
-            <div class="table-responsive bg-white rounded border" style="max-height: 520px;">
+            <div class="table-responsive bg-white rounded border" style="max-height: calc(100vh - 280px); min-height: 480px;">
               <table class="table table-hover align-middle mb-0 text-nowrap">
                 <thead class="table-sticky-header">
                   <tr>
@@ -647,10 +650,10 @@
   <!-- Thermal Printing Container Hidden for UI -->
   <div id="thermalPrintArea" class="d-none d-print-block"></div>
 
-  <!-- MODAL: Generate Asset Batch (New Modal in Hub) -->
+  <!-- MODAL: Generate Asset Batch (New Modern Design) -->
   <div class="modal fade" id="batchGenerateAssetModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
+      <div class="modal-content modal-frosted border-0 shadow-lg">
         <div class="modal-header bg-success text-white py-3">
           <h5 class="modal-title fw-bold"><i class="bi bi-plus-square-fill me-2"></i> ออกรหัสครุภัณฑ์ใหม่ (Asset Generator)</h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
@@ -671,8 +674,8 @@
               <input type="number" class="form-control bg-light" id="genQtyInput" min="1" value="1" required>
             </div>
             <div class="d-flex justify-content-end gap-2">
-              <button type="button" class="btn btn-secondary px-3" data-bs-dismiss="modal">ยกเลิก</button>
-              <button type="submit" id="btnGenAssetSubmit" class="btn btn-success px-4 fw-bold shadow-sm">
+              <button type="button" class="btn btn-secondary px-4 rounded-pill fw-bold" data-bs-dismiss="modal">ยกเลิก</button>
+              <button type="submit" id="btnGenAssetSubmit" class="btn btn-success px-4 rounded-pill fw-bold shadow-sm">
                 <i class="bi bi-plus-square-fill me-1"></i> สร้างรหัสครุภัณฑ์
               </button>
             </div>
@@ -682,10 +685,34 @@
     </div>
   </div>
 
+  <!-- MODAL: Confirm Delete Asset Item with Password -->
+  <div class="modal fade" id="deleteAssetPasswordModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content modal-frosted border-0 shadow-lg">
+        <div class="modal-header bg-danger text-white py-3">
+          <h6 class="modal-title fw-bold mb-0"><i class="bi bi-exclamation-triangle-fill me-2"></i> ยืนยันลบรหัสครุภัณฑ์</h6>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4 text-center">
+          <input type="hidden" id="targetDeleteAssetCode">
+          <p class="text-dark mb-1">ต้องการลบรหัสครุภัณฑ์ <code class="fw-bold text-danger fs-6" id="targetDeleteAssetDisplay"></code> ใช่หรือไม่?</p>
+          <small class="text-muted d-block mb-3">โปรดระบุรหัสผ่านแอดมินเพื่อยืนยันการลบออกถาวร</small>
+          
+          <input type="password" id="confirmDeletePasswordInput" class="form-control text-center py-2 mb-3" placeholder="ระบุรหัสผ่านแอดมิน" required>
+          
+          <div class="d-grid gap-2">
+            <button type="button" id="btnConfirmDeleteAsset" class="btn btn-danger fw-bold rounded-pill" onclick="submitDeleteAssetWithPassword()"><i class="bi bi-trash3-fill me-1"></i> ยืนยันลบข้อมูล</button>
+            <button type="button" class="btn btn-light rounded-pill fw-bold" data-bs-dismiss="modal">ยกเลิก</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- MODAL: View Single QR Code -->
   <div class="modal fade" id="singleQrModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-sm">
-      <div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
+      <div class="modal-content modal-frosted border-0 shadow-lg">
         <div class="modal-header bg-dark text-white py-2">
           <h6 class="modal-title fw-bold mb-0" id="singleQrModalTitle">QR Code ครุภัณฑ์</h6>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
@@ -694,7 +721,7 @@
           <div id="singleQrCanvasContainer" class="d-flex justify-content-center mb-3"></div>
           <code class="fs-5 text-primary fw-bold" id="singleQrCodeText"></code>
           <div class="small text-muted mt-1" id="singleQrEquipText"></div>
-          <button class="btn btn-sm btn-outline-dark w-100 fw-bold mt-3" onclick="printSingleQrSticker()">
+          <button class="btn btn-sm btn-dark w-100 fw-bold rounded-pill mt-3" onclick="printSingleQrSticker()">
             <i class="bi bi-printer me-1"></i> พิมพ์สติ๊กเกอร์ดวงนี้
           </button>
         </div>
@@ -705,7 +732,7 @@
   <!-- Modal Smart Approve Binding -->
   <div class="modal fade" id="smartApproveModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
+      <div class="modal-content modal-frosted border-0 shadow-lg">
         <div class="modal-header bg-primary text-white py-3">
           <h5 class="modal-title fw-bold"><i class="bi bi-qr-code text-warning me-2"></i> ระบุรหัสครุภัณฑ์ก่อนอนุมัติ</h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
@@ -722,8 +749,8 @@
             <div id="assetDropdownContainer"></div>
           </div>
           <div class="d-flex justify-content-end gap-2">
-            <button type="button" class="btn btn-secondary px-3" data-bs-dismiss="modal">ยกเลิก</button>
-            <button type="button" class="btn btn-success px-4 fw-bold" onclick="confirmSmartApproveAction()"><i class="bi bi-check-circle-fill me-1"></i> ยืนยันอนุมัติคำขอ</button>
+            <button type="button" class="btn btn-secondary px-4 rounded-pill fw-bold" data-bs-dismiss="modal">ยกเลิก</button>
+            <button type="button" class="btn btn-success px-4 rounded-pill fw-bold" onclick="confirmSmartApproveAction()"><i class="bi bi-check-circle-fill me-1"></i> ยืนยันอนุมัติคำขอ</button>
           </div>
         </div>
       </div>
@@ -733,7 +760,7 @@
   <!-- MODAL: Edit Asset Condition & Status -->
   <div class="modal fade" id="editAssetConditionModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
+      <div class="modal-content modal-frosted border-0 shadow-lg">
         <div class="modal-header bg-dark text-white py-3">
           <h5 class="modal-title fw-bold"><i class="bi bi-tools text-warning me-2"></i> บันทึกปรับเปลี่ยนสภาพ/สถานะครุภัณฑ์</h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
@@ -759,8 +786,8 @@
               <textarea class="form-control" id="modalConditionNoteInput" rows="3" placeholder="ระบุสภาพ เช่น ยางล้อเสื่อม, โครงเหล็กถลอก, สภาพสมบูรณ์ 95%" required></textarea>
             </div>
             <div class="d-flex justify-content-end gap-2">
-              <button type="button" class="btn btn-secondary px-3" data-bs-dismiss="modal">ยกเลิก</button>
-              <button type="submit" id="btnSaveAssetCond" class="btn btn-primary px-4 fw-bold"><i class="bi bi-save-fill me-1"></i> บันทึกข้อมูล</button>
+              <button type="button" class="btn btn-secondary px-4 rounded-pill fw-bold" data-bs-dismiss="modal">ยกเลิก</button>
+              <button type="submit" id="btnSaveAssetCond" class="btn btn-primary px-4 rounded-pill fw-bold"><i class="bi bi-save-fill me-1"></i> บันทึกข้อมูล</button>
             </div>
           </form>
         </div>
@@ -771,15 +798,15 @@
   <!-- MODAL: Asset Lifecycle & Full History Log -->
   <div class="modal fade" id="assetLifecycleModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
-      <div class="modal-content border-0 shadow-lg" style="border-radius: 20px;">
-        <div class="modal-header bg-primary text-white py-3" style="border-top-left-radius: 20px; border-top-right-radius: 20px;">
+      <div class="modal-content modal-frosted border-0 shadow-lg">
+        <div class="modal-header bg-primary text-white py-3">
           <h5 class="modal-title fw-bold"><i class="bi bi-journal-check text-warning me-2"></i> สมุดประวัติครุภัณฑ์เชิงลึก (Asset Lifecycle Log)</h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body p-4" id="assetLifecycleModalBody">
           <div class="text-center py-5"><div class="spinner-border text-primary"></div> กำลังดึงประวัติครุภัณฑ์...</div>
         </div>
-        <div class="modal-footer bg-light border-0 py-2" style="border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;">
+        <div class="modal-footer bg-light border-0 py-2">
           <button type="button" class="btn btn-secondary px-4 fw-bold rounded-pill" data-bs-dismiss="modal">ปิดหน้าต่าง</button>
         </div>
       </div>
@@ -790,12 +817,12 @@
   <div class="modal fade" id="rowDetailModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content modal-frosted border-0 shadow-lg">
-        <div class="modal-header bg-dark text-white py-3" style="border-top-left-radius: 20px; border-top-right-radius: 20px;">
+        <div class="modal-header bg-dark text-white py-3">
           <h5 class="modal-title fw-bold" id="rowDetailModalTitle"><i class="bi bi-info-circle-fill text-info me-2"></i> รายละเอียดข้อมูลคำขอเชิงลึก</h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body p-4" id="rowDetailModalBody"></div>
-        <div class="modal-footer bg-light border-0 d-flex justify-content-between py-2" style="border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;">
+        <div class="modal-footer bg-light border-0 d-flex justify-content-between py-2">
           <small class="text-muted"><i class="bi bi-shield-check text-success me-1"></i> ระบบกายอุปกรณ์ อบต.ท่าก๊อ</small>
           <button type="button" class="btn btn-secondary px-4 fw-bold rounded-pill" data-bs-dismiss="modal"><i class="bi bi-x-lg me-1"></i> ปิดหน้าต่าง</button>
         </div>
@@ -806,7 +833,7 @@
   <!-- Modal QR Scanner -->
   <div class="modal fade" id="qrScannerModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
+      <div class="modal-content modal-frosted border-0 shadow-lg">
         <div class="modal-header bg-dark text-white py-3">
           <h5 class="modal-title fw-bold"><i class="bi bi-qr-code-scan text-info me-2"></i> สแกน QR Code อุปกรณ์</h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" onclick="stopQrScanner()"></button>
@@ -822,7 +849,7 @@
   <!-- Modal Admin Full Edit -->
   <div class="modal fade" id="fullEditModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-lg modal-dialog-centered">
-      <div class="modal-content" style="border-radius: 16px;">
+      <div class="modal-content modal-frosted border-0 shadow-lg">
         <div class="modal-header bg-dark text-white py-3">
           <h5 class="modal-title fw-bold"><i class="bi bi-pencil-square text-warning me-2"></i> ฟอร์มแก้ไขข้อมูลรายละเอียด (Admin)</h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
@@ -878,8 +905,8 @@
             </div>
 
             <div class="d-flex justify-content-end gap-2 mt-4">
-              <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">ยกเลิก</button>
-              <button type="submit" class="btn btn-primary px-4 fw-bold"><i class="bi bi-save-fill me-1"></i> บันทึกอัปเดตข้อมูล</button>
+              <button type="button" class="btn btn-secondary px-4 rounded-pill fw-bold" data-bs-dismiss="modal">ยกเลิก</button>
+              <button type="submit" class="btn btn-primary px-4 rounded-pill fw-bold"><i class="bi bi-save-fill me-1"></i> บันทึกอัปเดตข้อมูล</button>
             </div>
           </form>
         </div>
@@ -962,11 +989,6 @@
     window.onload = function() {
       renderMooSelectionOptions();
       fetchPublicStockAndEquipList();
-      
-      if (localStorage.getItem('hide_mobile_qr_btn') === 'true') {
-        const el = document.getElementById('mobileFloatingQrWrapper');
-        if (el) el.classList.add('d-none');
-      }
 
       const rememberedPass = localStorage.getItem('gas_admin_session_key');
       if (rememberedPass) {
@@ -976,11 +998,6 @@
         switchView('welcome');
       }
     };
-
-    function hideMobileFloatingQrBtn() {
-      document.getElementById('mobileFloatingQrWrapper').classList.add('d-none');
-      localStorage.setItem('hide_mobile_qr_btn', 'true');
-    }
 
     function renderMooSelectionOptions() {
       const el = document.getElementById('uMoo');
@@ -1427,6 +1444,16 @@
       refreshAdminSubViewsUI();
     }
 
+    // Direct Link from Inventory Stock Card to Asset QR Hub with Filter
+    function navigateToAssetQrFiltered(equipName) {
+      switchAdminSubTab('asset_qr');
+      const sel = document.getElementById('filterAssetEquipTypeSelect');
+      if (sel) {
+        sel.value = equipName;
+        filterAssetItemsUI();
+      }
+    }
+
     async function loadCustomSystemCalendar() {
       if(!sessionPassword) return;
       const calendarNode = document.getElementById('systemFullCalendarNode');
@@ -1544,6 +1571,7 @@
       document.getElementById('lastUpdatedTimestampDisplay').textContent = "อัปเดตล่าสุด: " + new Date().toLocaleTimeString('th-TH') + " น.";
       refreshDashboardVisualCharts();
       renderAssetItemsTableUI();
+      verifyStockVsAssetMismatch();
       
       const pTable = document.getElementById('tablePendingBody');
       let pFilter = masterAdminCachedData.requests.filter(r => r['Status'] === 'Pending');
@@ -1651,11 +1679,11 @@
       masterAdminCachedData.stock.forEach(s => {
         invHtml += `
           <div class="col-md-6 col-xl-4">
-            <div class="card card-custom h-100 border-top border-4 border-info shadow-sm hover-elevate">
+            <div class="card card-custom h-100 border-top border-4 border-info shadow-sm hover-elevate cursor-pointer" onclick="navigateToAssetQrFiltered('${s['Name']}')">
               <div class="card-body p-3">
                 <div class="d-flex justify-content-between align-items-start mb-3">
                   <h6 class="fw-bold text-dark mb-0">${s['Name']}</h6>
-                  <div class="dropdown">
+                  <div class="dropdown" onclick="event.stopPropagation();">
                     <button class="btn btn-sm btn-light border-0" type="button" data-bs-toggle="dropdown"><i class="bi bi-three-dots-vertical"></i></button>
                     <ul class="dropdown-menu dropdown-menu-end shadow-sm">
                       <li><a class="dropdown-item py-2" href="#" onclick="setupInventoryEditMode('${s['Equipment ID']}', '${s['Name']}', ${s['Total Qty']})"><i class="bi bi-pencil-square text-primary me-2"></i> แก้ไขอุปกรณ์</a></li>
@@ -1716,6 +1744,34 @@
 
       executeTableFilterPreserve('filterTrackerInput', 'tableTrackerBody');
       executeTableFilterPreserve('filterHistoryInput', 'tableHistoryBody');
+    }
+
+    function verifyStockVsAssetMismatch() {
+      const alertArea = document.getElementById('stockMismatchAlertArea');
+      if (!alertArea || !masterAdminCachedData) return;
+
+      let mismatches = [];
+      masterAdminCachedData.stock.forEach(s => {
+        let eName = s['Name'].trim();
+        let totalStock = Number(s['Total Qty']) || 0;
+        let actualAssetCount = masterAdminCachedData.assets.filter(a => a['Equipment Name'].trim() === eName).length;
+
+        if (actualAssetCount < totalStock) {
+          mismatches.push({ name: eName, diff: totalStock - actualAssetCount });
+        }
+      });
+
+      if (mismatches.length > 0) {
+        let msg = mismatches.map(m => `<b>${m.name}</b> (ขาดอีก ${m.diff} รหัส)`).join(', ');
+        alertArea.innerHTML = `<div class="alert alert-warning py-2 px-3 small border mb-0 d-flex justify-content-between align-items-center flex-wrap gap-2">
+          <div><i class="bi bi-exclamation-triangle-fill text-warning me-2"></i> <strong>แจ้งเตือนรหัสครุภัณฑ์ไม่ครบตามสต็อก:</strong> ${msg}</div>
+          <button class="btn btn-sm btn-warning text-dark fw-bold py-0" onclick="openBatchGenerateAssetModal()"><i class="bi bi-plus-square me-1"></i> ออกรหัสส่วนที่ขาด</button>
+        </div>`;
+        alertArea.classList.remove('d-none');
+      } else {
+        alertArea.classList.add('d-none');
+        alertArea.innerHTML = "";
+      }
     }
 
     function populateGenEquipOptions() {
@@ -1806,7 +1862,8 @@
           <td class="text-center">
             <button class="btn btn-sm btn-outline-dark py-0 px-2 me-1" onclick="openSingleQrModal('${a['Asset Code']}', '${a['Equipment Name']}')" title="แสดง/พิมพ์ QR ดวงนี้"><i class="bi bi-qr-code"></i> พิมพ์ QR</button>
             <button class="btn btn-sm btn-outline-primary py-0 px-2 me-1" onclick="openAssetLifecycleModal('${a['Asset Code']}')" title="ดูสมุดประวัติเชิงลึก"><i class="bi bi-eye-fill"></i></button>
-            <button class="btn btn-sm btn-outline-warning text-dark py-0 px-2" onclick="openEditAssetConditionModal('${a['Asset Code']}', '${a['Equipment Name']}', '${a['Status']}', '${conditionNote}')" title="แก้ไขสภาพ/สถานะ"><i class="bi bi-pencil-square"></i></button>
+            <button class="btn btn-sm btn-outline-warning text-dark py-0 px-2 me-1" onclick="openEditAssetConditionModal('${a['Asset Code']}', '${a['Equipment Name']}', '${a['Status']}', '${conditionNote}')" title="แก้ไขสภาพ/สถานะ"><i class="bi bi-pencil-square"></i></button>
+            <button class="btn btn-sm btn-outline-danger py-0 px-2" onclick="openDeleteAssetPasswordModal('${a['Asset Code']}')" title="ลบรหัสครุภัณฑ์นี้"><i class="bi bi-trash3-fill"></i></button>
           </td>
         </tr>`;
       });
@@ -1825,6 +1882,39 @@
       const selected = document.querySelectorAll('.asset-checkbox:checked');
       const text = document.getElementById('selectedQrCountText');
       if (text) text.textContent = selected.length;
+    }
+
+    function openDeleteAssetPasswordModal(code) {
+      document.getElementById('targetDeleteAssetCode').value = code;
+      document.getElementById('targetDeleteAssetDisplay').textContent = code;
+      document.getElementById('confirmDeletePasswordInput').value = "";
+
+      let modal = new bootstrap.Modal(document.getElementById('deleteAssetPasswordModal'));
+      modal.show();
+    }
+
+    async function submitDeleteAssetWithPassword() {
+      const code = document.getElementById('targetDeleteAssetCode').value;
+      const pass = document.getElementById('confirmDeletePasswordInput').value;
+
+      if (!pass) return alert("กรุณาระบุรหัสผ่านแอดมินก่อนกดลบครับ");
+
+      const btn = document.getElementById('btnConfirmDeleteAsset');
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> กำลังลบ...';
+
+      try {
+        const resMsg = await callGASApi('deleteSingleAssetItem', { assetCode: code }, pass);
+        alert(resMsg);
+        btn.disabled = false;
+        btn.innerHTML = '<i class="bi bi-trash3-fill me-1"></i> ยืนยันลบข้อมูล';
+        bootstrap.Modal.getInstance(document.getElementById('deleteAssetPasswordModal')).hide();
+        executeAdminBackgroundRefresh();
+      } catch(err) {
+        alert("เกิดข้อผิดพลาด: " + err.message);
+        btn.disabled = false;
+        btn.innerHTML = '<i class="bi bi-trash3-fill me-1"></i> ยืนยันลบข้อมูล';
+      }
     }
 
     function openSingleQrModal(assetCode, equipName) {

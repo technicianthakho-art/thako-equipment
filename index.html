@@ -445,14 +445,7 @@
               <select class="form-select form-select-sm" id="analyticsFiscalYearFilter" onchange="syncAndRefreshFiscalYearViews(this.value)" style="width: 150px;"></select>
             </div>
           </div>
-
-          <div class="row g-3">
-            <div class="col-md-6 col-xl-3"><div class="card card-custom p-4 bg-primary text-white"><div class="small opacity-75">คำขอรอพิจารณา</div><h2 class="fw-bold mb-0" id="cardStatPending">0</h2></div></div>
-            <div class="col-md-6 col-xl-3"><div class="card card-custom p-4 bg-success text-white"><div class="small opacity-75">อยู่ระหว่างการยืม</div><h2 class="fw-bold mb-0" id="cardStatActive">0</h2></div></div>
-            <div class="col-md-6 col-xl-3"><div class="card card-custom p-4 bg-secondary text-white"><div class="small opacity-75">ส่งคืนแล้ว</div><h2 class="fw-bold mb-0" id="cardStatReturned">0</h2></div></div>
-            <div class="col-md-6 col-xl-3"><div class="card card-custom p-4 bg-info text-white"><div class="small opacity-75">ยืมสะสม (ชิ้นอนุมัติ)</div><h2 class="fw-bold mb-0" id="cardStatTotalBorrowedAccum">0</h2></div></div>
-          </div>
-
+         
           <div class="row g-4 mt-1">
             <div class="col-lg-6 col-xl-3"><div class="card card-custom p-3 h-100"><h6 class="fw-bold text-center">สัดส่วนเพศ</h6><div style="height: 240px; position: relative;"><canvas id="chartGender"></canvas></div></div></div>
             <div class="col-lg-6 col-xl-3"><div class="card card-custom p-3 h-100"><h6 class="fw-bold text-center">ประเภทสิทธิ์</h6><div style="height: 240px; position: relative;"><canvas id="chartStatus"></canvas></div></div></div>
@@ -2646,20 +2639,7 @@
       
       let rFilter = masterAdminCachedData.requests.filter(r => r['Fiscal Year'] === selectedFY);
       let hFilter = masterAdminCachedData.history.filter(h => h['Fiscal Year'] === selectedFY && (h['Status'] === 'Approved' || h['Status'] === 'อนุมัติแล้ว' || h['Status'] === 'Returned' || h['Status'] === 'ส่งคืนแล้ว'));
-      
-      document.getElementById('cardStatPending').textContent = masterAdminCachedData.requests.filter(r => r['Status'] === 'Pending' || r['Status'] === 'รอพิจารณา').length;
-      document.getElementById('cardStatActive').textContent = masterAdminCachedData.tracker.length;
-      document.getElementById('cardStatReturned').textContent = masterAdminCachedData.history.filter(h => h['Action Type'] === 'คืน' || h['Action Type'].includes('คืน')).length;
-
-      let sumApprovedBorrowedPieces = 0;
-      hFilter.forEach(h => {
-        let act = (h['Action Type'] || '').trim();
-        if (act === 'ยืม') {
-          sumApprovedBorrowedPieces += (Number(h['Qty']) || 0);
-        }
-      });
-      document.getElementById('cardStatTotalBorrowedAccum').textContent = sumApprovedBorrowedPieces;
-
+            
       let genderCounts = { 'ชาย': 0, 'หญิง': 0 };
       let statusCounts = { 'บุคคลทั่วไป': 0, 'เด็ก': 0, 'ผู้สูงอายุ': 0, 'ผู้พิการ': 0, 'บุคคลซึ่งไม่มีสัญชาติไทย/บุคคลซึ่งไม่มีสถานะทางทะเบียน': 0 };
       let ageGroup4Counts = { '0-14 ปี': 0, '15-59 ปี': 0, '60-79 ปี': 0, '80+ ปี': 0 };

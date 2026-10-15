@@ -44,7 +44,6 @@
     .form-control, .form-select { border-radius: 10px; padding: 10px 14px; background-color: #fafafa; border: 1px solid #ced4da; }
     .form-control:focus, .form-select:focus { background-color: #fff; box-shadow: 0 0 0 3px rgba(2, 136, 209, 0.2); border-color: #0288d1; }
     
-    /* Header Table Formatting Fix */
     .table-sticky-header th { position: sticky; top: 0; z-index: 5; background-color: #0f172a !important; color: #ffffff !important; box-shadow: 0 2px 2px -1px rgba(0,0,0,0.1); }
     
     .clickable-row { cursor: pointer; transition: background-color 0.15s ease-in-out; }
@@ -55,7 +54,6 @@
     .welcome-subtitle { color: #64748b; text-align: center; font-size: 1.1rem; margin-bottom: 40px; position: relative; word-break: keep-all; }
     .welcome-subtitle::after { content: ''; display: block; width: 40px; height: 3px; background: #0288d1; margin: 10px auto 0; border-radius: 2px; }
 
-    /* Landing Cards Equal Height Fit Fix */
     .landing-card {
       border-radius: 24px; padding: 32px 24px; color: white; position: relative; overflow: hidden; cursor: pointer;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 10px 25px rgba(0,0,0,0.08);
@@ -90,7 +88,6 @@
     .btn-counter { width: 38px; height: 38px; border-radius: 8px; font-weight: bold; display: flex; align-items: center; justify-content: center; }
     .counter-input { width: 50px; text-align: center; font-weight: bold; font-size: 1.1rem; border: none; background: transparent; }
     
-    /* Modern Modal Styling */
     .modal-frosted { background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-radius: 20px; border: 1px solid rgba(0,0,0,0.08); }
     .modal-content { border-radius: 20px; border: 1px solid rgba(0,0,0,0.08); overflow: hidden; }
 
@@ -100,7 +97,6 @@
     .hover-elevate:hover { transform: translateY(-3px); box-shadow: 0 8px 18px rgba(0,0,0,0.1) !important; }
     #customCalendarWrapper { background: #fff; padding: 15px; border-radius: 10px; }
 
-    /* Thermal Printing 55mm x 38mm CSS Rule */
     @media print {
       body * { visibility: hidden !important; }
       #thermalPrintArea, #thermalPrintArea * { visibility: visible !important; }
@@ -153,7 +149,7 @@
 
   <div class="container-fluid px-3 px-lg-5 mb-5">
 
-    <!-- 0. WELCOME VIEW (4 Embedded Cards with Equal Height & Embedded Mobile Scanner) -->
+    <!-- 0. WELCOME VIEW -->
     <div id="welcomeView">
       <div class="welcome-container">
         <h1 class="welcome-title">ยินดีต้อนรับสู่ระบบบริการออนไลน์</h1>
@@ -182,7 +178,6 @@
             </div>
           </div>
 
-          <!-- Embedded QR Scanner Card (Fix Floating Button) -->
           <div class="col-12 col-sm-6 col-lg-3">
             <div class="landing-card landing-card-purple" onclick="openQrScannerModal()">
               <div>
@@ -332,7 +327,6 @@
 
     <!-- 3. ADMIN VIEW -->
     <div id="adminView" style="display: none;">
-      <!-- Auth Gate -->
       <div id="adminAuthGate" class="card card-custom p-5 text-center mx-auto shadow-sm" style="max-width: 420px; margin-top: 8vh; border-radius: 20px;">
         <div class="mb-3"><i class="bi bi-shield-lock-fill text-primary display-3"></i></div>
         <h4 class="fw-bold mb-4 text-dark">ผู้ดูแลระบบ</h4>
@@ -520,7 +514,7 @@
           </div>
         </div>
 
-        <!-- SUB VIEW 3.5: คลังรหัสครุภัณฑ์และระบบจัดพิมพ์ สติ๊กเกอร์ QR (Expanded Full-Height Asset Hub) -->
+        <!-- Sub 3.5: Asset Items & QR Hub -->
         <div id="subViewAssetQr" class="admin-subview d-none">
           <div class="card card-custom p-4 border-top border-4 border-dark shadow-sm">
             <div class="d-flex justify-content-between align-items-center mb-2 flex-wrap gap-2">
@@ -541,10 +535,8 @@
               </div>
             </div>
 
-            <!-- Verification Alert Container -->
             <div id="stockMismatchAlertArea" class="mb-2 d-none"></div>
 
-            <!-- Advanced Filter Toolbar -->
             <div class="row g-2 mb-3 bg-light p-2.5 rounded-3 border">
               <div class="col-md-5">
                 <div class="input-group input-group-sm">
@@ -647,10 +639,9 @@
     </div>
   </div>
 
-  <!-- Thermal Printing Container Hidden for UI -->
   <div id="thermalPrintArea" class="d-none d-print-block"></div>
 
-  <!-- MODAL: Generate Asset Batch (New Modern Design) -->
+  <!-- MODAL: Generate Asset Batch -->
   <div class="modal fade" id="batchGenerateAssetModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content modal-frosted border-0 shadow-lg">
@@ -685,7 +676,7 @@
     </div>
   </div>
 
-  <!-- MODAL: Confirm Delete Asset Item with Password -->
+  <!-- MODAL: Confirm Delete Asset Item -->
   <div class="modal fade" id="deleteAssetPasswordModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-centered modal-sm">
       <div class="modal-content modal-frosted border-0 shadow-lg">
@@ -757,7 +748,7 @@
     </div>
   </div>
 
-  <!-- MODAL: Edit Asset Condition & Status -->
+  <!-- MODAL: Edit Asset Condition -->
   <div class="modal fade" id="editAssetConditionModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content modal-frosted border-0 shadow-lg">
@@ -795,7 +786,7 @@
     </div>
   </div>
 
-  <!-- MODAL: Asset Lifecycle & Full History Log -->
+  <!-- MODAL: Asset Lifecycle Modal -->
   <div class="modal fade" id="assetLifecycleModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content modal-frosted border-0 shadow-lg">
@@ -922,9 +913,7 @@
   <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 
   <script>
-    // ==========================================
     // REST API Endpoint Config
-    // ==========================================
     const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxbbbbJQnA4CAWgXWwhpwbiJTxwAhBJn1FS2BTpoePGIiHrFTr1oS_-48ZIgVpz0nL0/exec";
     
     const VILLAGE_MAP = {
@@ -961,7 +950,6 @@
 
     Chart.register(ChartDataLabels);
 
-    // HELPER: Strip Timestamp ISO string T17:00:00.000Z
     function cleanDateDisplay(rawDate) {
       if (!rawDate && rawDate !== 0) return "-";
       let str = rawDate.toString().trim();
@@ -1444,7 +1432,6 @@
       refreshAdminSubViewsUI();
     }
 
-    // Direct Link from Inventory Stock Card to Asset QR Hub with Filter
     function navigateToAssetQrFiltered(equipName) {
       switchAdminSubTab('asset_qr');
       const sel = document.getElementById('filterAssetEquipTypeSelect');
@@ -2510,7 +2497,6 @@
       const tbody = document.getElementById('tableInventoryMatrixBody');
       if (!tbody || !masterAdminCachedData) return;
 
-      // กรองประวัติย้อนหลังตามปีงบประมาณเฉพาะรายการที่ได้รับการอนุมัติแล้ว
       let hYearFilter = masterAdminCachedData.history.filter(h => h['Fiscal Year'] === selectedFY && (h['Status'] === 'Approved' || h['Status'] === 'Returned'));
       let matrixHtml = "";
 
@@ -2518,17 +2504,14 @@
         let eName = stock['Name'].trim();
         let total = Number(stock['Total Qty']) || 0;
 
-        // 1. ดึงยอด "ถูกยืม" ณ ปัจจุบันโดยตรงจากฐานข้อมูล Stock (ตรงกับการ์ดสต็อก 100%)
         let currentActiveBorrowed = Number(stock['Borrowed Qty']) || 0;
 
-        // 2. คำนวณ % การใช้งานจากยอดถูกยืมจริง ณ ปัจจุบัน
         let usagePercent = total > 0 ? ((currentActiveBorrowed / total) * 100).toFixed(1) : "0.0";
         let usageBadgeColor = usagePercent > 70 ? 'bg-danger' : (usagePercent >= 30 ? 'bg-warning text-dark' : 'bg-success');
 
-        // 3. คำนวณสถิติสะสมตามปีงบประมาณจาก History_Log
-        let accumBorrowed = 0; // ยืมสะสม (นับเฉพาะยืมใหม่ ไม่รวมยืมต่อ เพื่อไม่ให้นับชิ้นอุปกรณ์ซ้ำ)
-        let accumReturned = 0; // คืนแล้ว
-        let accumDonated = 0;  // บริจาคเข้าคลัง
+        let newBorrowedInFY = 0;
+        let accumReturned = 0;
+        let accumDonated = 0;
 
         hYearFilter.forEach(h => {
           let hEquip = (h['Equipment Name'] || '').trim();
@@ -2537,7 +2520,7 @@
 
           if (hEquip === eName) {
             if (act === 'ยืม') {
-              accumBorrowed += qty; 
+              newBorrowedInFY += qty; 
             } else if (act === 'คืน' || act.includes('คืน')) {
               accumReturned += qty;
             } else if (act === 'บริจาค') {
@@ -2546,8 +2529,9 @@
           }
         });
 
-        // 4. คำนวณ % หมุนเวียนสะสมประจำปีงบประมาณ
-        let accumTurnoverPercent = total > 0 ? ((accumBorrowed / total) * 100).toFixed(1) : "0.0";
+        let accumBorrowedTotal = Math.max(currentActiveBorrowed, newBorrowedInFY + accumReturned);
+
+        let accumTurnoverPercent = total > 0 ? ((accumBorrowedTotal / total) * 100).toFixed(1) : "0.0";
         let turnoverBadgeColor = accumTurnoverPercent >= 100 ? 'bg-primary' : (accumTurnoverPercent >= 50 ? 'bg-info text-dark' : 'bg-secondary');
 
         matrixHtml += `<tr>
@@ -2555,7 +2539,7 @@
           <td class="text-center fw-semibold">${total}</td>
           <td class="text-center text-danger fw-bold fs-6">${currentActiveBorrowed}</td>
           <td class="text-center"><span class="badge ${usageBadgeColor} px-2 py-1 fs-6">${usagePercent}%</span></td>
-          <td class="text-center text-primary fw-bold">${accumBorrowed}</td>
+          <td class="text-center text-primary fw-bold">${accumBorrowedTotal}</td>
           <td class="text-center text-success fw-bold">${accumReturned}</td>
           <td class="text-center text-info fw-bold">${accumDonated}</td>
           <td class="text-center"><span class="badge ${turnoverBadgeColor} px-2 py-1 fs-6">${accumTurnoverPercent}%</span></td>

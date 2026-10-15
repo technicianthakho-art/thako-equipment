@@ -20,7 +20,6 @@
     body { font-family: 'Prompt', sans-serif; background-color: var(--bg-light); color: #333; -webkit-tap-highlight-color: transparent; }
     .navbar-custom { background-color: #1e3a8a; color: white; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
     
-    /* ล็อคเมนูให้วางแนวนอน 100% ไม่ตกบรรทัด */
     .navbar-nav-horizontal {
       flex-direction: row !important;
       flex-wrap: nowrap !important;
@@ -36,7 +35,7 @@
       border-bottom: 3px solid transparent; 
       transition: all 0.2s; 
       color: rgba(255,255,255,0.85); 
-      white-space: nowrap !important; /* ห้ามตัวอักษรตัดขึ้นบรรทัดใหม่ */
+      white-space: nowrap !important; 
     }
     .tab-nav.active { border-bottom: 3px solid #fff; color: #fff !important; font-weight: 600; }
     .tab-nav:hover { color: #fff !important; }
@@ -49,59 +48,18 @@
     .clickable-row { cursor: pointer; transition: background-color 0.15s ease-in-out; }
     .clickable-row:hover { background-color: rgba(2, 136, 209, 0.08) !important; }
 
-    /* Welcome Landing Page UI Inspired by Design Image */
-    .welcome-container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 40px 15px;
-    }
-    .welcome-title {
-      font-size: 2.2rem;
-      font-weight: 700;
-      color: #0f172a;
-      text-align: center;
-      margin-bottom: 8px;
-      word-break: keep-all;
-    }
-    .welcome-subtitle {
-      color: #64748b;
-      text-align: center;
-      font-size: 1.1rem;
-      margin-bottom: 40px;
-      position: relative;
-      word-break: keep-all;
-    }
-    .welcome-subtitle::after {
-      content: '';
-      display: block;
-      width: 40px;
-      height: 3px;
-      background: #0288d1;
-      margin: 10px auto 0;
-      border-radius: 2px;
-    }
+    .welcome-container { max-width: 1100px; margin: 0 auto; padding: 40px 15px; }
+    .welcome-title { font-size: 2.2rem; font-weight: 700; color: #0f172a; text-align: center; margin-bottom: 8px; word-break: keep-all; }
+    .welcome-subtitle { color: #64748b; text-align: center; font-size: 1.1rem; margin-bottom: 40px; position: relative; word-break: keep-all; }
+    .welcome-subtitle::after { content: ''; display: block; width: 40px; height: 3px; background: #0288d1; margin: 10px auto 0; border-radius: 2px; }
 
-    /* Landing Card Option Styles */
     .landing-card {
-      border-radius: 24px;
-      padding: 32px 24px;
-      color: white;
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-      min-height: 280px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      border-radius: 24px; padding: 32px 24px; color: white; position: relative; overflow: hidden; cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 10px 25px rgba(0,0,0,0.08); min-height: 280px;
+      display: flex; flex-direction: column; justify-content: space-between;
     }
-    .landing-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 18px 35px rgba(0,0,0,0.15);
-    }
+    .landing-card:hover { transform: translateY(-8px); box-shadow: 0 18px 35px rgba(0,0,0,0.15); }
 
-    /* Responsive Design Optimization สำหรับหน้าจอมือถือ */
     @media (max-width: 576px) {
       .welcome-container { padding: 20px 10px; }
       .welcome-title { font-size: 1.4rem; }
@@ -112,91 +70,66 @@
       .brand-title-sub { font-size: 0.7rem !important; }
       .tab-nav { padding: 6px 8px; font-size: 0.82rem; }
     }
-    .landing-card-blue {
-      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-    }
-    .landing-card-teal {
-      background: linear-gradient(135deg, #0d9488 0%, #06b6d4 100%);
-    }
-    .landing-card-white {
-      background: #ffffff;
-      color: #0f172a;
-      border: 1px solid #e2e8f0;
-    }
+    .landing-card-blue { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); }
+    .landing-card-teal { background: linear-gradient(135deg, #0d9488 0%, #06b6d4 100%); }
+    .landing-card-white { background: #ffffff; color: #0f172a; border: 1px solid #e2e8f0; }
 
-    .icon-circle {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.2rem;
-      margin-bottom: 20px;
-    }
+    .icon-circle { width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; margin-bottom: 20px; }
     .icon-circle-white-bg { background: rgba(255, 255, 255, 0.2); color: white; }
     .icon-circle-slate-bg { background: #e0e7ff; color: #1e3a8a; }
 
-    .card-arrow-btn {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: white;
-      color: #0f172a;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      align-self: flex-end;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-    .landing-card-white .card-arrow-btn {
-      background: #f1f5f9;
-      color: #0f172a;
-    }
+    .card-arrow-btn { width: 44px; height: 44px; border-radius: 50%; background: white; color: #0f172a; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; align-self: flex-end; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    .landing-card-white .card-arrow-btn { background: #f1f5f9; color: #0f172a; }
 
-    /* Mobile Only Floating Scan QR Button */
     .mobile-scan-floating-btn {
-      position: fixed;
-      bottom: 25px;
-      right: 20px;
-      z-index: 1050;
-      background: #0288d1;
-      color: white;
-      border-radius: 50px;
-      padding: 10px 18px;
-      box-shadow: 0 8px 25px rgba(2, 136, 209, 0.4);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 600;
+      position: fixed; bottom: 25px; right: 20px; z-index: 1050; background: #0288d1; color: white;
+      border-radius: 50px; padding: 10px 18px; box-shadow: 0 8px 25px rgba(2, 136, 209, 0.4);
+      display: flex; align-items: center; gap: 8px; font-weight: 600;
     }
 
-    /* Counter Cards */
     .equip-counter-card { border: 1px solid #e2e8f0; border-radius: 12px; transition: all 0.2s ease; background-color: #fff; }
     .equip-counter-card:hover { border-color: #0288d1; box-shadow: 0 4px 12px rgba(2, 136, 209, 0.1); }
     .btn-counter { width: 38px; height: 38px; border-radius: 8px; font-weight: bold; display: flex; align-items: center; justify-content: center; }
     .counter-input { width: 50px; text-align: center; font-weight: bold; font-size: 1.1rem; border: none; background: transparent; }
     
-    /* Frosted Glass Modals */
-    .modal-frosted {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-radius: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-    }
+    .modal-frosted { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.3); }
 
     #reader { width: 100%; border-radius: 12px; overflow: hidden; }
     .toast-container { z-index: 2000; }
     .hover-elevate { transition: transform 0.2s ease, box-shadow 0.2s ease; }
     .hover-elevate:hover { transform: translateY(-3px); box-shadow: 0 8px 18px rgba(0,0,0,0.1) !important; }
     #customCalendarWrapper { background: #fff; padding: 15px; border-radius: 10px; }
+
+    /* Bento Grid Layout for Asset QR Hub */
+    .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; }
+    .bento-col-4 { grid-column: span 4; }
+    .bento-col-8 { grid-column: span 8; }
+    .bento-col-12 { grid-column: span 12; }
+    @media (max-width: 992px) {
+      .bento-col-4, .bento-col-8 { grid-column: span 12; }
+    }
+
+    /* Thermal Printing 55mm x 38mm CSS Rule */
+    @media print {
+      body * { visibility: hidden !important; }
+      #thermalPrintArea, #thermalPrintArea * { visibility: visible !important; }
+      #thermalPrintArea {
+        position: absolute !important; left: 0 !important; top: 0 !important; width: 55mm !important; margin: 0 !important; padding: 0 !important;
+      }
+      .qr-sticker-item {
+        width: 55mm !important; height: 38mm !important; box-sizing: border-box !important; padding: 2mm !important;
+        display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important;
+        text-align: center !important; page-break-after: always !important; border: none !important;
+      }
+      .qr-sticker-title { font-size: 8pt !important; font-weight: bold !important; line-height: 1 !important; margin-bottom: 2px !important; }
+      .qr-sticker-sub { font-size: 6pt !important; margin-bottom: 2px !important; }
+      .qr-sticker-code { font-size: 9pt !important; font-weight: bold !important; margin-top: 2px !important; }
+    }
   </style>
 </head>
 <body>
 
-<!-- Navigation Bar -->
+  <!-- Navigation Bar -->
   <nav class="navbar navbar-custom py-2 mb-3 sticky-top">
     <div class="container-fluid px-2 px-lg-5 d-flex justify-content-between align-items-center flex-nowrap">
       <div class="d-flex align-items-center gap-2 flex-shrink-0">
@@ -206,7 +139,6 @@
         </span>
       </div>
 
-      <!-- แถบเมนูย่อยแนวนอน (ล็อคแนวนอน 100% ไม่หลุดบรรทัด) -->
       <div id="subNavbarNav" class="navbar-nav-horizontal" style="display: none !important;">
         <div id="navWelcome" class="tab-nav" onclick="switchView('welcome')"><i class="bi bi-house-door-fill me-1"></i>หน้าแรก</div>
         <div id="navUser" class="tab-nav" onclick="switchView('user')"><i class="bi bi-pencil-square me-1"></i>บันทึกคำขอ</div>
@@ -217,7 +149,7 @@
     </div>
   </nav>
 
-  <!-- Mobile Only Floating QR Scanner Button with Close Button -->
+  <!-- Mobile Only Floating QR Scanner Button -->
   <div id="mobileFloatingQrWrapper" class="d-md-none">
     <div class="mobile-scan-floating-btn shadow-lg">
       <span onclick="openQrScannerModal()" class="d-flex align-items-center gap-2 cursor-pointer">
@@ -240,59 +172,44 @@
 
   <div class="container-fluid px-3 px-lg-5 mb-5">
 
-    <!-- 0. WELCOME VIEW: หน้าแรกคลีนตรงตามภาพตัวอย่าง -->
+    <!-- 0. WELCOME VIEW -->
     <div id="welcomeView">
       <div class="welcome-container">
         <h1 class="welcome-title">ยินดีต้อนรับสู่ระบบบริการออนไลน์</h1>
         <p class="welcome-subtitle">ระบบจัดการกายอุปกรณ์ขององค์กรตำบลท่าก๊อ</p>
 
         <div class="row g-4 justify-content-center">
-          <!-- Card 1: บันทึกคำขอ -->
           <div class="col-12 col-md-4">
             <div class="landing-card landing-card-blue" onclick="switchView('user')">
               <div>
-                <div class="icon-circle icon-circle-white-bg">
-                  <i class="bi bi-pencil-square"></i>
-                </div>
+                <div class="icon-circle icon-circle-white-bg"><i class="bi bi-pencil-square"></i></div>
                 <h3 class="fw-bold mb-2">บันทึกคำขอ</h3>
                 <p class="opacity-90 small mb-0">ยื่นคำขอและบันทึกข้อมูลการใช้บริการ</p>
               </div>
-              <div class="card-arrow-btn">
-                <i class="bi bi-arrow-right"></i>
-              </div>
+              <div class="card-arrow-btn"><i class="bi bi-arrow-right"></i></div>
             </div>
           </div>
 
-          <!-- Card 2: ติดตามสถานะคำขอ -->
           <div class="col-12 col-md-4">
             <div class="landing-card landing-card-teal" onclick="switchView('track')">
               <div>
-                <div class="icon-circle icon-circle-white-bg">
-                  <i class="bi bi-file-earmark-check"></i>
-                </div>
+                <div class="icon-circle icon-circle-white-bg"><i class="bi bi-file-earmark-check"></i></div>
                 <h3 class="fw-bold mb-2">ติดตามสถานะคำขอ</h3>
                 <p class="opacity-90 small mb-0">ตรวจสอบความคืบหน้าและผลการดำเนินงาน</p>
               </div>
-              <div class="card-arrow-btn">
-                <i class="bi bi-arrow-right"></i>
-              </div>
+              <div class="card-arrow-btn"><i class="bi bi-arrow-right"></i></div>
             </div>
           </div>
 
-          <!-- Card 3: แผงควบคุมแอดมิน -->
           <div class="col-12 col-md-4">
             <div class="landing-card landing-card-white" onclick="switchView('admin')">
               <div>
-                <div class="icon-circle icon-circle-slate-bg">
-                  <i class="bi bi-shield-check"></i>
-                </div>
+                <div class="icon-circle icon-circle-slate-bg"><i class="bi bi-shield-check"></i></div>
                 <h3 class="fw-bold mb-2">แผงควบคุมแอดมิน</h3>
                 <p class="text-muted small mb-3">จัดการคำขอและดูภาพรวมระบบ</p>
                 <span class="badge bg-secondary bg-opacity-10 text-secondary border px-3 py-1 fw-normal">สำหรับเจ้าหน้าที่</span>
               </div>
-              <div class="card-arrow-btn">
-                <i class="bi bi-arrow-right"></i>
-              </div>
+              <div class="card-arrow-btn"><i class="bi bi-arrow-right"></i></div>
             </div>
           </div>
         </div>
@@ -304,7 +221,7 @@
       </div>
     </div>
 
-    <!-- 1. USER VIEW: หน้าบันทึกคำขอ -->
+    <!-- 1. USER VIEW -->
     <div id="userView" style="display: none;">
       <div class="row g-4">
         <div class="col-lg-4">
@@ -370,7 +287,6 @@
               
               <div class="mb-3"><label class="form-label fw-semibold">เบอร์โทรศัพท์ติดต่อ</label><input type="tel" class="form-control" id="uPhone" required></div>
               
-              <!-- Quantity Card Counter UI Component -->
               <div class="p-3 border rounded-3 bg-light mb-3">
                 <label class="form-label fw-bold text-dark mb-1"><i class="bi bi-boxes text-primary me-1"></i> เลือกกายอุปกรณ์และระบุจำนวนที่ต้องการยื่นคำขอ</label>
                 <small class="text-muted d-block mb-3">กดปุ่ม + หรือ - เพื่อปรับจำนวนอุปกรณ์ทันที ระบบจะตรวจสอบสต็อกให้สอดคล้องกัน</small>
@@ -390,7 +306,7 @@
       </div>
     </div>
 
-    <!-- Modal แจ้งเตือนเมื่อส่งสำเร็จ -->
+    <!-- Modal Submit Success -->
     <div class="modal fade" id="submitSuccessModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
@@ -407,7 +323,7 @@
       </div>
     </div>
 
-    <!-- 2. TRACK VIEW: หน้าติดตามสถานะ -->
+    <!-- 2. TRACK VIEW -->
     <div id="trackView" style="display: none;">
       <div class="card card-custom p-4 border-top border-4 border-info mx-auto" style="max-width: 1000px;">
         <h4 class="fw-bold text-center text-dark"><i class="bi bi-search text-info me-2"></i> ตรวจสอบสถานะคำขอและประวัติทั้งหมด</h4>
@@ -421,13 +337,11 @@
       </div>
     </div>
 
-    <!-- 3. ADMIN VIEW: แผงควบคุมแอดมิน -->
+    <!-- 3. ADMIN VIEW -->
     <div id="adminView" style="display: none;">
-      <!-- หน้าป้อนรหัสผ่าน (Auth Gate) แบบ Clean UI ตรงตามภาพอ้างอิง -->
+      <!-- Auth Gate -->
       <div id="adminAuthGate" class="card card-custom p-5 text-center mx-auto shadow-sm" style="max-width: 420px; margin-top: 8vh; border-radius: 20px;">
-        <div class="mb-3">
-          <i class="bi bi-shield-lock-fill text-primary display-3"></i>
-        </div>
+        <div class="mb-3"><i class="bi bi-shield-lock-fill text-primary display-3"></i></div>
         <h4 class="fw-bold mb-4 text-dark">ผู้ดูแลระบบ</h4>
         <div class="mb-3">
           <input type="password" id="adminPasswordInput" class="form-control text-center py-2.5 fs-6" placeholder="ระบุรหัสผ่านแอดมิน" style="border-radius: 12px; background-color: #f8fafc;">
@@ -440,11 +354,13 @@
           <li class="nav-item"><button class="nav-link active" onclick="switchAdminSubTab('operations')"><i class="bi bi-list-check me-1"></i>ติดตามงานและอนุมัติ</button></li>
           <li class="nav-item"><button class="nav-link" onclick="switchAdminSubTab('analytics')"><i class="bi bi-pie-chart-fill me-1"></i>รายงานสถิติ</button></li>
           <li class="nav-item"><button class="nav-link" onclick="switchAdminSubTab('inventory')"><i class="bi bi-boxes me-1"></i>จัดการคลังอุปกรณ์</button></li>
+          <!-- NEW SUB TAB: ครุภัณฑ์และ QR Code placed right after Inventory -->
+          <li class="nav-item"><button class="nav-link" onclick="switchAdminSubTab('asset_qr')"><i class="bi bi-qr-code-scan me-1"></i>ครุภัณฑ์และ QR Code</button></li>
           <li class="nav-item"><button class="nav-link" onclick="switchAdminSubTab('history')"><i class="bi bi-journal-text me-1"></i>ประวัติทั้งหมด</button></li>
           <li class="nav-item"><button class="nav-link" onclick="switchAdminSubTab('calendar')"><i class="bi bi-calendar3 me-1"></i>ปฏิทินงาน</button></li>
         </ul>
 
-        <!-- Sub 1: ติดตามงานและอนุมัติ -->
+        <!-- Sub 1: Operations -->
         <div id="subViewOperations" class="admin-subview">
           <div class="card card-custom p-4 mb-4 border-start border-4 border-warning shadow-sm">
             <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
@@ -488,7 +404,7 @@
                     <th>ผู้ใช้งาน</th>
                     <th>ข้อมูลติดต่อ</th>
                     <th>ข้อมูลส่วนตัว/ที่อยู่</th>
-                    <th>อุปกรณ์</th>
+                    <th>อุปกรณ์ / รหัสครุภัณฑ์</th>
                     <th class="text-center">จำนวน</th>
                     <th>วันที่ยืม</th>
                     <th>วันกำหนดคืน</th>
@@ -502,7 +418,7 @@
           </div>
         </div>
 
-        <!-- Sub 2: รายงานสถิติและตัวชี้วัด -->
+        <!-- Sub 2: Analytics -->
         <div id="subViewAnalytics" class="admin-subview d-none">
           <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
             <div>
@@ -518,7 +434,6 @@
             </div>
           </div>
 
-          <!-- 1. แดชบอร์ดสรุปสถิติ 4 ช่อง -->
           <div class="row g-3">
             <div class="col-md-6 col-xl-3"><div class="card card-custom p-4 bg-primary text-white"><div class="small opacity-75">คำขอรอดำเนินการ</div><h2 class="fw-bold mb-0" id="cardStatPending">0</h2></div></div>
             <div class="col-md-6 col-xl-3"><div class="card card-custom p-4 bg-success text-white"><div class="small opacity-75">อยู่ระหว่างการยืม</div><h2 class="fw-bold mb-0" id="cardStatActive">0</h2></div></div>
@@ -526,7 +441,6 @@
             <div class="col-md-6 col-xl-3"><div class="card card-custom p-4 bg-info text-white"><div class="small opacity-75">ยืมสะสม (ชิ้นอนุมัติ)</div><h2 class="fw-bold mb-0" id="cardStatTotalBorrowedAccum">0</h2></div></div>
           </div>
 
-          <!-- 2. กลุ่มกราฟย่อย 4 กราฟ -->
           <div class="row g-4 mt-1">
             <div class="col-lg-6 col-xl-3"><div class="card card-custom p-3 h-100"><h6 class="fw-bold text-center">สัดส่วนเพศ</h6><div style="height: 240px; position: relative;"><canvas id="chartGender"></canvas></div></div></div>
             <div class="col-lg-6 col-xl-3"><div class="card card-custom p-3 h-100"><h6 class="fw-bold text-center">ประเภทสิทธิ์</h6><div style="height: 240px; position: relative;"><canvas id="chartStatus"></canvas></div></div></div>
@@ -534,19 +448,15 @@
             <div class="col-lg-6 col-xl-3"><div class="card card-custom p-3 h-100"><h6 class="fw-bold text-center">คำร้องรายหมู่บ้าน</h6><div style="height: 240px; position: relative;"><canvas id="chartMoo"></canvas></div></div></div>
           </div>
 
-          <!-- 3. สถิติจำนวนครั้งกิจกรรมแยกตามประเภทอุปกรณ์ -->
           <div class="row g-4 mt-1">
             <div class="col-12">
               <div class="card card-custom p-4 border-top border-4 border-primary">
                 <h6 class="fw-bold text-dark mb-1"><i class="bi bi-bar-chart-fill text-primary me-2"></i> สถิติจำนวนครั้งกิจกรรมการใช้งาน แยกตามประเภทกายอุปกรณ์</h6>
-                <div style="height: 380px; position: relative;">
-                  <canvas id="chartEquipmentUsage"></canvas>
-                </div>
+                <div style="height: 380px; position: relative;"><canvas id="chartEquipmentUsage"></canvas></div>
               </div>
             </div>
           </div>
 
-          <!-- 4. ตารางสรุปภาพรวมคลังอุปกรณ์ (ปรับใส่ Dropdown ปีงบประมาณแทนที่ Export CSV) -->
           <div class="row g-4 mt-1">
             <div class="col-12">
               <div class="card card-custom p-4 border-top border-4 border-info">
@@ -555,7 +465,6 @@
                     <h6 class="fw-bold text-dark mb-0"><i class="bi bi-table text-info me-2"></i> ตารางสรุปภาพรวมคลังอุปกรณ์</h6>
                     <small class="text-muted">สรุปสถานะการใช้งานและสถิติตัวเลขสะสมแยกตามปีงบประมาณ</small>
                   </div>
-                  <!-- ปรับปุ่มเปลี่ยนปีงบประมาณมาวางแทนที่ปุ่ม Export CSV -->
                   <div class="d-flex align-items-center gap-2">
                     <label class="fw-medium text-nowrap text-dark small">ปีงบประมาณ:</label>
                     <select class="form-select form-select-sm" id="tableMatrixFiscalYearFilter" onchange="syncAndRefreshFiscalYearViews(this.value)" style="width: 140px; border-radius: 8px;"></select>
@@ -584,7 +493,7 @@
 
         </div>
 
-        <!-- Sub 3: จัดการคลังอุปกรณ์ -->
+        <!-- Sub 3: Inventory -->
         <div id="subViewInventory" class="admin-subview d-none">
           <div class="row g-4">
             <div class="col-xl-4 col-lg-5">
@@ -619,7 +528,85 @@
           </div>
         </div>
 
-        <!-- Sub 4: ประวัติทั้งหมด -->
+        <!-- NEW SUB VIEW 3.5: ครุภัณฑ์และ QR Code (Asset QR Hub in Bento Grid) -->
+        <div id="subViewAssetQr" class="admin-subview d-none">
+          <div class="bento-grid">
+            
+            <!-- Bento Box 1: Smart Asset Generator -->
+            <div class="bento-col-4">
+              <div class="card card-custom p-4 border-top border-4 border-success shadow-sm h-100">
+                <h5 class="fw-bold text-dark mb-3"><i class="bi bi-qr-code text-success me-2"></i> ออกรหัสครุภัณฑ์ใหม่ (Smart Generator)</h5>
+                <form id="assetGenerateForm" onsubmit="handleAssetBatchGenerateSubmit(event)">
+                  <div class="mb-3">
+                    <label class="form-label fw-semibold text-secondary">ประเภทกายอุปกรณ์</label>
+                    <select class="form-select" id="genEquipNameSelect" onchange="autoSuggestPrefix(this.value)" required></select>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label fw-semibold text-secondary">คำนำหน้ารหัส (Prefix)</label>
+                    <input type="text" class="form-control bg-light text-uppercase fw-bold text-primary" id="genPrefixInput" placeholder="เช่น BED, WCH" required>
+                    <small class="text-muted">รูปแบบรหัสที่ได้: PREFIX-ปีงบ-เลขรัน (เช่น BED-69-001)</small>
+                  </div>
+                  <div class="mb-4">
+                    <label class="form-label fw-semibold text-secondary">จำนวนดวง/ชิ้นที่ต้องการออกเพิ่ม</label>
+                    <input type="number" class="form-control bg-light" id="genQtyInput" min="1" value="1" required>
+                  </div>
+                  <button type="submit" id="btnGenAssetSubmit" class="btn btn-success w-100 fw-bold shadow-sm py-2.5">
+                    <i class="bi bi-plus-square-fill me-1"></i> สร้างรหัสครุภัณฑ์
+                  </button>
+                </form>
+              </div>
+            </div>
+
+            <!-- Bento Box 2: Batch Thermal Print & Inventory Hub Table -->
+            <div class="bento-col-8">
+              <div class="card card-custom p-4 border-top border-4 border-dark shadow-sm h-100">
+                <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                  <div>
+                    <h5 class="fw-bold text-dark mb-0"><i class="bi bi-printer-fill text-dark me-2"></i> คลังรหัสครุภัณฑ์และระบบจัดพิมพ์ สติ๊กเกอร์ QR</h5>
+                    <small class="text-muted">เลือกรายการรหัสที่ต้องการพิมพ์ สติ๊กเกอร์ขนาด 55mm x 38mm</small>
+                  </div>
+                  <div class="d-flex align-items-center gap-2">
+                    <button class="btn btn-sm btn-dark fw-bold shadow-sm" onclick="executeBatchThermalPrint()">
+                      <i class="bi bi-printer me-1"></i> พิมพ์ QR ที่เลือก (<span id="selectedQrCountText">0</span>)
+                    </button>
+                    <button class="btn btn-sm btn-outline-secondary fw-bold" onclick="triggerAdminDataRefresh(this)">
+                      <i class="bi bi-arrow-clockwise"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="d-flex gap-2 mb-3">
+                  <input type="text" id="filterAssetInput" class="form-control form-control-sm" placeholder="ค้นหารหัส หรือชื่ออุปกรณ์..." onkeyup="executeTableFilter('filterAssetInput', 'tableAssetItemsBody')">
+                  <select class="form-select form-select-sm" id="filterAssetStatusSelect" onchange="renderAssetItemsTableUI()" style="width: 150px;">
+                    <option value="">-- ทุกสถานะ --</option>
+                    <option value="Available">Available (ว่าง)</option>
+                    <option value="Borrowed">Borrowed (ถูกยืม)</option>
+                    <option value="Maintenance">Maintenance (ชำรุด)</option>
+                  </select>
+                </div>
+
+                <div class="table-responsive bg-white rounded border" style="max-height: 420px;">
+                  <table class="table table-hover align-middle mb-0 text-nowrap">
+                    <thead class="table-dark table-sticky-header">
+                      <tr>
+                        <th width="40" class="text-center"><input type="checkbox" class="form-check-input" id="checkAllAssetQr" onchange="toggleSelectAllAssets(this)"></th>
+                        <th>รหัสครุภัณฑ์ (Asset Code)</th>
+                        <th>ชื่อกายอุปกรณ์</th>
+                        <th>สถานะ</th>
+                        <th>ผู้ถือครองปัจจุบัน</th>
+                        <th>วันที่ลงทะเบียน</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tableAssetItemsBody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Sub 4: History -->
         <div id="subViewHistory" class="admin-subview d-none">
           <div class="card card-custom p-4 shadow-sm border-start border-4 border-secondary">
             <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
@@ -648,7 +635,7 @@
                     <th>ข้อมูลติดต่อ</th>
                     <th>ข้อมูลส่วนตัว/ที่อยู่</th>
                     <th>ประเภท</th>
-                    <th>อุปกรณ์</th>
+                    <th>อุปกรณ์ / รหัสครุภัณฑ์</th>
                     <th class="text-center">จำนวน</th>
                     <th>วันอ้างอิง/กำหนดส่งคืน</th>
                     <th>สถานะ</th>
@@ -661,7 +648,7 @@
           </div>
         </div>
 
-        <!-- Sub 5: ปฏิทินงาน -->
+        <!-- Sub 5: Calendar -->
         <div id="subViewCalendar" class="admin-subview d-none">
           <div class="card card-custom p-4 shadow-sm border-top border-4 border-dark">
              <div class="d-flex justify-content-between align-items-center mb-3">
@@ -678,7 +665,64 @@
     </div>
   </div>
 
-  <!-- Modal ป๊อปอัปรายละเอียดข้อมูลเชิงลึก -->
+  <!-- Thermal Printing Container Hidden for UI -->
+  <div id="thermalPrintArea" class="d-none d-print-block"></div>
+
+  <!-- Modal Smart Approve Binding (Pre-binding Validation) -->
+  <div class="modal fade" id="smartApproveModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
+        <div class="modal-header bg-primary text-white py-3">
+          <h5 class="modal-title fw-bold"><i class="bi bi-qr-code text-warning me-2"></i> ระบุรหัสครุภัณฑ์ก่อนอนุมัติ</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4">
+          <input type="hidden" id="approveTargetReqId">
+          <div class="mb-3">
+            <label class="fw-bold text-dark mb-1">อุปกรณ์ที่ขอ:</label>
+            <div class="fs-6 text-primary fw-bold" id="approveEquipNameDisplay"></div>
+            <div class="small text-muted" id="approveReqInfoDisplay"></div>
+          </div>
+          <div class="p-3 bg-light rounded border mb-3">
+            <label class="form-label fw-bold text-dark"><i class="bi bi-tag-fill me-1 text-success"></i> เลือกรหัสครุภัณฑ์ (Asset Code) ที่ว่างอยู่:</label>
+            <div id="assetDropdownContainer"></div>
+          </div>
+          <div class="d-flex justify-content-end gap-2">
+            <button type="button" class="btn btn-secondary px-3" data-bs-dismiss="modal">ยกเลิก</button>
+            <button type="button" class="btn btn-success px-4 fw-bold" onclick="confirmSmartApproveAction()"><i class="bi bi-check-circle-fill me-1"></i> ยืนยันอนุมัติคำขอ</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Field Migration (ผูกรหัสหน้างาน) -->
+  <div class="modal fade" id="fieldMigrationModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
+        <div class="modal-header bg-dark text-white py-3">
+          <h5 class="modal-title fw-bold"><i class="bi bi-link-45deg text-info me-2"></i> ผูกรหัส QR กับผู้ถือครองเดิมหน้างาน</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4">
+          <input type="hidden" id="migrationAssetCode">
+          <div class="mb-3">
+            <label class="fw-bold text-dark">รหัส QR Code:</label>
+            <code class="fs-5 text-primary fw-bold d-block" id="migrationAssetCodeDisplay"></code>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-bold text-dark">เลือกผู้ถือครองเดิมในตาราง Tracker:</label>
+            <select class="form-select" id="migrationTrackerSelect" required></select>
+          </div>
+          <button type="button" class="btn btn-primary w-100 fw-bold py-2" onclick="submitFieldMigrationBinding()">
+            <i class="bi bi-save-fill me-1"></i> ยืนยันผูกรหัสครุภัณฑ์
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Row Detail -->
   <div class="modal fade" id="rowDetailModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content modal-frosted border-0 shadow-lg">
@@ -695,7 +739,7 @@
     </div>
   </div>
 
-  <!-- Modal สแกน QR Code สำหรับมือถือ -->
+  <!-- Modal QR Scanner -->
   <div class="modal fade" id="qrScannerModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
@@ -711,7 +755,7 @@
     </div>
   </div>
 
-  <!-- Modal ฟอร์มแก้ไขข้อมูลฉบับเต็มสำหรับ Admin -->
+  <!-- Modal Admin Full Edit -->
   <div class="modal fade" id="fullEditModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content" style="border-radius: 16px;">
@@ -784,6 +828,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
   <script src="https://unpkg.com/html5-qrcode"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 
   <script>
     // ==========================================
@@ -800,6 +845,17 @@
       26:"บ้านใหม่สุขสรรค์", 27:"บ้านดอนแก้ว", 28:"บ้านใหม่จะคะ"
     };
 
+    const PREFIX_AUTO_MAP = {
+      "ไม้ค้ำยัน": "CRU",
+      "ไม้เท้าขาเดียว": "STK",
+      "ไม้เท้า 3 ขา": "STK3",
+      "ไม้เท้า 4 ขา": "STK4",
+      "ที่หัดเดิน 4 ขา (walker)": "WLK",
+      "รถเข็นผู้ป่วย (wheelchairs)": "WCH",
+      "เตียงผู้ป่วย": "BED",
+      "อื่นๆ": "EQ"
+    };
+
     let sessionPassword = "";
     let backgroundAutoRefreshTimer = null;
     let masterAdminCachedData = null;
@@ -813,9 +869,6 @@
 
     Chart.register(ChartDataLabels);
 
-    // ==========================================
-    // API Helper Gateway (CORS Bridge)
-    // ==========================================
     async function callGASApi(action, payload = {}, pass = "") {
       try {
         const response = await fetch(GAS_WEB_APP_URL, {
@@ -893,11 +946,9 @@
 
       const subNav = document.getElementById('subNavbarNav');
       
-      // ล็อคซ่อนเมนูมุมขวาบนเด็ดขาดในหน้าแรก (welcome)
       if (target === 'welcome' || !sessionPassword) {
         if (subNav) subNav.style.setProperty('display', 'none', 'important');
       } else {
-        // แสดงเมนูเฉพาะกรณีอยู่ในหน้าแอดมินและล็อกอินสำเร็จแล้วเท่านั้น
         if (target === 'admin' && sessionPassword) {
           if (subNav) subNav.style.setProperty('display', 'flex', 'important');
         } else {
@@ -921,9 +972,6 @@
       }
     }
 
-    // ==========================================
-    // Public Stock & Quantity Card Counter Logic
-    // ==========================================
     async function fetchPublicStockAndEquipList() {
       try {
         const stockData = await callGASApi('getPublicStock');
@@ -1086,9 +1134,6 @@
       }
     }
 
-    // ==========================================
-    // Track Search Logic
-    // ==========================================
     async function executeTrackSearch() {
       const keyword = document.getElementById('searchKeyword').value.trim();
       if(!keyword) return alert("โปรดกรอกข้อมูลค้นหาครับ");
@@ -1121,12 +1166,13 @@
           html += `<div class="card mb-4 border-start border-4 border-success shadow-sm">
             <div class="card-header bg-white"><h6 class="fw-bold text-success mb-0"><i class="bi bi-people-fill me-2"></i> บัญชีรายชื่อผู้ครองสิทธิ์ใช้งานอุปกรณ์ประจำการ</h6></div>
             <div class="table-responsive"><table class="table table-sm table-hover align-middle mb-0 text-nowrap">
-            <thead class="table-light"><tr><th>รหัสติดตาม</th><th>ชื่อ-นามสกุล</th><th>เบอร์โทรศัพท์</th><th>อุปกรณ์</th><th class="text-center">จำนวน</th><th>วันที่ยืม</th><th>วันกำหนดคืน</th><th>สถานะ</th></tr></thead><tbody>`;
+            <thead class="table-light"><tr><th>รหัสติดตาม</th><th>ชื่อ-นามสกุล</th><th>เบอร์โทรศัพท์</th><th>อุปกรณ์ / รหัสครุภัณฑ์</th><th class="text-center">จำนวน</th><th>วันที่ยืม</th><th>วันกำหนดคืน</th><th>สถานะ</th></tr></thead><tbody>`;
           res.active.forEach(t => {
              let name = (t['Title'] || '') + t['Name'];
              let phone = t['Phone'].toString().replace(/^'/, '');
              let startDate = t['Due Date'] ? t['Due Date'] : '-';
-             html += `<tr><td><code class="text-dark bg-light px-1 rounded">${t['Tracker ID']}</code></td><td class="fw-medium">${name}</td><td>${phone}</td><td class="text-accent fw-bold">${t['Equipment Name']}</td><td class="text-center">${t['Qty']}</td><td class="small text-muted">${startDate}</td><td class="text-danger fw-bold"><i class="bi bi-calendar-x"></i> ${t['Due Date']}</td><td><span class="badge bg-success">ใช้งานอยู่</span></td></tr>`;
+             let assetTag = t['Asset Code'] ? `<br><code class="text-primary bg-light px-1 rounded">${t['Asset Code']}</code>` : '';
+             html += `<tr><td><code class="text-dark bg-light px-1 rounded">${t['Tracker ID']}</code></td><td class="fw-medium">${name}</td><td>${phone}</td><td class="text-accent fw-bold">${t['Equipment Name']}${assetTag}</td><td class="text-center">${t['Qty']}</td><td class="small text-muted">${startDate}</td><td class="text-danger fw-bold"><i class="bi bi-calendar-x"></i> ${t['Due Date']}</td><td><span class="badge bg-success">ใช้งานอยู่</span></td></tr>`;
           });
           html += `</tbody></table></div></div>`;
         }
@@ -1141,7 +1187,8 @@
              let phone = h['Phone'].toString().replace(/^'/, '');
              let stColor = h['Status'] === 'Rejected' ? 'text-danger' : (h['Status'] === 'Pending' ? 'text-warning' : 'text-success');
              let badgeColor = h['Action Type'] === 'คืนอุปกรณ์' || h['Action Type'] === 'คืน' ? 'bg-info text-dark' : (h['Action Type'] === 'บริจาค' ? 'bg-primary' : 'bg-dark');
-             html += `<tr><td class="small">${h['Timestamp']}</td><td><code class="text-dark bg-light px-1 rounded">${h['Request ID']}</code></td><td class="fw-medium">${name}</td><td>${phone}</td><td><span class="badge ${badgeColor}">${h['Action Type']}</span></td><td class="fw-medium">${h['Equipment Name']}</td><td class="text-center">${h['Qty']}</td><td class="${stColor} fw-bold">${h['Status']}</td></tr>`;
+             let assetTag = h['Asset Code'] ? ` <small class="text-muted">(${h['Asset Code']})</small>` : '';
+             html += `<tr><td class="small">${h['Timestamp']}</td><td><code class="text-dark bg-light px-1 rounded">${h['Request ID']}</code></td><td class="fw-medium">${name}</td><td>${phone}</td><td><span class="badge ${badgeColor}">${h['Action Type']}</span></td><td class="fw-medium">${h['Equipment Name']}${assetTag}</td><td class="text-center">${h['Qty']}</td><td class="${stColor} fw-bold">${h['Status']}</td></tr>`;
           });
           html += `</tbody></table></div></div>`;
         }
@@ -1153,9 +1200,6 @@
       }
     }
 
-    // ==========================================
-    // Admin Control Panel & Subviews
-    // ==========================================
     async function attemptAdminAuthentication(isAuto = false) {
       const pass = document.getElementById('adminPasswordInput').value; if(!pass) return;
       try {
@@ -1166,7 +1210,6 @@
         document.getElementById('adminAuthGate').classList.add('d-none'); 
         document.getElementById('adminMainControlPanel').classList.remove('d-none'); 
         
-        // Show Sub-navbar and Red Logout Button upon successful authentication
         const subNav = document.getElementById('subNavbarNav');
         if (subNav && document.getElementById('adminView').style.display !== 'none') {
           subNav.style.setProperty('display', 'flex', 'important');
@@ -1180,6 +1223,7 @@
         
         masterAdminCachedData = dataset; 
         populateFiscalYearDropdownFilter(); 
+        populateGenEquipOptions();
         switchAdminSubTab('operations'); 
         evaluateOverdueSchedules(dataset); 
         setupBackgroundPeriodicSync();
@@ -1235,6 +1279,7 @@
         const freshDataset = await callGASApi('getAdminDashboardData', {}, sessionPassword);
         masterAdminCachedData = freshDataset;
         populateFiscalYearDropdownFilter();
+        populateGenEquipOptions();
         refreshAdminSubViewsUI();
         evaluateOverdueSchedules(freshDataset);
         btnBtn.disabled = false;
@@ -1251,7 +1296,6 @@
       else executeAdminBackgroundRefresh();
     }
 
-    // เติมตัวเลือกและ Sync Dropdown ปีงบประมาณของทั้ง 2 จุด
     function populateFiscalYearDropdownFilter() {
       const selMain = document.getElementById('analyticsFiscalYearFilter'); 
       const selMatrix = document.getElementById('tableMatrixFiscalYearFilter');
@@ -1277,7 +1321,6 @@
       });
     }
 
-    // ฟังก์ชัน Sync ค่าปีงบประมาณและอัปเดต UI พร้อมกันทุกตาราง/กราฟ
     function syncAndRefreshFiscalYearViews(selectedFY) {
       const selMain = document.getElementById('analyticsFiscalYearFilter');
       const selMatrix = document.getElementById('tableMatrixFiscalYearFilter');
@@ -1298,6 +1341,7 @@
       if (subTabName === 'operations') document.getElementById('subViewOperations').classList.remove('d-none');
       else if (subTabName === 'analytics') document.getElementById('subViewAnalytics').classList.remove('d-none');
       else if (subTabName === 'inventory') document.getElementById('subViewInventory').classList.remove('d-none');
+      else if (subTabName === 'asset_qr') document.getElementById('subViewAssetQr').classList.remove('d-none');
       else if (subTabName === 'history') document.getElementById('subViewHistory').classList.remove('d-none');
       else if (subTabName === 'calendar') { 
         document.getElementById('subViewCalendar').classList.remove('d-none'); 
@@ -1332,9 +1376,6 @@
       }
     }
 
-    // ==========================================
-    // Table Row Detail Popup Modals
-    // ==========================================
     function openRowDetailModal(sheetName, id) {
       if(!masterAdminCachedData) return;
       
@@ -1396,6 +1437,7 @@
               <div class="mb-1"><b>วัตถุประสงค์:</b> <span class="badge bg-primary">${item['Action Type'] || 'ยืมอุปกรณ์'}</span></div>
               <div class="mb-1"><b>กายอุปกรณ์:</b> <span class="text-accent fw-bold fs-6">${item['Equipment Name']}</span></div>
               <div class="mb-1"><b>จำนวน:</b> <span class="fw-bold fs-6">${item['Qty']} ชิ้น</span></div>
+              <div class="mb-1"><b>รหัสครุภัณฑ์:</b> <code class="text-primary">${item['Asset Code'] || '-'}</code></div>
               <div class="mb-1"><b>วันกำหนดคืน/อ้างอิง:</b> <span class="text-danger fw-bold">${item['Relevant Date'] || item['Due Date'] || '-'}</span></div>
               <div><b>ปีงบประมาณ:</b> ${item['Fiscal Year'] || '-'}</div>
             </div>
@@ -1424,8 +1466,9 @@
       if(!masterAdminCachedData) return;
       document.getElementById('lastUpdatedTimestampDisplay').textContent = "อัปเดตล่าสุด: " + new Date().toLocaleTimeString('th-TH') + " น.";
       refreshDashboardVisualCharts();
+      renderAssetItemsTableUI();
       
-      // 1. ตารางคำร้องรอพิจารณา (Requests)
+      // 1. Requests Table
       const pTable = document.getElementById('tablePendingBody');
       let pFilter = masterAdminCachedData.requests.filter(r => r['Status'] === 'Pending');
       let pHtml = "";
@@ -1465,7 +1508,7 @@
           <td>${matchBadge}</td>
           <td><i class="bi bi-telephone-fill text-success"></i> ${dispPhone}</td>
           <td class="text-center" onclick="event.stopPropagation();">
-            <button class="btn btn-sm btn-success me-1 py-1" onclick="submitAdminDecision('${r['Request ID']}', true)"><i class="bi bi-check-lg"></i> อนุมัติ</button>
+            <button class="btn btn-sm btn-success me-1 py-1" onclick="openSmartApproveModal('${r['Request ID']}')"><i class="bi bi-check-lg"></i> อนุมัติ</button>
             <button class="btn btn-sm btn-outline-danger me-1 py-1" onclick="submitAdminDecision('${r['Request ID']}', false)"><i class="bi bi-x-lg"></i> ปฏิเสธ</button>
             <button class="btn btn-sm btn-warning text-dark py-1" onclick="openFullAdminEditModal('Requests', '${r['Request ID']}')"><i class="bi bi-pencil-square"></i> แก้ไข</button>
           </td>
@@ -1473,7 +1516,7 @@
       });
       pTable.innerHTML = pHtml || '<tr><td colspan="9" class="text-center text-muted py-3">ไม่มีรายการค้างรอดำเนินการครับ</td></tr>';
       
-      // 2. ตารางผู้ครองสิทธิ์ (Tracker)
+      // 2. Tracker Table
       const tTable = document.getElementById('tableTrackerBody');
       let tHtml = "";
       let sortedTracker = masterAdminCachedData.tracker.map(t => {
@@ -1504,13 +1547,14 @@
         let fullName = (t['Title'] || '') + t['Name'];
         let dispIdCard = t['ID Card'].toString().replace(/^'/, '');
         let dispPhone = t['Phone'].toString().replace(/^'/, '');
+        let assetDisplay = t['Asset Code'] ? `<br><code class="text-primary bg-light px-1 border rounded">${t['Asset Code']}</code>` : '';
         
         tHtml += `<tr class="clickable-row" onclick="openRowDetailModal('Tracker', '${t['Tracker ID']}')">
           <td><code>${t['Tracker ID']}</code></td>
           <td class="fw-bold text-success">${fullName} <br><small class="text-muted"><i class="bi bi-person-vcard"></i> ${dispIdCard}</small></td>
           <td><span class="fw-medium text-dark"><i class="bi bi-telephone-fill text-success"></i> ${dispPhone}</span></td>
           <td class="small">อายุ: ${t['Age']} ปี | เพศ: ${t['Gender']}<br><span class="badge bg-info text-dark">${t['User Status']}</span> ม.${t['Moo']} ${t['Village']}</td>
-          <td class="text-accent fw-bold">${t['Equipment Name']}</td>
+          <td class="text-accent fw-bold">${t['Equipment Name']}${assetDisplay}</td>
           <td class="text-center fw-bold text-dark fs-5">${t['Qty']}</td>
           <td class="small text-muted">${t['Due Date'] ? t['Due Date'] : '-'}</td>
           <td class="text-danger fw-bold"><i class="bi bi-calendar-x"></i> ${t['Due Date']}</td>
@@ -1525,7 +1569,7 @@
       });
       tTable.innerHTML = tHtml || '<tr><td colspan="10" class="text-center text-muted py-4">ไม่มีรายการค้างส่งคืนในระบบครับ</td></tr>';
 
-      // 3. การ์ดคลังอุปกรณ์
+      // 3. Stock Cards
       const invContainer = document.getElementById('inventoryCardsContainer');
       let invHtml = "";
       masterAdminCachedData.stock.forEach(s => {
@@ -1555,7 +1599,7 @@
       });
       invContainer.innerHTML = invHtml || '<div class="col-12 text-center py-5 text-muted">ไม่มีข้อมูลอุปกรณ์ในคลังระบบ</div>';
       
-      // 4. ตารางประวัติ History Log
+      // 4. History Table
       const hTable = document.getElementById('tableHistoryBody');
       const actionFilter = document.getElementById('historyActionFilter').value;
       let hHtml = "";
@@ -1575,6 +1619,7 @@
         let fullName = (h['Title'] || '') + h['Name'];
         let dispIdCard = h['ID Card'].toString().replace(/^'/, '');
         let dispPhone = h['Phone'].toString().replace(/^'/, '');
+        let assetTag = h['Asset Code'] ? `<br><code class="text-primary bg-light px-1 border rounded">${h['Asset Code']}</code>` : '';
    
         hHtml += `<tr>
           <td class="small text-muted">${h['Timestamp']}</td>
@@ -1583,7 +1628,7 @@
           <td><span class="fw-medium text-dark"><i class="bi bi-telephone-fill text-success"></i> ${dispPhone}</span></td>
           <td class="small">อายุ: ${h['Age']} ปี | ${h['Gender']}<br><span class="badge bg-secondary">${h['User Status']}</span> ม.${h['Moo']} ${h['Village']}</td>
           <td><span class="badge ${badgeColor}">${h['Action Type']}</span></td>
-          <td class="fw-medium">${h['Equipment Name']}</td>
+          <td class="fw-medium">${h['Equipment Name']}${assetTag}</td>
           <td class="text-center fw-bold fs-6">${h['Qty']}</td>
           <td class="text-muted small"><i class="bi bi-calendar-check"></i> ${h['Relevant Date']}</td>
           <td class="${stColor} fw-bold">${h['Status']}</td>
@@ -1596,6 +1641,373 @@
 
       executeTableFilterPreserve('filterTrackerInput', 'tableTrackerBody');
       executeTableFilterPreserve('filterHistoryInput', 'tableHistoryBody');
+    }
+
+    function populateGenEquipOptions() {
+      const sel = document.getElementById('genEquipNameSelect');
+      if (!sel || !masterAdminCachedData) return;
+      sel.innerHTML = "";
+      masterAdminCachedData.stock.forEach(s => {
+        let opt = document.createElement('option');
+        opt.value = s['Name'];
+        opt.textContent = s['Name'];
+        sel.appendChild(opt);
+      });
+      if (masterAdminCachedData.stock.length > 0) {
+        autoSuggestPrefix(masterAdminCachedData.stock[0]['Name']);
+      }
+    }
+
+    function autoSuggestPrefix(equipName) {
+      const pInput = document.getElementById('genPrefixInput');
+      if (!pInput) return;
+      pInput.value = PREFIX_AUTO_MAP[equipName] || 'EQ';
+    }
+
+    function renderAssetItemsTableUI() {
+      const tbody = document.getElementById('tableAssetItemsBody');
+      if (!tbody || !masterAdminCachedData || !masterAdminCachedData.assets) return;
+
+      const filterStatus = document.getElementById('filterAssetStatusSelect').value;
+      let assets = masterAdminCachedData.assets;
+
+      if (filterStatus) {
+        assets = assets.filter(a => a['Status'] === filterStatus);
+      }
+
+      let html = "";
+      assets.forEach((a, idx) => {
+        let stBadge = a['Status'] === 'Available' ? '<span class="badge bg-success">ว่าง (Available)</span>' : (a['Status'] === 'Borrowed' ? '<span class="badge bg-warning text-dark">ถูกยืม (Borrowed)</span>' : '<span class="badge bg-danger">ชำรุด (Maintenance)</span>');
+        
+        html += `<tr>
+          <td class="text-center"><input type="checkbox" class="form-check-input asset-checkbox" value="${a['Asset Code']}" onchange="updateSelectedQrCount()"></td>
+          <td class="fw-bold"><code class="text-primary fs-6">${a['Asset Code']}</code></td>
+          <td class="fw-semibold text-dark">${a['Equipment Name']}</td>
+          <td>${stBadge}</td>
+          <td>${a['Current Borrower'] || '-'}</td>
+          <td class="small text-muted">${a['Registered Date'] || '-'}</td>
+        </tr>`;
+      });
+
+      tbody.innerHTML = html || '<tr><td colspan="6" class="text-center text-muted py-4">ไม่มีข้อมูลรหัสครุภัณฑ์ในระบบ</td></tr>';
+      updateSelectedQrCount();
+    }
+
+    function toggleSelectAllAssets(masterCheck) {
+      const checkboxes = document.querySelectorAll('.asset-checkbox');
+      checkboxes.forEach(cb => cb.checked = masterCheck.checked);
+      updateSelectedQrCount();
+    }
+
+    function updateSelectedQrCount() {
+      const selected = document.querySelectorAll('.asset-checkbox:checked');
+      const text = document.getElementById('selectedQrCountText');
+      if (text) text.textContent = selected.length;
+    }
+
+    async function handleAssetBatchGenerateSubmit(e) {
+      e.preventDefault();
+      const equipName = document.getElementById('genEquipNameSelect').value;
+      const prefix = document.getElementById('genPrefixInput').value.trim();
+      const qty = document.getElementById('genQtyInput').value;
+
+      const btn = document.getElementById('btnGenAssetSubmit');
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> กำลังสร้างรหัส...';
+
+      try {
+        const resMsg = await callGASApi('generateNewAssetCodesBatch', { equipName: equipName, prefix: prefix, quantity: qty }, sessionPassword);
+        alert(resMsg);
+        btn.disabled = false;
+        btn.innerHTML = '<i class="bi bi-plus-square-fill me-1"></i> สร้างรหัสครุภัณฑ์';
+        triggerAdminDataRefresh(btn);
+      } catch(err) {
+        alert("เกิดข้อผิดพลาด: " + err.message);
+        btn.disabled = false;
+        btn.innerHTML = '<i class="bi bi-plus-square-fill me-1"></i> สร้างรหัสครุภัณฑ์';
+      }
+    }
+
+    function executeBatchThermalPrint() {
+      const checkedBoxes = document.querySelectorAll('.asset-checkbox:checked');
+      if (checkedBoxes.length === 0) return alert("กรุณาติ๊กเลือกรหัสครุภัณฑ์อย่างน้อย 1 รายการเพื่อสั่งพิมพ์ครับ");
+
+      const printArea = document.getElementById('thermalPrintArea');
+      printArea.innerHTML = "";
+
+      checkedBoxes.forEach((cb, index) => {
+        let code = cb.value;
+        let matchAsset = masterAdminCachedData.assets.find(a => a['Asset Code'] === code);
+        let equipName = matchAsset ? matchAsset['Equipment Name'] : 'กายอุปกรณ์';
+
+        let stickerNode = document.createElement('div');
+        stickerNode.className = 'qr-sticker-item';
+        stickerNode.innerHTML = `
+          <div class="qr-sticker-title">อบต.ท่าก๊อ</div>
+          <div class="qr-sticker-sub">${equipName}</div>
+          <div id="qr_canvas_${index}"></div>
+          <div class="qr-sticker-code">${code}</div>
+        `;
+        printArea.appendChild(stickerNode);
+
+        new QRCode(stickerNode.querySelector(`#qr_canvas_${index}`), {
+          text: code,
+          width: 75,
+          height: 75,
+          correctLevel: QRCode.CorrectLevel.M
+        });
+      });
+
+      setTimeout(() => {
+        window.print();
+      }, 500);
+    }
+
+    async function openSmartApproveModal(reqId) {
+      if (!masterAdminCachedData) return;
+      let req = masterAdminCachedData.requests.find(r => r['Request ID'] === reqId);
+      if (!req) return alert("ไม่พบข้อมูลคำขอ");
+
+      document.getElementById('approveTargetReqId').value = reqId;
+      document.getElementById('approveEquipNameDisplay').textContent = req['Equipment Name'] + ` (จำนวน ${req['Qty']} ชิ้น)`;
+      document.getElementById('approveReqInfoDisplay').textContent = `ผู้ยื่น: ${req['Title']}${req['Name']} | เบอร์โทร: ${req['Phone'].toString().replace(/^'/, '')}`;
+
+      const container = document.getElementById('assetDropdownContainer');
+      container.innerHTML = '<div class="text-muted"><span class="spinner-border spinner-border-sm me-1"></span> กำลังค้นหารหัสครุภัณฑ์ที่ว่างอยู่...</div>';
+
+      let modal = new bootstrap.Modal(document.getElementById('smartApproveModal'));
+      modal.show();
+
+      try {
+        const availables = await callGASApi('getAvailableAssetsForEquipment', { equipName: req['Equipment Name'] }, sessionPassword);
+        let qtyReq = Number(req['Qty']) || 1;
+        let html = "";
+
+        if (availables.length === 0) {
+          html = `<div class="alert alert-warning py-2 small mb-0"><i class="bi bi-exclamation-triangle-fill me-1"></i> ไม่พบรหัสครุภัณฑ์ที่ว่างอยู่สำหรับอุปกรณ์นี้ ท่านสามารถกดอนุมัติแบบไม่ผูกรหัสได้ หรือออกรหัสใหม่ก่อนครับ</div>`;
+        } else {
+          for (let k = 0; k < qtyReq; k++) {
+            html += `<div class="mb-2"><label class="small text-muted mb-1">ชิ้นที่ ${k+1}:</label><select class="form-select form-select-sm approve-asset-select"><option value="">-- ไม่ระบุผูกรหัส --</option>`;
+            availables.forEach(a => {
+              html += `<option value="${a.assetCode}">${a.assetCode} (${a.equipName})</option>`;
+            });
+            html += `</select></div>`;
+          }
+        }
+        container.innerHTML = html;
+      } catch(err) {
+        container.innerHTML = `<div class="alert alert-danger py-1 small">${err.message}</div>`;
+      }
+    }
+
+    async function confirmSmartApproveAction() {
+      const reqId = document.getElementById('approveTargetReqId').value;
+      const selects = document.querySelectorAll('.approve-asset-select');
+      let selectedCodes = [];
+      selects.forEach(s => { if (s.value) selectedCodes.push(s.value); });
+
+      let finalAssetStr = selectedCodes.join(', ');
+
+      bootstrap.Modal.getInstance(document.getElementById('smartApproveModal')).hide();
+      submitAdminDecision(reqId, true, finalAssetStr);
+    }
+
+    async function submitAdminDecision(reqId, isApproved, assetCodes = "") {
+      if(!isApproved && !confirm(`ยืนยันการปฏิเสธคำร้องรหัส ${reqId} ใช่หรือไม่ครับ?`)) return;
+      try {
+        const resMsg = await callGASApi('processAdminAction', { reqId: reqId, isApproved: isApproved, assetCodes: assetCodes }, sessionPassword);
+        alert(resMsg);
+        executeAdminBackgroundRefresh();
+      } catch(err) {
+        alert("เกิดข้อผิดพลาด: " + err.message);
+      }
+    }
+
+    async function processDirectTrackerRenew(trackerId) {
+      if(!confirm("ยืนยันขยายเวลายืมต่ออีก 90 วัน สำหรับรายการนี้ใช่หรือไม่ครับ?")) return;
+      try {
+        const resMsg = await callGASApi('renewEquipmentFromTracker', { trackerId: trackerId }, sessionPassword);
+        alert(resMsg);
+        executeAdminBackgroundRefresh();
+      } catch(err) {
+        alert("เกิดข้อผิดพลาด: " + err.message);
+      }
+    }
+
+    async function processDirectTrackerReturn(trackerId) {
+      if(!confirm("ยืนยันรับอุปกรณ์ชิ้นนี้คืนเข้าคลังใช่หรือไม่ครับ?")) return;
+      try {
+        const resMsg = await callGASApi('returnEquipmentFromTracker', { trackerId: trackerId }, sessionPassword);
+        alert(resMsg);
+        executeAdminBackgroundRefresh();
+      } catch(err) {
+        alert("เกิดข้อผิดพลาด: " + err.message);
+      }
+    }
+
+    function setupInventoryEditMode(id, name, total) {
+      document.getElementById('invFormTitle').innerHTML = '<i class="bi bi-pencil-square text-primary me-2"></i> แก้ไขคลังอุปกรณ์';
+      document.getElementById('invId').value = id;
+      document.getElementById('invName').value = name; 
+      document.getElementById('invTotal').value = total;
+      document.getElementById('btnCancelEditInv').classList.remove('d-none');
+    }
+
+    function resetInventoryFormState() {
+      document.getElementById('invFormTitle').innerHTML = '<i class="bi bi-plus-circle-fill text-primary me-2"></i> จัดการคลังอุปกรณ์';
+      document.getElementById('invId').value = "";
+      document.getElementById('inventoryCrudForm').reset(); 
+      document.getElementById('btnCancelEditInv').classList.add('d-none');
+    }
+
+    async function executeInventorySubmit(e) {
+      e.preventDefault();
+      const id = document.getElementById('invId').value; 
+      const typeAction = id ? 'edit' : 'add_new';
+      const name = document.getElementById('invName').value.trim(); 
+      const total = document.getElementById('invTotal').value;
+
+      try {
+        const resMsg = await callGASApi('manageEquipmentStock', { actionType: typeAction, itemId: id, name: name, totalQty: total }, sessionPassword);
+        alert(resMsg);
+        resetInventoryFormState();
+        executeAdminBackgroundRefresh();
+      } catch(err) {
+        alert("เกิดข้อผิดพลาด: " + err.message);
+      }
+    }
+
+    async function executeInventoryDelete(id) {
+      if(!confirm("ต้องการลบอุปกรณ์นี้ออกจากระบบถาวรใช่หรือไม่?")) return;
+      try {
+        const resMsg = await callGASApi('manageEquipmentStock', { actionType: 'delete', itemId: id, name: '', totalQty: 0 }, sessionPassword);
+        alert(resMsg);
+        executeAdminBackgroundRefresh();
+      } catch(err) {
+        alert("เกิดข้อผิดพลาด: " + err.message);
+      }
+    }
+
+    function openQrScannerModal() {
+      let qModal = new bootstrap.Modal(document.getElementById('qrScannerModal'));
+      qModal.show();
+      document.getElementById('scanResultCard').classList.add('d-none');
+
+      setTimeout(() => {
+        if (!html5QrCodeScannerInstance) {
+          html5QrCodeScannerInstance = new Html5Qrcode("reader");
+        }
+        
+        html5QrCodeScannerInstance.start(
+          { facingMode: "environment" },
+          { fps: 10, qrbox: { width: 250, height: 250 } },
+          onQrScanSuccess,
+          onQrScanError
+        ).catch(err => {
+          document.getElementById('reader').innerHTML = `<div class="alert alert-warning p-2 small">ไม่สามารถเปิดกล้องได้: โปรดอนุญาตการเข้าถึงกล้องบนเบราว์เซอร์</div>`;
+        });
+      }, 300);
+    }
+
+    function stopQrScanner() {
+      if (html5QrCodeScannerInstance && html5QrCodeScannerInstance.isScanning) {
+        html5QrCodeScannerInstance.stop().then(() => {
+          document.getElementById('reader').innerHTML = "";
+        }).catch(() => {});
+      }
+    }
+
+    async function onQrScanSuccess(decodedText, decodedResult) {
+      stopQrScanner();
+      
+      const resultCard = document.getElementById('scanResultCard');
+      resultCard.classList.remove('d-none');
+      resultCard.innerHTML = '<div class="spinner-border spinner-border-sm text-info me-2"></div> กำลังตรวจสอบรหัสอุปกรณ์...';
+
+      try {
+        const resData = await callGASApi('scanAssetItem', { assetCode: decodedText });
+        if (!resData.found) {
+          resultCard.innerHTML = `<div class="alert alert-danger mb-0">${resData.message}</div>`;
+          return;
+        }
+
+        let asset = resData.asset;
+        let tracker = resData.tracker;
+        let html = `
+          <div class="card card-custom p-3 text-start border-top border-4 border-info">
+            <h6 class="fw-bold text-primary mb-1"><i class="bi bi-qr-code text-info me-1"></i> ${asset.assetCode}</h6>
+            <div class="fw-bold text-dark fs-5 mb-2">${asset.equipName}</div>
+            <div class="mb-2"><span class="badge ${asset.status === 'Available' ? 'bg-success' : 'bg-warning text-dark'}">${asset.status}</span></div>`;
+
+        if (tracker) {
+          html += `
+            <div class="p-2 bg-light rounded border mb-3 small">
+              <div><b>ผู้ถือครองปัจจุบัน:</b> ${tracker.borrowerName}</div>
+              <div><b>เบอร์โทร:</b> ${tracker.phone}</div>
+              <div><b>วันกำหนดคืน:</b> <span class="text-danger fw-bold">${tracker.dueDate}</span></div>
+            </div>`;
+
+          if (sessionPassword) {
+            html += `
+              <div class="d-grid gap-2">
+                <button class="btn btn-warning btn-sm text-dark fw-bold" onclick="processDirectTrackerRenew('${tracker.trackerId}')"><i class="bi bi-arrow-repeat me-1"></i> ขยายเวลายืมต่อ (+90 วัน)</button>
+                <button class="btn btn-success btn-sm fw-bold" onclick="processDirectTrackerReturn('${tracker.trackerId}')"><i class="bi bi-box-arrow-in-down me-1"></i> รับคืนเข้าคลัง</button>
+              </div>`;
+          }
+        } else {
+          html += `<div class="text-muted small mb-3">อุปกรณ์ชิ้นนี้อยู่ในคลัง / รหัสยังไม่ได้ผูกผู้ยืม</div>`;
+          if (sessionPassword) {
+            html += `<button class="btn btn-primary btn-sm w-100 fw-bold" onclick="openFieldMigrationModal('${asset.assetCode}', '${asset.equipName}')"><i class="bi bi-link-45deg me-1"></i> ผูกรหัสกับผู้ใช้งานเดิม (Field Migration)</button>`;
+          }
+        }
+
+        html += `</div>`;
+        resultCard.innerHTML = html;
+      } catch(err) {
+        resultCard.innerHTML = `<div class="alert alert-danger mb-0">${err.message}</div>`;
+      }
+    }
+
+    function onQrScanError(errorMessage) {}
+
+    function openFieldMigrationModal(assetCode, equipName) {
+      if (!masterAdminCachedData) return;
+      document.getElementById('migrationAssetCode').value = assetCode;
+      document.getElementById('migrationAssetCodeDisplay').textContent = assetCode + ` (${equipName})`;
+
+      const sel = document.getElementById('migrationTrackerSelect');
+      sel.innerHTML = "";
+
+      let matches = masterAdminCachedData.tracker.filter(t => t['Equipment Name'].toString().trim().toLowerCase() === equipName.toString().trim().toLowerCase());
+      if (matches.length === 0) {
+        sel.innerHTML = `<option value="">-- ไม่พบรายการผู้ยืมอุปกรณ์ชนิดนี้ใน Tracker --</option>`;
+      } else {
+        matches.forEach(t => {
+          let opt = document.createElement('option');
+          opt.value = t['Tracker ID'];
+          opt.textContent = `${t['Title']}${t['Name']} (ม.${t['Moo']} ${t['Village']}) - กำหนดคืน: ${t['Due Date']}`;
+          sel.appendChild(opt);
+        });
+      }
+
+      bootstrap.Modal.getInstance(document.getElementById('qrScannerModal')).hide();
+      let modal = new bootstrap.Modal(document.getElementById('fieldMigrationModal'));
+      modal.show();
+    }
+
+    async function submitFieldMigrationBinding() {
+      const assetCode = document.getElementById('migrationAssetCode').value;
+      const trackerId = document.getElementById('migrationTrackerSelect').value;
+      if (!trackerId) return alert("โปรดเลือกรายการผู้ถือครองในระบบก่อนกดผูกรหัสครับ");
+
+      try {
+        const resMsg = await callGASApi('bindAssetToExistingTracker', { assetCode: assetCode, trackerId: trackerId }, sessionPassword);
+        alert(resMsg);
+        bootstrap.Modal.getInstance(document.getElementById('fieldMigrationModal')).hide();
+        executeAdminBackgroundRefresh();
+      } catch(err) {
+        alert("เกิดข้อผิดพลาด: " + err.message);
+      }
     }
 
     function executeTableFilterPreserve(inputId, tableBodyId) {
@@ -1701,9 +2113,6 @@
       }
     }
 
-    // ==========================================
-    // Visual Charts Dashboard & Inventory Summary
-    // ==========================================
     function refreshDashboardVisualCharts() {
       if(!masterAdminCachedData) return;
       const selectedFY = document.getElementById('analyticsFiscalYearFilter').value;
@@ -1780,24 +2189,20 @@
       renderSummaryInventoryMatrixTable(selectedFY);
     }
 
-    // ==========================================
-    // Updated Summary Inventory Matrix (Pure Fiscal Year Logic)
-    // ==========================================
     function renderSummaryInventoryMatrixTable(selectedFY) {
       const tbody = document.getElementById('tableInventoryMatrixBody');
       if (!tbody || !masterAdminCachedData) return;
 
-      // กรองประวัติที่อนุมัติ/คืนแล้ว เฉพาะปีงบประมาณที่เลือก
       let hYearFilter = masterAdminCachedData.history.filter(h => h['Fiscal Year'] === selectedFY && (h['Status'] === 'Approved' || h['Status'] === 'Returned'));
       let matrixHtml = "";
 
       masterAdminCachedData.stock.forEach(stock => {
         let eName = stock['Name'].trim();
-        let total = Number(stock['Total Qty']) || 0; // จำนวนคลังตั้งต้น
+        let total = Number(stock['Total Qty']) || 0;
 
-        let accumBorrowed = 0; // ยืมสะสมในปีนี้
-        let accumReturned = 0; // คืนแล้วในปีนี้
-        let accumDonated = 0;  // บริจาคในปีนี้
+        let accumBorrowed = 0;
+        let accumReturned = 0;
+        let accumDonated = 0;
 
         hYearFilter.forEach(h => {
           let hEquip = (h['Equipment Name'] || '').trim();
@@ -1811,18 +2216,13 @@
           }
         });
 
-        // 1. ถูกยืมประจำปีนี้ = (ยืมสะสม - คืนแล้ว)
         let activeInFY = Math.max(0, accumBorrowed - accumReturned);
-        
-        // 2. เปอร์เซ็นต์ใช้งานประจำปี = (ถูกยืมปีนี้ / รวม) * 100
         let usagePercent = total > 0 ? ((activeInFY / total) * 100).toFixed(1) : 0;
         let usageBadgeColor = usagePercent > 70 ? 'bg-danger' : (usagePercent >= 30 ? 'bg-warning text-dark' : 'bg-success');
 
-        // 3. เปอร์เซ็นต์หมุนเวียนสะสมประจำปี = (ยืมสะสมปีนี้ / รวม) * 100
         let accumTurnoverPercent = total > 0 ? ((accumBorrowed / total) * 100).toFixed(1) : 0;
         let turnoverBadgeColor = accumTurnoverPercent >= 100 ? 'bg-primary' : (accumTurnoverPercent >= 50 ? 'bg-info text-dark' : 'bg-secondary');
 
-        // เรียงลำดับ 8 คอลัมน์: ชื่อ | รวม | ถูกยืม (ปีนี้) | ใช้งาน% | ยืมสะสม (ปีนี้) | คืนแล้ว (ปีนี้) | บริจาค (ปีนี้) | หมุนเวียนสะสม%
         matrixHtml += `<tr>
           <td class="fw-bold text-dark">${eName}</td>
           <td class="text-center fw-semibold">${total}</td>
@@ -1924,164 +2324,6 @@
         if(toastContent !== "") { document.getElementById('toastMessageContent').innerHTML = toastContent; new bootstrap.Toast(document.getElementById('liveNotificationToast')).show(); }
       }
     }
-
-    async function submitAdminDecision(reqId, isApproved) {
-      if(!confirm(`ยืนยันการ${isApproved?'อนุมัติ':'ปฏิเสธ'}คำร้องรหัส ${reqId} ใช่หรือไม่ครับ?`)) return;
-      try {
-        const resMsg = await callGASApi('processAdminAction', { reqId: reqId, isApproved: isApproved }, sessionPassword);
-        alert(resMsg);
-        executeAdminBackgroundRefresh();
-      } catch(err) {
-        alert("เกิดข้อผิดพลาด: " + err.message);
-      }
-    }
-
-    async function processDirectTrackerRenew(trackerId) {
-      if(!confirm("ยืนยันขยายเวลายืมต่ออีก 90 วัน สำหรับรายการนี้ใช่หรือไม่ครับ?")) return;
-      try {
-        const resMsg = await callGASApi('renewEquipmentFromTracker', { trackerId: trackerId }, sessionPassword);
-        alert(resMsg);
-        executeAdminBackgroundRefresh();
-      } catch(err) {
-        alert("เกิดข้อผิดพลาด: " + err.message);
-      }
-    }
-
-    async function processDirectTrackerReturn(trackerId) {
-      if(!confirm("ยืนยันรับอุปกรณ์ชิ้นนี้คืนเข้าคลังใช่หรือไม่ครับ?")) return;
-      try {
-        const resMsg = await callGASApi('returnEquipmentFromTracker', { trackerId: trackerId }, sessionPassword);
-        alert(resMsg);
-        executeAdminBackgroundRefresh();
-      } catch(err) {
-        alert("เกิดข้อผิดพลาด: " + err.message);
-      }
-    }
-
-    function setupInventoryEditMode(id, name, total) {
-      document.getElementById('invFormTitle').innerHTML = '<i class="bi bi-pencil-square text-primary me-2"></i> แก้ไขคลังอุปกรณ์';
-      document.getElementById('invId').value = id;
-      document.getElementById('invName').value = name; 
-      document.getElementById('invTotal').value = total;
-      document.getElementById('btnCancelEditInv').classList.remove('d-none');
-    }
-
-    function resetInventoryFormState() {
-      document.getElementById('invFormTitle').innerHTML = '<i class="bi bi-plus-circle-fill text-primary me-2"></i> จัดการคลังอุปกรณ์';
-      document.getElementById('invId').value = "";
-      document.getElementById('inventoryCrudForm').reset(); 
-      document.getElementById('btnCancelEditInv').classList.add('d-none');
-    }
-
-    async function executeInventorySubmit(e) {
-      e.preventDefault();
-      const id = document.getElementById('invId').value; 
-      const typeAction = id ? 'edit' : 'add_new';
-      const name = document.getElementById('invName').value.trim(); 
-      const total = document.getElementById('invTotal').value;
-
-      try {
-        const resMsg = await callGASApi('manageEquipmentStock', { actionType: typeAction, itemId: id, name: name, totalQty: total }, sessionPassword);
-        alert(resMsg);
-        resetInventoryFormState();
-        executeAdminBackgroundRefresh();
-      } catch(err) {
-        alert("เกิดข้อผิดพลาด: " + err.message);
-      }
-    }
-
-    async function executeInventoryDelete(id) {
-      if(!confirm("ต้องการลบอุปกรณ์นี้ออกจากระบบถาวรใช่หรือไม่?")) return;
-      try {
-        const resMsg = await callGASApi('manageEquipmentStock', { actionType: 'delete', itemId: id, name: '', totalQty: 0 }, sessionPassword);
-        alert(resMsg);
-        executeAdminBackgroundRefresh();
-      } catch(err) {
-        alert("เกิดข้อผิดพลาด: " + err.message);
-      }
-    }
-
-    // ==========================================
-    // Mobile QR Code Scanner Logic
-    // ==========================================
-    function openQrScannerModal() {
-      let qModal = new bootstrap.Modal(document.getElementById('qrScannerModal'));
-      qModal.show();
-      document.getElementById('scanResultCard').classList.add('d-none');
-
-      setTimeout(() => {
-        if (!html5QrCodeScannerInstance) {
-          html5QrCodeScannerInstance = new Html5Qrcode("reader");
-        }
-        
-        html5QrCodeScannerInstance.start(
-          { facingMode: "environment" },
-          { fps: 10, qrbox: { width: 250, height: 250 } },
-          onQrScanSuccess,
-          onQrScanError
-        ).catch(err => {
-          document.getElementById('reader').innerHTML = `<div class="alert alert-warning p-2 small">ไม่สามารถเปิดกล้องได้: โปรดอนุญาตการเข้าถึงกล้องบนเบราว์เซอร์</div>`;
-        });
-      }, 300);
-    }
-
-    function stopQrScanner() {
-      if (html5QrCodeScannerInstance && html5QrCodeScannerInstance.isScanning) {
-        html5QrCodeScannerInstance.stop().then(() => {
-          document.getElementById('reader').innerHTML = "";
-        }).catch(() => {});
-      }
-    }
-
-    async function onQrScanSuccess(decodedText, decodedResult) {
-      stopQrScanner();
-      
-      const resultCard = document.getElementById('scanResultCard');
-      resultCard.classList.remove('d-none');
-      resultCard.innerHTML = '<div class="spinner-border spinner-border-sm text-info me-2"></div> กำลังตรวจสอบรหัสอุปกรณ์...';
-
-      try {
-        const resData = await callGASApi('scanAssetItem', { assetCode: decodedText });
-        if (!resData.found) {
-          resultCard.innerHTML = `<div class="alert alert-danger mb-0">${resData.message}</div>`;
-          return;
-        }
-
-        let asset = resData.asset;
-        let tracker = resData.tracker;
-        let html = `
-          <div class="card card-custom p-3 text-start border-top border-4 border-info">
-            <h6 class="fw-bold text-primary mb-1"><i class="bi bi-qr-code text-info me-1"></i> ${asset.assetCode}</h6>
-            <div class="fw-bold text-dark fs-5 mb-2">${asset.equipName}</div>
-            <div class="mb-2"><span class="badge ${asset.status === 'Available' ? 'bg-success' : 'bg-warning text-dark'}">${asset.status}</span></div>`;
-
-        if (tracker) {
-          html += `
-            <div class="p-2 bg-light rounded border mb-3 small">
-              <div><b>ผู้ถือครองปัจจุบัน:</b> ${tracker.borrowerName}</div>
-              <div><b>เบอร์โทร:</b> ${tracker.phone}</div>
-              <div><b>วันกำหนดคืน:</b> <span class="text-danger fw-bold">${tracker.dueDate}</span></div>
-            </div>`;
-
-          if (sessionPassword) {
-            html += `
-              <div class="d-grid gap-2">
-                <button class="btn btn-warning btn-sm text-dark fw-bold" onclick="processDirectTrackerRenew('${tracker.trackerId}')"><i class="bi bi-arrow-repeat me-1"></i> ขยายเวลายืมต่อ (+90 วัน)</button>
-                <button class="btn btn-success btn-sm fw-bold" onclick="processDirectTrackerReturn('${tracker.trackerId}')"><i class="bi bi-box-arrow-in-down me-1"></i> รับคืนเข้าคลัง</button>
-              </div>`;
-          }
-        } else {
-          html += `<div class="text-muted small">อุปกรณ์ชิ้นนี้อยู่ในคลัง พร้อมให้ยืมใช้งาน</div>`;
-        }
-
-        html += `</div>`;
-        resultCard.innerHTML = html;
-      } catch(err) {
-        resultCard.innerHTML = `<div class="alert alert-danger mb-0">${err.message}</div>`;
-      }
-    }
-
-    function onQrScanError(errorMessage) {}
 
     function executeTableFilter(inputId, tableBodyId) {
       let val = document.getElementById(inputId).value.toLowerCase();

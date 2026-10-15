@@ -121,6 +121,24 @@
       box-shadow: 0 20px 40px rgba(0,0,0,0.15) !important;
     }
 
+    /* Custom Styling หัวตารางสรุปอุปกรณ์ย้อนหลัง 4 ปี */
+    .table-header-slate {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%) !important;
+      color: #ffffff !important;
+      font-weight: 600 !important;
+      text-align: center !important;
+      vertical-align: middle !important;
+      border-color: #334155 !important;
+    }
+    .table-header-subslate {
+      background-color: #1e293b !important;
+      color: #38bdf8 !important;
+      font-weight: 600 !important;
+      text-align: center !important;
+      vertical-align: middle !important;
+      border-color: #334155 !important;
+    }
+
     @media print {
       body * { visibility: hidden !important; }
       #thermalPrintArea, #thermalPrintArea * { visibility: visible !important; }
@@ -334,7 +352,7 @@
 
     <!-- 3. ADMIN VIEW -->
     <div id="adminView" style="display: none;">
-      <!-- ฟอร์มเข้าสู่ระบบแอดมิน เพิ่ม onkeyup กด Enter ล็อกอินได้ทันที -->
+      <!-- ฟอร์มเข้าสู่ระบบแอดมิน กด Enter ล็อกอินได้ทันที -->
       <div id="adminAuthGate" class="card card-custom p-5 text-center mx-auto shadow-sm" style="max-width: 420px; margin-top: 8vh; border-radius: 20px;">
         <div class="mb-3"><i class="bi bi-shield-lock-fill text-primary display-3"></i></div>
         <h4 class="fw-bold mb-4 text-dark">ผู้ดูแลระบบ</h4>
@@ -429,9 +447,9 @@
           </div>
 
           <div class="row g-3">
-            <div class="col-md-6 col-xl-3"><div class="card card-custom p-4 bg-primary text-white"><div class="small opacity-75">คำขอรอดำเนินการ</div><h2 class="fw-bold mb-0" id="cardStatPending">0</h2></div></div>
+            <div class="col-md-6 col-xl-3"><div class="card card-custom p-4 bg-primary text-white"><div class="small opacity-75">คำขอรอพิจารณา</div><h2 class="fw-bold mb-0" id="cardStatPending">0</h2></div></div>
             <div class="col-md-6 col-xl-3"><div class="card card-custom p-4 bg-success text-white"><div class="small opacity-75">อยู่ระหว่างการยืม</div><h2 class="fw-bold mb-0" id="cardStatActive">0</h2></div></div>
-            <div class="col-md-6 col-xl-3"><div class="card card-custom p-4 bg-secondary text-white"><div class="small opacity-75">รับคืนแล้ว</div><h2 class="fw-bold mb-0" id="cardStatReturned">0</h2></div></div>
+            <div class="col-md-6 col-xl-3"><div class="card card-custom p-4 bg-secondary text-white"><div class="small opacity-75">ส่งคืนแล้ว</div><h2 class="fw-bold mb-0" id="cardStatReturned">0</h2></div></div>
             <div class="col-md-6 col-xl-3"><div class="card card-custom p-4 bg-info text-white"><div class="small opacity-75">ยืมสะสม (ชิ้นอนุมัติ)</div><h2 class="fw-bold mb-0" id="cardStatTotalBorrowedAccum">0</h2></div></div>
           </div>
 
@@ -500,7 +518,7 @@
                         <th class="bg-primary bg-opacity-10 text-danger">ถูกยืม (ชิ้น)</th>
                         <th class="bg-primary bg-opacity-10">ใช้งาน (%)</th>
                         <th class="bg-success bg-opacity-10 text-primary">ยืมสะสม (ชิ้น)</th>
-                        <th class="bg-success bg-opacity-10 text-success">คืนแล้ว (ชิ้น)</th>
+                        <th class="bg-success bg-opacity-10 text-success">ส่งคืนแล้ว (ชิ้น)</th>
                         <th class="bg-success bg-opacity-10 text-info">บริจาค (ชิ้น)</th>
                         <th class="bg-success bg-opacity-10">หมุนเวียนสะสม (%)</th>
                       </tr>
@@ -512,7 +530,7 @@
             </div>
           </div>
 
-          <!-- ตารางใหม่: สรุปจำนวนอุปกรณ์ที่ยืมแยกตามปีงบประมาณ (เปรียบเทียบย้อนหลัง 4 ปี: ปัจจุบันย้อนกลับไปทางขวา) -->
+          <!-- ตารางใหม่: สรุปจำนวนอุปกรณ์ที่ยืมแยกตามปีงบประมาณ (เปรียบเทียบย้อนหลัง 4 ปีล่าสุด: ขวาสุดเป็นปีปัจจุบัน + ลำดับที่ + หัวตารางเข้มตรงกลาง) -->
           <div class="row g-4 mt-1">
             <div class="col-12">
               <div class="card card-custom p-4 border-top border-4 border-success">
@@ -523,8 +541,8 @@
                 <div class="table-responsive">
                   <table class="table table-bordered table-hover align-middle mb-0 text-nowrap">
                     <thead>
-                      <tr class="text-center align-middle bg-light" id="tableBorrowSummaryHeader1"></tr>
-                      <tr class="text-center align-middle small fw-bold bg-light" id="tableBorrowSummaryHeader2"></tr>
+                      <tr class="text-center align-middle" id="tableBorrowSummaryHeader1"></tr>
+                      <tr class="text-center align-middle small fw-bold" id="tableBorrowSummaryHeader2"></tr>
                     </thead>
                     <tbody id="tableBorrowSummaryBody"></tbody>
                   </table>
@@ -1080,6 +1098,24 @@
       return str;
     }
 
+    // Helper แปลงสถานะเป็น Badge สีสันภาษาไทยสวยงาม
+    function renderStatusBadgeThai(statusStr) {
+      if (!statusStr) return '<span class="badge bg-secondary">ไม่ระบุ</span>';
+      let st = statusStr.toString().trim();
+      
+      if (st === 'Pending' || st === 'รอพิจารณา') {
+        return '<span class="badge bg-warning text-dark px-2 py-1"><i class="bi bi-hourglass-split me-1"></i>รอพิจารณา</span>';
+      } else if (st === 'Approved' || st === 'อนุมัติแล้ว') {
+        return '<span class="badge bg-success px-2 py-1"><i class="bi bi-check-circle-fill me-1"></i>อนุมัติแล้ว</span>';
+      } else if (st === 'Rejected' || st === 'ไม่อนุมัติ') {
+        return '<span class="badge bg-danger px-2 py-1"><i class="bi bi-x-circle-fill me-1"></i>ไม่อนุมัติ</span>';
+      } else if (st === 'Returned' || st === 'ส่งคืนแล้ว') {
+        return '<span class="badge bg-info text-dark px-2 py-1"><i class="bi bi-box-arrow-in-down me-1"></i>ส่งคืนแล้ว</span>';
+      } else {
+        return `<span class="badge bg-secondary px-2 py-1">${st}</span>`;
+      }
+    }
+
     async function callGASApi(action, payload = {}, pass = "") {
       try {
         const response = await fetch(GAS_WEB_APP_URL, {
@@ -1351,7 +1387,7 @@
           res.pending.forEach(r => {
              let name = (r['Title'] || '') + r['Name'];
              let phone = r['Phone'].toString().replace(/^'/, '');
-             html += `<tr><td><code class="text-dark bg-light px-1 rounded">${r['Request ID']}</code></td><td class="fw-medium">${name}</td><td>${phone}</td><td><span class="badge bg-secondary">${r['Action Type']}</span></td><td class="text-primary fw-semibold">${r['Equipment Name']}</td><td class="text-center">${r['Qty']}</td><td>${cleanDateDisplay(r['Relevant Date'])}</td><td><span class="badge bg-warning text-dark">รอตรวจสอบ</span></td></tr>`;
+             html += `<tr><td><code class="text-dark bg-light px-1 rounded">${r['Request ID']}</code></td><td class="fw-medium">${name}</td><td>${phone}</td><td><span class="badge bg-secondary">${r['Action Type']}</span></td><td class="text-primary fw-semibold">${r['Equipment Name']}</td><td class="text-center">${r['Qty']}</td><td>${cleanDateDisplay(r['Relevant Date'])}</td><td>${renderStatusBadgeThai(r['Status'])}</td></tr>`;
           });
           html += `</tbody></table></div></div>`;
         }
@@ -1366,7 +1402,7 @@
              let phone = t['Phone'].toString().replace(/^'/, '');
              let startDate = cleanDateDisplay(t['Due Date']);
              let assetTag = t['Asset Code'] ? `<br><code class="text-primary bg-light px-1 rounded">${t['Asset Code']}</code>` : '';
-             html += `<tr><td><code class="text-dark bg-light px-1 rounded">${t['Tracker ID']}</code></td><td class="fw-medium">${name}</td><td>${phone}</td><td class="text-accent fw-bold">${t['Equipment Name']}${assetTag}</td><td class="text-center">${t['Qty']}</td><td class="small text-muted">${startDate}</td><td class="text-danger fw-bold"><i class="bi bi-calendar-x"></i> ${cleanDateDisplay(t['Due Date'])}</td><td><span class="badge bg-success">ใช้งานอยู่</span></td></tr>`;
+             html += `<tr><td><code class="text-dark bg-light px-1 rounded">${t['Tracker ID']}</code></td><td class="fw-medium">${name}</td><td>${phone}</td><td class="text-accent fw-bold">${t['Equipment Name']}${assetTag}</td><td class="text-center">${t['Qty']}</td><td class="small text-muted">${startDate}</td><td class="text-danger fw-bold"><i class="bi bi-calendar-x"></i> ${cleanDateDisplay(t['Due Date'])}</td><td><span class="badge bg-success">อยู่ระหว่างการยืม</span></td></tr>`;
           });
           html += `</tbody></table></div></div>`;
         }
@@ -1379,10 +1415,9 @@
           res.history.forEach(h => {
              let name = (h['Title'] || '') + h['Name'];
              let phone = h['Phone'].toString().replace(/^'/, '');
-             let stColor = h['Status'] === 'Rejected' ? 'text-danger' : (h['Status'] === 'Pending' ? 'text-warning' : 'text-success');
              let badgeColor = h['Action Type'] === 'คืนอุปกรณ์' || h['Action Type'] === 'คืน' ? 'bg-info text-dark' : (h['Action Type'] === 'บริจาค' ? 'bg-primary' : 'bg-dark');
              let assetTag = h['Asset Code'] ? ` <small class="text-muted">(${h['Asset Code']})</small>` : '';
-             html += `<tr><td class="small">${h['Timestamp']}</td><td><code class="text-dark bg-light px-1 rounded">${h['Request ID']}</code></td><td class="fw-medium">${name}</td><td>${phone}</td><td><span class="badge ${badgeColor}">${h['Action Type']}</span></td><td class="fw-medium">${h['Equipment Name']}${assetTag}</td><td class="text-center">${h['Qty']}</td><td class="${stColor} fw-bold">${h['Status']}</td></tr>`;
+             html += `<tr><td class="small">${h['Timestamp']}</td><td><code class="text-dark bg-light px-1 rounded">${h['Request ID']}</code></td><td class="fw-medium">${name}</td><td>${phone}</td><td><span class="badge ${badgeColor}">${h['Action Type']}</span></td><td class="fw-medium">${h['Equipment Name']}${assetTag}</td><td class="text-center">${h['Qty']}</td><td>${renderStatusBadgeThai(h['Status'])}</td></tr>`;
           });
           html += `</tbody></table></div></div>`;
         }
@@ -1609,12 +1644,11 @@
       let historyRowsHtml = "";
       if (personHistory.length > 0) {
         personHistory.forEach(h => {
-          let stColor = h['Status'] === 'Approved' ? 'badge bg-success' : (h['Status'] === 'Rejected' ? 'badge bg-danger' : 'badge bg-warning text-dark');
           historyRowsHtml += `<tr>
             <td class="small">${h['Timestamp']}</td>
             <td><span class="badge bg-secondary">${h['Action Type']}</span></td>
             <td class="fw-bold">${h['Equipment Name']} (${h['Qty']} ชิ้น)</td>
-            <td><span class="${stColor}">${h['Status']}</span></td>
+            <td>${renderStatusBadgeThai(h['Status'])}</td>
           </tr>`;
         });
       } else {
@@ -1675,7 +1709,7 @@
       verifyStockVsAssetMismatch();
       
       const pTable = document.getElementById('tablePendingBody');
-      let pFilter = masterAdminCachedData.requests.filter(r => r['Status'] === 'Pending');
+      let pFilter = masterAdminCachedData.requests.filter(r => r['Status'] === 'Pending' || r['Status'] === 'รอพิจารณา');
       let pHtml = "";
 
       pFilter.forEach(r => {
@@ -1724,7 +1758,7 @@
       const tTable = document.getElementById('tableTrackerBody');
       let tHtml = "";
       let sortedTracker = masterAdminCachedData.tracker.map(t => {
-        let statusBadge = `<span class="badge bg-success rounded-pill px-3 py-2">ใช้งานปกติ</span>`;
+        let statusBadge = `<span class="badge bg-success rounded-pill px-3 py-2">อยู่ระหว่างการยืม</span>`;
         let sortPriority = 0;
         let cleanDueStr = cleanDateDisplay(t['Due Date']);
 
@@ -1818,7 +1852,6 @@
       }
 
       filteredHistory.forEach(h => {
-        let stColor = h['Status'] === 'Rejected' ? 'text-danger' : (h['Status'] === 'Pending' ? 'text-warning' : 'text-success');
         let badgeColor = h['Action Type'] === 'คืนอุปกรณ์' || h['Action Type'] === 'คืน' ? 'bg-info text-dark' : (h['Action Type'] === 'บริจาค' ? 'bg-primary' : 'bg-dark');
         let fullName = (h['Title'] || '') + h['Name'];
         let dispIdCard = h['ID Card'].toString().replace(/^'/, '');
@@ -1835,7 +1868,7 @@
           <td class="fw-medium">${h['Equipment Name']}${assetTag}</td>
           <td class="text-center fw-bold fs-6">${h['Qty']}</td>
           <td class="text-muted small"><i class="bi bi-calendar-check"></i> ${cleanDateDisplay(h['Relevant Date'])}</td>
-          <td class="${stColor} fw-bold">${h['Status']}</td>
+          <td>${renderStatusBadgeThai(h['Status'])}</td>
           <td class="text-center">
             <button class="btn btn-sm btn-outline-danger p-1" onclick="executeAdminDeleteRowAction('History_Log', '${h['Log ID']}')" title="ลบ"><i class="bi bi-trash3-fill"></i></button>
           </td>
@@ -2122,7 +2155,7 @@
               <td class="fw-bold">${l.borrowerName}</td>
               <td><span class="badge bg-secondary">${l.actionType}</span></td>
               <td class="small text-muted">${cleanDateDisplay(l.relevantDate)}</td>
-              <td><span class="badge bg-success">${l.status}</span></td>
+              <td>${renderStatusBadgeThai(l.status)}</td>
             </tr>`;
           });
         } else {
@@ -2612,9 +2645,9 @@
       const selectedFY = document.getElementById('analyticsFiscalYearFilter').value;
       
       let rFilter = masterAdminCachedData.requests.filter(r => r['Fiscal Year'] === selectedFY);
-      let hFilter = masterAdminCachedData.history.filter(h => h['Fiscal Year'] === selectedFY && (h['Status'] === 'Approved' || h['Status'] === 'Returned'));
+      let hFilter = masterAdminCachedData.history.filter(h => h['Fiscal Year'] === selectedFY && (h['Status'] === 'Approved' || h['Status'] === 'อนุมัติแล้ว' || h['Status'] === 'Returned' || h['Status'] === 'ส่งคืนแล้ว'));
       
-      document.getElementById('cardStatPending').textContent = masterAdminCachedData.requests.filter(r => r['Status'] === 'Pending').length;
+      document.getElementById('cardStatPending').textContent = masterAdminCachedData.requests.filter(r => r['Status'] === 'Pending' || r['Status'] === 'รอพิจารณา').length;
       document.getElementById('cardStatActive').textContent = masterAdminCachedData.tracker.length;
       document.getElementById('cardStatReturned').textContent = masterAdminCachedData.history.filter(h => h['Action Type'] === 'คืน' || h['Action Type'].includes('คืน')).length;
 
@@ -2666,7 +2699,7 @@
     function updateStackedChartDatasets() {
       if(!masterAdminCachedData) return;
       const selectedFY = document.getElementById('analyticsFiscalYearFilter').value;
-      let hFilter = masterAdminCachedData.history.filter(h => h['Fiscal Year'] === selectedFY && (h['Status'] === 'Approved' || h['Status'] === 'Returned'));
+      let hFilter = masterAdminCachedData.history.filter(h => h['Fiscal Year'] === selectedFY && (h['Status'] === 'Approved' || h['Status'] === 'อนุมัติแล้ว' || h['Status'] === 'Returned' || h['Status'] === 'ส่งคืนแล้ว'));
 
       let equipmentLabels = masterAdminCachedData.stock.map(s => s['Name']).filter(name => name !== "");
       let equipMatrix = {};
@@ -2715,7 +2748,7 @@
 
       let hYearFilter = masterAdminCachedData.history.filter(h => 
         h['Fiscal Year'] === selectedFY && 
-        (h['Status'] === 'Approved' || h['Status'] === 'Returned')
+        (h['Status'] === 'Approved' || h['Status'] === 'อนุมัติแล้ว' || h['Status'] === 'Returned' || h['Status'] === 'ส่งคืนแล้ว')
       );
 
       let matrixHtml = "";
@@ -2767,7 +2800,7 @@
     }
 
     // =========================================================================
-    // ตารางใหม่: สรุปจำนวนอุปกรณ์ที่ยืมแยกตามปีงบประมาณ (เปรียบเทียบย้อนหลัง 4 ปี: ปัจจุบันย้อนกลับไปทางขวา)
+    // ตารางใหม่: สรุปจำนวนอุปกรณ์ที่ยืมแยกตามปีงบประมาณ (เปรียบเทียบย้อนหลัง 4 ปี: ขวาสุดเป็นปีปัจจุบัน + ลำดับที่ + หัวตารางเข้มตรงกลาง)
     // =========================================================================
     function renderBorrowSummary4YearsRollingTable() {
       const h1Node = document.getElementById('tableBorrowSummaryHeader1');
@@ -2782,28 +2815,35 @@
       let currentMonth = now.getMonth() + 1;
       let currentFiscalYearNum = currentMonth >= 10 ? (currentYearAD + 544) : (currentYearAD + 543);
 
-      // 2. สร้างรายการปีงบประมาณ 4 ปีย้อนหลัง (เรียงจากปีปัจจุบันถอยหลังไปทางขวา: 2570, 2569, 2568, 2567)
+      // 2. สร้างรายการปีงบประมาณ 4 ปีย้อนหลัง (เรียงจากอดีตไปหาปีปัจจุบันไว้ขวาสุด: 2567, 2568, 2569, 2570)
       let rollingYears = [];
-      for (let i = 0; i < 4; i++) {
+      for (let i = 3; i >= 0; i--) {
         rollingYears.push("ปี " + (currentFiscalYearNum - i));
       }
 
-      // Render Header Row 1 & Row 2
-      let h1Html = `<th rowspan="2" class="text-start bg-white" style="min-width: 180px;">ชื่อประเภทกายอุปกรณ์</th>`;
+      // Render Header Row 1 & Row 2 สไตล์ Slate Navy Gradient
+      let h1Html = `
+        <th rowspan="2" class="table-header-slate" width="60">ลำดับ</th>
+        <th rowspan="2" class="table-header-slate" style="min-width: 200px;">ชื่อประเภทกายอุปกรณ์</th>`;
       let h2Html = "";
 
-      rollingYears.forEach(yrStr => {
-        h1Html += `<th colspan="2" class="bg-success bg-opacity-10 text-success fw-bold">${yrStr}</th>`;
-        h2Html += `<th class="bg-success bg-opacity-10 text-primary">รายการ (ครั้ง)</th><th class="bg-success bg-opacity-10 text-success fw-bold">อุปกรณ์ (ชิ้น)</th>`;
+      rollingYears.forEach((yrStr, idx) => {
+        let isCurrent = (idx === rollingYears.length - 1);
+        let headerLabel = isCurrent ? `${yrStr} (ปัจจุบัน)` : yrStr;
+        
+        h1Html += `<th colspan="2" class="table-header-slate">${headerLabel}</th>`;
+        h2Html += `
+          <th class="table-header-subslate">รายการ (ครั้ง)</th>
+          <th class="table-header-subslate">อุปกรณ์ (ชิ้น)</th>`;
       });
 
       h1Node.innerHTML = h1Html;
       h2Node.innerHTML = h2Html;
 
-      // 3. กรองข้อมูลเฉพาะประเภท "ยืม" จาก History_Log
+      // 3. กรองข้อมูลเฉพาะประเภท "ยืม" จาก History_Log (รองรับทั้งภาษาไทยและอังกฤษ)
       let historyBorrowLogs = masterAdminCachedData.history.filter(h => 
         (h['Action Type'] || '').trim() === 'ยืม' && 
-        (h['Status'] === 'Approved' || h['Status'] === 'Returned')
+        (h['Status'] === 'Approved' || h['Status'] === 'อนุมัติแล้ว' || h['Status'] === 'Returned' || h['Status'] === 'ส่งคืนแล้ว')
       );
 
       // 4. สรุปผลแยกตามรายชื่ออุปกรณ์ และรายปีงบประมาณ
@@ -2813,8 +2853,10 @@
 
       let bodyHtml = "";
 
-      equipmentNames.forEach(eName => {
-        bodyHtml += `<tr><td class="fw-bold text-dark">${eName}</td>`;
+      equipmentNames.forEach((eName, index) => {
+        bodyHtml += `<tr>
+          <td class="text-center fw-bold text-secondary">${index + 1}</td>
+          <td class="fw-bold text-dark ps-3 text-start">${eName}</td>`;
 
         rollingYears.forEach(yrStr => {
           let reqCount = 0;
@@ -2842,11 +2884,11 @@
       });
 
       // แถบสรุปรวมผลสุทธิประจำปี (Footer Summary Row)
-      bodyHtml += `<tr class="table-light fw-bold align-middle"><td class="text-start text-dark">รวมผลสุทธิประจำปีงบประมาณ</td>`;
+      bodyHtml += `<tr class="table-dark fw-bold align-middle text-center"><td colspan="2" class="text-center text-white py-2">รวมผลสุทธิประจำปีงบประมาณ</td>`;
       rollingYears.forEach(yrStr => {
         bodyHtml += `
-          <td class="text-center text-primary fs-6">${totalsByYear[yrStr].count} รายการ</td>
-          <td class="text-center text-success fs-5">${totalsByYear[yrStr].sumQty} ชิ้น</td>`;
+          <td class="text-center text-info fs-6">${totalsByYear[yrStr].count} รายการ</td>
+          <td class="text-center text-warning fs-5">${totalsByYear[yrStr].sumQty} ชิ้น</td>`;
       });
       bodyHtml += `</tr>`;
 
@@ -2921,7 +2963,7 @@
     }
 
     function evaluateOverdueSchedules(dataset) {
-      let pendingItems = dataset.requests.filter(r => r['Status'] === 'Pending');
+      let pendingItems = dataset.requests.filter(r => r['Status'] === 'Pending' || r['Status'] === 'รอพิจารณา');
       let overdueItems = []; let today = new Date(); today.setHours(0,0,0,0);
       dataset.tracker.forEach(t => { 
         let cleanDue = cleanDateDisplay(t['Due Date']);

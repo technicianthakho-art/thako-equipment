@@ -43,7 +43,9 @@
     .card-custom { border: none; border-radius: 16px; box-shadow: 0 4px 18px rgba(0,0,0,0.05); background-color: white; }
     .form-control, .form-select { border-radius: 10px; padding: 10px 14px; background-color: #fafafa; border: 1px solid #ced4da; }
     .form-control:focus, .form-select:focus { background-color: #fff; box-shadow: 0 0 0 3px rgba(2, 136, 209, 0.2); border-color: #0288d1; }
-    .table-sticky-header th { position: sticky; top: 0; z-index: 5; background-color: #f1f3f5; box-shadow: 0 2px 2px -1px rgba(0,0,0,0.05); }
+    
+    /* Header Table Formatting Fix */
+    .table-sticky-header th { position: sticky; top: 0; z-index: 5; background-color: #0f172a !important; color: #ffffff !important; box-shadow: 0 2px 2px -1px rgba(0,0,0,0.1); }
     
     .clickable-row { cursor: pointer; transition: background-color 0.15s ease-in-out; }
     .clickable-row:hover { background-color: rgba(2, 136, 209, 0.08) !important; }
@@ -99,14 +101,6 @@
     .hover-elevate { transition: transform 0.2s ease, box-shadow 0.2s ease; }
     .hover-elevate:hover { transform: translateY(-3px); box-shadow: 0 8px 18px rgba(0,0,0,0.1) !important; }
     #customCalendarWrapper { background: #fff; padding: 15px; border-radius: 10px; }
-
-    /* Bento Grid Layout for Asset QR Hub */
-    .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; }
-    .bento-col-4 { grid-column: span 4; }
-    .bento-col-8 { grid-column: span 8; }
-    @media (max-width: 992px) {
-      .bento-col-4, .bento-col-8 { grid-column: span 12; }
-    }
 
     /* Thermal Printing 55mm x 38mm CSS Rule */
     @media print {
@@ -369,7 +363,7 @@
             </div>
             <div class="table-responsive">
               <table class="table table-hover align-middle mb-0 text-nowrap">
-                <thead class="table-dark">
+                <thead style="background-color: #0f172a; color: white;">
                   <tr>
                     <th>รหัสคำขอ</th>
                     <th>ประเภท</th>
@@ -396,7 +390,7 @@
             </div>
             <div class="table-responsive bg-white rounded border" style="max-height: 480px;">
               <table class="table table-hover align-middle mb-0 text-nowrap">
-                <thead class="table-success table-sticky-header">
+                <thead class="table-sticky-header">
                   <tr>
                     <th>รหัสติดตาม</th>
                     <th>ผู้ใช้งาน</th>
@@ -526,84 +520,68 @@
           </div>
         </div>
 
-        <!-- SUB VIEW 3.5: ครุภัณฑ์และ QR Code (Asset QR Hub in Bento Grid) -->
+        <!-- SUB VIEW 3.5: คลังรหัสครุภัณฑ์และระบบจัดพิมพ์ สติ๊กเกอร์ QR (Full Width Asset Hub) -->
         <div id="subViewAssetQr" class="admin-subview d-none">
-          <div class="bento-grid">
-            
-            <!-- Bento Box 1: Smart Asset Generator -->
-            <div class="bento-col-4">
-              <div class="card card-custom p-4 border-top border-4 border-success shadow-sm h-100">
-                <h5 class="fw-bold text-dark mb-3"><i class="bi bi-qr-code text-success me-2"></i> ออกรหัสครุภัณฑ์ใหม่ (Smart Generator)</h5>
-                <form id="assetGenerateForm" onsubmit="handleAssetBatchGenerateSubmit(event)">
-                  <div class="mb-3">
-                    <label class="form-label fw-semibold text-secondary">ประเภทกายอุปกรณ์</label>
-                    <select class="form-select" id="genEquipNameSelect" onchange="autoSuggestPrefix(this.value)" required></select>
-                  </div>
-                  <div class="mb-3">
-                    <label class="form-label fw-semibold text-secondary">คำนำหน้ารหัส (Prefix)</label>
-                    <input type="text" class="form-control bg-light text-uppercase fw-bold text-primary" id="genPrefixInput" placeholder="เช่น BED, WCH" required>
-                    <small class="text-muted">รูปแบบรหัสที่ได้: PREFIX-ปีงบ-เลขรัน (เช่น BED-69-001)</small>
-                  </div>
-                  <div class="mb-4">
-                    <label class="form-label fw-semibold text-secondary">จำนวนดวง/ชิ้นที่ต้องการออกเพิ่ม</label>
-                    <input type="number" class="form-control bg-light" id="genQtyInput" min="1" value="1" required>
-                  </div>
-                  <button type="submit" id="btnGenAssetSubmit" class="btn btn-success w-100 fw-bold shadow-sm py-2.5">
-                    <i class="bi bi-plus-square-fill me-1"></i> สร้างรหัสครุภัณฑ์
-                  </button>
-                </form>
+          <div class="card card-custom p-4 border-top border-4 border-dark shadow-sm">
+            <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+              <div>
+                <h5 class="fw-bold text-dark mb-0"><i class="bi bi-qr-code-scan text-primary me-2"></i> คลังรหัสครุภัณฑ์และระบบจัดพิมพ์ สติ๊กเกอร์ QR</h5>
+                <small class="text-muted">ระบบบริหารจัดการครุภัณฑ์รายชิ้น ออกรหัสใหม่ และพิมพ์สติ๊กเกอร์ขนาด 55mm x 38mm</small>
+              </div>
+              <div class="d-flex align-items-center gap-2 flex-wrap">
+                <button class="btn btn-success fw-bold shadow-sm" onclick="openBatchGenerateAssetModal()">
+                  <i class="bi bi-plus-square-fill me-1"></i> ออกรหัสครุภัณฑ์ใหม่
+                </button>
+                <button class="btn btn-dark fw-bold shadow-sm" onclick="executeBatchThermalPrint()">
+                  <i class="bi bi-printer me-1"></i> พิมพ์ QR ที่เลือก (<span id="selectedQrCountText">0</span>)
+                </button>
+                <button class="btn btn-outline-secondary fw-bold" onclick="triggerAdminDataRefresh(this)">
+                  <i class="bi bi-arrow-clockwise"></i> รีเฟรช
+                </button>
               </div>
             </div>
 
-            <!-- Bento Box 2: Batch Thermal Print & Inventory Hub Table -->
-            <div class="bento-col-8">
-              <div class="card card-custom p-4 border-top border-4 border-dark shadow-sm h-100">
-                <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
-                  <div>
-                    <h5 class="fw-bold text-dark mb-0"><i class="bi bi-printer-fill text-dark me-2"></i> คลังรหัสครุภัณฑ์และระบบจัดพิมพ์ สติ๊กเกอร์ QR</h5>
-                    <small class="text-muted">เลือกรายการรหัสที่ต้องการพิมพ์ สติ๊กเกอร์ขนาด 55mm x 38mm</small>
-                  </div>
-                  <div class="d-flex align-items-center gap-2">
-                    <button class="btn btn-sm btn-dark fw-bold shadow-sm" onclick="executeBatchThermalPrint()">
-                      <i class="bi bi-printer me-1"></i> พิมพ์ QR ที่เลือก (<span id="selectedQrCountText">0</span>)
-                    </button>
-                    <button class="btn btn-sm btn-outline-secondary fw-bold" onclick="triggerAdminDataRefresh(this)">
-                      <i class="bi bi-arrow-clockwise"></i>
-                    </button>
-                  </div>
+            <!-- Advanced Filter Toolbar -->
+            <div class="row g-2 mb-3 bg-light p-2.5 rounded-3 border">
+              <div class="col-md-5">
+                <div class="input-group input-group-sm">
+                  <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+                  <input type="text" id="filterAssetInput" class="form-control" placeholder="ค้นหารหัส, ชื่ออุปกรณ์, หรือผู้ถือครอง..." onkeyup="filterAssetItemsUI()">
                 </div>
-
-                <div class="d-flex gap-2 mb-3">
-                  <input type="text" id="filterAssetInput" class="form-control form-control-sm" placeholder="ค้นหารหัส หรือชื่ออุปกรณ์..." onkeyup="executeTableFilter('filterAssetInput', 'tableAssetItemsBody')">
-                  <select class="form-select form-select-sm" id="filterAssetStatusSelect" onchange="renderAssetItemsTableUI()" style="width: 160px;">
-                    <option value="">-- ทุกสถานะ --</option>
-                    <option value="Available">Available (ว่าง)</option>
-                    <option value="Borrowed">Borrowed (ถูกยืม)</option>
-                    <option value="Maintenance">Maintenance (ชำรุด)</option>
-                    <option value="Retired">Retired (ปลดระวาง)</option>
-                  </select>
-                </div>
-
-                <div class="table-responsive bg-white rounded border" style="max-height: 420px;">
-                  <table class="table table-hover align-middle mb-0 text-nowrap">
-                    <thead class="table-dark table-sticky-header">
-                      <tr>
-                        <th width="40" class="text-center"><input type="checkbox" class="form-check-input" id="checkAllAssetQr" onchange="toggleSelectAllAssets(this)"></th>
-                        <th>รหัสครุภัณฑ์ (Asset Code)</th>
-                        <th>ชื่อกายอุปกรณ์</th>
-                        <th>สถานะ</th>
-                        <th>สภาพวัสดุ</th>
-                        <th class="text-center">ยืมสะสม</th>
-                        <th>ผู้ถือครองปัจจุบัน</th>
-                        <th class="text-center">จัดการ</th>
-                      </tr>
-                    </thead>
-                    <tbody id="tableAssetItemsBody"></tbody>
-                  </table>
-                </div>
+              </div>
+              <div class="col-md-4">
+                <select class="form-select form-select-sm" id="filterAssetEquipTypeSelect" onchange="filterAssetItemsUI()">
+                  <option value="">-- ทุกประเภทกายอุปกรณ์ --</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <select class="form-select form-select-sm" id="filterAssetStatusSelect" onchange="filterAssetItemsUI()">
+                  <option value="">-- ทุกสถานะ --</option>
+                  <option value="Available">Available (ว่าง/พร้อมใช้งาน)</option>
+                  <option value="Borrowed">Borrowed (ถูกยืม)</option>
+                  <option value="Maintenance">Maintenance (ชำรุด)</option>
+                  <option value="Retired">Retired (ปลดระวาง)</option>
+                </select>
               </div>
             </div>
 
+            <div class="table-responsive bg-white rounded border" style="max-height: 520px;">
+              <table class="table table-hover align-middle mb-0 text-nowrap">
+                <thead class="table-sticky-header">
+                  <tr>
+                    <th width="40" class="text-center"><input type="checkbox" class="form-check-input" id="checkAllAssetQr" onchange="toggleSelectAllAssets(this)"></th>
+                    <th>รหัสครุภัณฑ์ (Asset Code)</th>
+                    <th>ชื่อกายอุปกรณ์</th>
+                    <th>สถานะ</th>
+                    <th>สภาพวัสดุ</th>
+                    <th class="text-center">ยืมสะสม</th>
+                    <th>ผู้ถือครองปัจจุบัน</th>
+                    <th class="text-center">จัดการ/ออก QR</th>
+                  </tr>
+                </thead>
+                <tbody id="tableAssetItemsBody"></tbody>
+              </table>
+            </div>
           </div>
         </div>
 
@@ -628,7 +606,7 @@
             </div>
             <div class="table-responsive bg-white rounded border" style="max-height: 500px;">
                <table class="table table-hover align-middle mb-0 text-nowrap">
-                <thead class="table-secondary table-sticky-header">
+                <thead class="table-sticky-header">
                   <tr>
                     <th>วันที่/เวลา ทำรายการ</th>
                     <th>รหัสคำขอ</th>
@@ -668,6 +646,61 @@
 
   <!-- Thermal Printing Container Hidden for UI -->
   <div id="thermalPrintArea" class="d-none d-print-block"></div>
+
+  <!-- MODAL: Generate Asset Batch (New Modal in Hub) -->
+  <div class="modal fade" id="batchGenerateAssetModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
+        <div class="modal-header bg-success text-white py-3">
+          <h5 class="modal-title fw-bold"><i class="bi bi-plus-square-fill me-2"></i> ออกรหัสครุภัณฑ์ใหม่ (Asset Generator)</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4">
+          <form id="assetGenerateForm" onsubmit="handleAssetBatchGenerateSubmit(event)">
+            <div class="mb-3">
+              <label class="form-label fw-semibold text-secondary">ประเภทกายอุปกรณ์</label>
+              <select class="form-select" id="genEquipNameSelect" onchange="autoSuggestPrefix(this.value)" required></select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-semibold text-secondary">คำนำหน้ารหัส (Prefix)</label>
+              <input type="text" class="form-control bg-light text-uppercase fw-bold text-primary" id="genPrefixInput" placeholder="เช่น BED, WCH" required>
+              <small class="text-muted">รูปแบบรหัสที่ได้: PREFIX-ปีงบ-เลขรัน (เช่น BED-69-001)</small>
+            </div>
+            <div class="mb-4">
+              <label class="form-label fw-semibold text-secondary">จำนวนดวง/ชิ้นที่ต้องการออกเพิ่ม</label>
+              <input type="number" class="form-control bg-light" id="genQtyInput" min="1" value="1" required>
+            </div>
+            <div class="d-flex justify-content-end gap-2">
+              <button type="button" class="btn btn-secondary px-3" data-bs-dismiss="modal">ยกเลิก</button>
+              <button type="submit" id="btnGenAssetSubmit" class="btn btn-success px-4 fw-bold shadow-sm">
+                <i class="bi bi-plus-square-fill me-1"></i> สร้างรหัสครุภัณฑ์
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: View Single QR Code -->
+  <div class="modal fade" id="singleQrModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
+        <div class="modal-header bg-dark text-white py-2">
+          <h6 class="modal-title fw-bold mb-0" id="singleQrModalTitle">QR Code ครุภัณฑ์</h6>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body text-center p-4">
+          <div id="singleQrCanvasContainer" class="d-flex justify-content-center mb-3"></div>
+          <code class="fs-5 text-primary fw-bold" id="singleQrCodeText"></code>
+          <div class="small text-muted mt-1" id="singleQrEquipText"></div>
+          <button class="btn btn-sm btn-outline-dark w-100 fw-bold mt-3" onclick="printSingleQrSticker()">
+            <i class="bi bi-printer me-1"></i> พิมพ์สติ๊กเกอร์ดวงนี้
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Modal Smart Approve Binding -->
   <div class="modal fade" id="smartApproveModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
@@ -748,32 +781,6 @@
         </div>
         <div class="modal-footer bg-light border-0 py-2" style="border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;">
           <button type="button" class="btn btn-secondary px-4 fw-bold rounded-pill" data-bs-dismiss="modal">ปิดหน้าต่าง</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal Field Migration -->
-  <div class="modal fade" id="fieldMigrationModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
-        <div class="modal-header bg-dark text-white py-3">
-          <h5 class="modal-title fw-bold"><i class="bi bi-link-45deg text-info me-2"></i> ผูกรหัส QR กับผู้ถือครองเดิมหน้างาน</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body p-4">
-          <input type="hidden" id="migrationAssetCode">
-          <div class="mb-3">
-            <label class="fw-bold text-dark">รหัส QR Code:</label>
-            <code class="fs-5 text-primary fw-bold d-block" id="migrationAssetCodeDisplay"></code>
-          </div>
-          <div class="mb-3">
-            <label class="form-label fw-bold text-dark">เลือกผู้ถือครองเดิมในตาราง Tracker:</label>
-            <select class="form-select" id="migrationTrackerSelect" required></select>
-          </div>
-          <button type="button" class="btn btn-primary w-100 fw-bold py-2" onclick="submitFieldMigrationBinding()">
-            <i class="bi bi-save-fill me-1"></i> ยืนยันผูกรหัสครุภัณฑ์
-          </button>
         </div>
       </div>
     </div>
@@ -923,8 +930,19 @@
     let userSelectedItemsMap = {};
     let html5QrCodeScannerInstance = null;
     let globalFullCalendarInstance = null;
+    let currentSingleQrCode = "";
 
     Chart.register(ChartDataLabels);
+
+    // HELPER: Strip Timestamp ISO string T17:00:00.000Z
+    function cleanDateDisplay(rawDate) {
+      if (!rawDate && rawDate !== 0) return "-";
+      let str = rawDate.toString().trim();
+      if (str.indexOf("T") !== -1) {
+        str = str.split("T")[0];
+      }
+      return str;
+    }
 
     async function callGASApi(action, payload = {}, pass = "") {
       try {
@@ -1214,7 +1232,7 @@
           res.pending.forEach(r => {
              let name = (r['Title'] || '') + r['Name'];
              let phone = r['Phone'].toString().replace(/^'/, '');
-             html += `<tr><td><code class="text-dark bg-light px-1 rounded">${r['Request ID']}</code></td><td class="fw-medium">${name}</td><td>${phone}</td><td><span class="badge bg-secondary">${r['Action Type']}</span></td><td class="text-primary fw-semibold">${r['Equipment Name']}</td><td class="text-center">${r['Qty']}</td><td>${r['Relevant Date']}</td><td><span class="badge bg-warning text-dark">รอตรวจสอบ</span></td></tr>`;
+             html += `<tr><td><code class="text-dark bg-light px-1 rounded">${r['Request ID']}</code></td><td class="fw-medium">${name}</td><td>${phone}</td><td><span class="badge bg-secondary">${r['Action Type']}</span></td><td class="text-primary fw-semibold">${r['Equipment Name']}</td><td class="text-center">${r['Qty']}</td><td>${cleanDateDisplay(r['Relevant Date'])}</td><td><span class="badge bg-warning text-dark">รอตรวจสอบ</span></td></tr>`;
           });
           html += `</tbody></table></div></div>`;
         }
@@ -1227,9 +1245,9 @@
           res.active.forEach(t => {
              let name = (t['Title'] || '') + t['Name'];
              let phone = t['Phone'].toString().replace(/^'/, '');
-             let startDate = t['Due Date'] ? t['Due Date'] : '-';
+             let startDate = cleanDateDisplay(t['Due Date']);
              let assetTag = t['Asset Code'] ? `<br><code class="text-primary bg-light px-1 rounded">${t['Asset Code']}</code>` : '';
-             html += `<tr><td><code class="text-dark bg-light px-1 rounded">${t['Tracker ID']}</code></td><td class="fw-medium">${name}</td><td>${phone}</td><td class="text-accent fw-bold">${t['Equipment Name']}${assetTag}</td><td class="text-center">${t['Qty']}</td><td class="small text-muted">${startDate}</td><td class="text-danger fw-bold"><i class="bi bi-calendar-x"></i> ${t['Due Date']}</td><td><span class="badge bg-success">ใช้งานอยู่</span></td></tr>`;
+             html += `<tr><td><code class="text-dark bg-light px-1 rounded">${t['Tracker ID']}</code></td><td class="fw-medium">${name}</td><td>${phone}</td><td class="text-accent fw-bold">${t['Equipment Name']}${assetTag}</td><td class="text-center">${t['Qty']}</td><td class="small text-muted">${startDate}</td><td class="text-danger fw-bold"><i class="bi bi-calendar-x"></i> ${cleanDateDisplay(t['Due Date'])}</td><td><span class="badge bg-success">ใช้งานอยู่</span></td></tr>`;
           });
           html += `</tbody></table></div></div>`;
         }
@@ -1281,6 +1299,7 @@
         masterAdminCachedData = dataset; 
         populateFiscalYearDropdownFilter(); 
         populateGenEquipOptions();
+        populateEquipTypeFilterOptions();
         switchAdminSubTab('operations'); 
         evaluateOverdueSchedules(dataset); 
         setupBackgroundPeriodicSync();
@@ -1337,6 +1356,7 @@
         masterAdminCachedData = freshDataset;
         populateFiscalYearDropdownFilter();
         populateGenEquipOptions();
+        populateEquipTypeFilterOptions();
         refreshAdminSubViewsUI();
         evaluateOverdueSchedules(freshDataset);
         btnBtn.disabled = false;
@@ -1495,7 +1515,7 @@
               <div class="mb-1"><b>กายอุปกรณ์:</b> <span class="text-accent fw-bold fs-6">${item['Equipment Name']}</span></div>
               <div class="mb-1"><b>จำนวน:</b> <span class="fw-bold fs-6">${item['Qty']} ชิ้น</span></div>
               <div class="mb-1"><b>รหัสครุภัณฑ์:</b> <code class="text-primary">${item['Asset Code'] || '-'}</code></div>
-              <div class="mb-1"><b>วันกำหนดคืน/อ้างอิง:</b> <span class="text-danger fw-bold">${item['Relevant Date'] || item['Due Date'] || '-'}</span></div>
+              <div class="mb-1"><b>วันกำหนดคืน/อ้างอิง:</b> <span class="text-danger fw-bold">${cleanDateDisplay(item['Relevant Date'] || item['Due Date'])}</span></div>
               <div><b>ปีงบประมาณ:</b> ${item['Fiscal Year'] || '-'}</div>
             </div>
           </div>
@@ -1560,7 +1580,7 @@
           <td class="fw-bold text-dark">${fullName}<br><small class="text-muted"><i class="bi bi-person-vcard"></i> ${dispIdCard}</small><br><small class="text-secondary">อายุ: ${r['Age']} ปี | ${r['Gender']} | ${r['User Status']}</small></td>
           <td class="text-primary fw-semibold">${r['Equipment Name']}<br><small class="text-muted">ม.${r['Moo']} ${r['Village']}</small></td>
           <td class="text-center fw-bold fs-6">${r['Qty']}</td>
-          <td class="small text-muted">${r['Relevant Date'] || '-'}</td>
+          <td class="small text-muted">${cleanDateDisplay(r['Relevant Date'])}</td>
           <td>${matchBadge}</td>
           <td><i class="bi bi-telephone-fill text-success"></i> ${dispPhone}</td>
           <td class="text-center" onclick="event.stopPropagation();">
@@ -1577,9 +1597,11 @@
       let sortedTracker = masterAdminCachedData.tracker.map(t => {
         let statusBadge = `<span class="badge bg-success rounded-pill px-3 py-2">ใช้งานปกติ</span>`;
         let sortPriority = 0;
-        if (t['Due Date'] && t['Due Date'] !== '-') {
+        let cleanDueStr = cleanDateDisplay(t['Due Date']);
+
+        if (cleanDueStr && cleanDueStr !== '-') {
           let today = new Date(); today.setHours(0, 0, 0, 0);
-          let dueDate = new Date(t['Due Date']); dueDate.setHours(0, 0, 0, 0);
+          let dueDate = new Date(cleanDueStr); dueDate.setHours(0, 0, 0, 0);
           if (!isNaN(dueDate.getTime())) {
             let diffDays = Math.ceil((dueDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
             if (diffDays < 0) {
@@ -1594,7 +1616,7 @@
             }
           }
         }
-        return { ...t, _statusBadge: statusBadge, _priority: sortPriority };
+        return { ...t, _statusBadge: statusBadge, _priority: sortPriority, _cleanDueDate: cleanDueStr };
       });
       
       sortedTracker.sort((a, b) => b._priority - a._priority);
@@ -1611,8 +1633,8 @@
           <td class="small">อายุ: ${t['Age']} ปี | เพศ: ${t['Gender']}<br><span class="badge bg-info text-dark">${t['User Status']}</span> ม.${t['Moo']} ${t['Village']}</td>
           <td class="text-accent fw-bold">${t['Equipment Name']}${assetDisplay}</td>
           <td class="text-center fw-bold text-dark fs-5">${t['Qty']}</td>
-          <td class="small text-muted">${t['Due Date'] ? t['Due Date'] : '-'}</td>
-          <td class="text-danger fw-bold"><i class="bi bi-calendar-x"></i> ${t['Due Date']}</td>
+          <td class="small text-muted">${t._cleanDueDate}</td>
+          <td class="text-danger fw-bold"><i class="bi bi-calendar-x"></i> ${t._cleanDueDate}</td>
           <td>${t._statusBadge}</td>
           <td class="text-center" onclick="event.stopPropagation();">
             <button class="btn btn-sm btn-warning text-dark py-1 me-1 shadow-sm hover-elevate" onclick="processDirectTrackerRenew('${t['Tracker ID']}')" title="ยืมต่อ +90 วัน"><i class="bi bi-arrow-repeat"></i> ยืมต่อ</button>
@@ -1683,7 +1705,7 @@
           <td><span class="badge ${badgeColor}">${h['Action Type']}</span></td>
           <td class="fw-medium">${h['Equipment Name']}${assetTag}</td>
           <td class="text-center fw-bold fs-6">${h['Qty']}</td>
-          <td class="text-muted small"><i class="bi bi-calendar-check"></i> ${h['Relevant Date']}</td>
+          <td class="text-muted small"><i class="bi bi-calendar-check"></i> ${cleanDateDisplay(h['Relevant Date'])}</td>
           <td class="${stColor} fw-bold">${h['Status']}</td>
           <td class="text-center">
             <button class="btn btn-sm btn-outline-danger p-1" onclick="executeAdminDeleteRowAction('History_Log', '${h['Log ID']}')" title="ลบ"><i class="bi bi-trash3-fill"></i></button>
@@ -1711,21 +1733,60 @@
       }
     }
 
+    function populateEquipTypeFilterOptions() {
+      const sel = document.getElementById('filterAssetEquipTypeSelect');
+      if (!sel || !masterAdminCachedData) return;
+      sel.innerHTML = '<option value="">-- ทุกประเภทกายอุปกรณ์ --</option>';
+      masterAdminCachedData.stock.forEach(s => {
+        let opt = document.createElement('option');
+        opt.value = s['Name'];
+        opt.textContent = s['Name'];
+        sel.appendChild(opt);
+      });
+    }
+
     function autoSuggestPrefix(equipName) {
       const pInput = document.getElementById('genPrefixInput');
       if (!pInput) return;
       pInput.value = PREFIX_AUTO_MAP[equipName] || 'EQ';
     }
 
+    function openBatchGenerateAssetModal() {
+      populateGenEquipOptions();
+      let modal = new bootstrap.Modal(document.getElementById('batchGenerateAssetModal'));
+      modal.show();
+    }
+
     function renderAssetItemsTableUI() {
       const tbody = document.getElementById('tableAssetItemsBody');
       if (!tbody || !masterAdminCachedData || !masterAdminCachedData.assets) return;
 
-      const filterStatus = document.getElementById('filterAssetStatusSelect').value;
+      filterAssetItemsUI();
+    }
+
+    function filterAssetItemsUI() {
+      const tbody = document.getElementById('tableAssetItemsBody');
+      if (!tbody || !masterAdminCachedData || !masterAdminCachedData.assets) return;
+
+      const filterKw = document.getElementById('filterAssetInput')?.value.toLowerCase().trim() || "";
+      const filterEquip = document.getElementById('filterAssetEquipTypeSelect')?.value || "";
+      const filterStatus = document.getElementById('filterAssetStatusSelect')?.value || "";
+
       let assets = masterAdminCachedData.assets;
 
+      if (filterEquip) {
+        assets = assets.filter(a => a['Equipment Name'] === filterEquip);
+      }
       if (filterStatus) {
         assets = assets.filter(a => a['Status'] === filterStatus);
+      }
+      if (filterKw) {
+        assets = assets.filter(a => {
+          let codeStr = (a['Asset Code'] || '').toString().toLowerCase();
+          let nameStr = (a['Equipment Name'] || '').toString().toLowerCase();
+          let borStr = (a['Current Borrower'] || '').toString().toLowerCase();
+          return codeStr.includes(filterKw) || nameStr.includes(filterKw) || borStr.includes(filterKw);
+        });
       }
 
       let html = "";
@@ -1743,13 +1804,14 @@
           <td class="text-center fw-bold text-primary fs-6">${borrowCount} ครั้ง</td>
           <td>${a['Current Borrower'] || '-'}</td>
           <td class="text-center">
-            <button class="btn btn-sm btn-outline-primary py-0 px-2 me-1" onclick="openAssetLifecycleModal('${a['Asset Code']}')" title="ดูสมุดประวัติเชิงลึก"><i class="bi bi-eye-fill"></i> ประวัติ</button>
-            <button class="btn btn-sm btn-outline-warning text-dark py-0 px-2" onclick="openEditAssetConditionModal('${a['Asset Code']}', '${a['Equipment Name']}', '${a['Status']}', '${conditionNote}')" title="แก้ไขสภาพ/สถานะ"><i class="bi bi-pencil-square"></i> แก้ไข</button>
+            <button class="btn btn-sm btn-outline-dark py-0 px-2 me-1" onclick="openSingleQrModal('${a['Asset Code']}', '${a['Equipment Name']}')" title="แสดง/พิมพ์ QR ดวงนี้"><i class="bi bi-qr-code"></i> พิมพ์ QR</button>
+            <button class="btn btn-sm btn-outline-primary py-0 px-2 me-1" onclick="openAssetLifecycleModal('${a['Asset Code']}')" title="ดูสมุดประวัติเชิงลึก"><i class="bi bi-eye-fill"></i></button>
+            <button class="btn btn-sm btn-outline-warning text-dark py-0 px-2" onclick="openEditAssetConditionModal('${a['Asset Code']}', '${a['Equipment Name']}', '${a['Status']}', '${conditionNote}')" title="แก้ไขสภาพ/สถานะ"><i class="bi bi-pencil-square"></i></button>
           </td>
         </tr>`;
       });
 
-      tbody.innerHTML = html || '<tr><td colspan="8" class="text-center text-muted py-4">ไม่มีข้อมูลรหัสครุภัณฑ์ในระบบ</td></tr>';
+      tbody.innerHTML = html || '<tr><td colspan="8" class="text-center text-muted py-4">ไม่พบข้อมูลรหัสครุภัณฑ์ตรงตามเงื่อนไขค้นหา</td></tr>';
       updateSelectedQrCount();
     }
 
@@ -1763,6 +1825,54 @@
       const selected = document.querySelectorAll('.asset-checkbox:checked');
       const text = document.getElementById('selectedQrCountText');
       if (text) text.textContent = selected.length;
+    }
+
+    function openSingleQrModal(assetCode, equipName) {
+      currentSingleQrCode = assetCode;
+      document.getElementById('singleQrCodeText').textContent = assetCode;
+      document.getElementById('singleQrEquipText').textContent = equipName;
+
+      const container = document.getElementById('singleQrCanvasContainer');
+      container.innerHTML = "";
+
+      new QRCode(container, {
+        text: assetCode,
+        width: 140,
+        height: 140,
+        correctLevel: QRCode.CorrectLevel.M
+      });
+
+      let modal = new bootstrap.Modal(document.getElementById('singleQrModal'));
+      modal.show();
+    }
+
+    function printSingleQrSticker() {
+      const printArea = document.getElementById('thermalPrintArea');
+      printArea.innerHTML = "";
+
+      let matchAsset = masterAdminCachedData.assets.find(a => a['Asset Code'] === currentSingleQrCode);
+      let equipName = matchAsset ? matchAsset['Equipment Name'] : 'กายอุปกรณ์';
+
+      let stickerNode = document.createElement('div');
+      stickerNode.className = 'qr-sticker-item';
+      stickerNode.innerHTML = `
+        <div class="qr-sticker-title">อบต.ท่าก๊อ</div>
+        <div class="qr-sticker-sub">${equipName}</div>
+        <div id="qr_single_print_canvas"></div>
+        <div class="qr-sticker-code">${currentSingleQrCode}</div>
+      `;
+      printArea.appendChild(stickerNode);
+
+      new QRCode(stickerNode.querySelector('#qr_single_print_canvas'), {
+        text: currentSingleQrCode,
+        width: 75,
+        height: 75,
+        correctLevel: QRCode.CorrectLevel.M
+      });
+
+      setTimeout(() => {
+        window.print();
+      }, 400);
     }
 
     function openEditAssetConditionModal(code, name, status, note) {
@@ -1820,7 +1930,7 @@
               <td><code>${l.requestId}</code></td>
               <td class="fw-bold">${l.borrowerName}</td>
               <td><span class="badge bg-secondary">${l.actionType}</span></td>
-              <td class="small text-muted">${l.relevantDate}</td>
+              <td class="small text-muted">${cleanDateDisplay(l.relevantDate)}</td>
               <td><span class="badge bg-success">${l.status}</span></td>
             </tr>`;
           });
@@ -1842,7 +1952,7 @@
             <div class="col-md-6">
               <div class="p-3 bg-light rounded-3 border">
                 <h6 class="fw-bold text-primary mb-2"><i class="bi bi-activity me-1"></i> สถิติและการใช้งาน</h6>
-                <div><b>วันที่ลงทะเบียนระบบ:</b> ${info.registeredDate}</div>
+                <div><b>วันที่ลงทะเบียนระบบ:</b> ${cleanDateDisplay(info.registeredDate)}</div>
                 <div><b>สภาพวัสดุปัจจุบัน:</b> <span class="fw-bold text-dark">${info.conditionNote}</span></div>
                 <div><b>จำนวนครั้งที่ยืมสะสม:</b> <span class="fs-5 text-success fw-bold">${info.borrowCount} ครั้ง</span></div>
               </div>
@@ -1878,6 +1988,7 @@
         alert(resMsg);
         btn.disabled = false;
         btn.innerHTML = '<i class="bi bi-plus-square-fill me-1"></i> สร้างรหัสครุภัณฑ์';
+        bootstrap.Modal.getInstance(document.getElementById('batchGenerateAssetModal')).hide();
         triggerAdminDataRefresh(btn);
       } catch(err) {
         alert("เกิดข้อผิดพลาด: " + err.message);
@@ -2103,7 +2214,7 @@
             <div class="p-2 bg-light rounded border mb-3 small">
               <div><b>ผู้ถือครองปัจจุบัน:</b> ${tracker.borrowerName}</div>
               <div><b>เบอร์โทร:</b> ${tracker.phone}</div>
-              <div><b>วันกำหนดคืน:</b> <span class="text-danger fw-bold">${tracker.dueDate}</span></div>
+              <div><b>วันกำหนดคืน:</b> <span class="text-danger fw-bold">${cleanDateDisplay(tracker.dueDate)}</span></div>
             </div>`;
 
           if (sessionPassword) {
@@ -2115,9 +2226,6 @@
           }
         } else {
           html += `<div class="text-muted small mb-3">อุปกรณ์ชิ้นนี้อยู่ในคลัง / รหัสยังไม่ได้ผูกผู้ยืม</div>`;
-          if (sessionPassword) {
-            html += `<button class="btn btn-primary btn-sm w-100 fw-bold" onclick="openFieldMigrationModal('${asset.assetCode}', '${asset.equipName}')"><i class="bi bi-link-45deg me-1"></i> ผูกรหัสกับผู้ใช้งานเดิม (Field Migration)</button>`;
-          }
         }
 
         html += `</div>`;
@@ -2128,46 +2236,6 @@
     }
 
     function onQrScanError() {}
-
-    function openFieldMigrationModal(assetCode, equipName) {
-      if (!masterAdminCachedData) return;
-      document.getElementById('migrationAssetCode').value = assetCode;
-      document.getElementById('migrationAssetCodeDisplay').textContent = assetCode + ` (${equipName})`;
-
-      const sel = document.getElementById('migrationTrackerSelect');
-      sel.innerHTML = "";
-
-      let matches = masterAdminCachedData.tracker.filter(t => t['Equipment Name'].toString().trim().toLowerCase() === equipName.toString().trim().toLowerCase());
-      if (matches.length === 0) {
-        sel.innerHTML = `<option value="">-- ไม่พบรายการผู้ยืมอุปกรณ์ชนิดนี้ใน Tracker --</option>`;
-      } else {
-        matches.forEach(t => {
-          let opt = document.createElement('option');
-          opt.value = t['Tracker ID'];
-          opt.textContent = `${t['Title']}${t['Name']} (ม.${t['Moo']} ${t['Village']}) - กำหนดคืน: ${t['Due Date']}`;
-          sel.appendChild(opt);
-        });
-      }
-
-      bootstrap.Modal.getInstance(document.getElementById('qrScannerModal')).hide();
-      let modal = new bootstrap.Modal(document.getElementById('fieldMigrationModal'));
-      modal.show();
-    }
-
-    async function submitFieldMigrationBinding() {
-      const assetCode = document.getElementById('migrationAssetCode').value;
-      const trackerId = document.getElementById('migrationTrackerSelect').value;
-      if (!trackerId) return alert("โปรดเลือกรายการผู้ถือครองในระบบก่อนกดผูกรหัสครับ");
-
-      try {
-        const resMsg = await callGASApi('bindAssetToExistingTracker', { assetCode: assetCode, trackerId: trackerId }, sessionPassword);
-        alert(resMsg);
-        bootstrap.Modal.getInstance(document.getElementById('fieldMigrationModal')).hide();
-        executeAdminBackgroundRefresh();
-      } catch(err) {
-        alert("เกิดข้อผิดพลาด: " + err.message);
-      }
-    }
 
     function executeTableFilterPreserve(inputId, tableBodyId) {
       const el = document.getElementById(inputId);
@@ -2207,7 +2275,7 @@
         eqSel.appendChild(opt);
       });
 
-      let dateVal = (sheetName === 'Requests') ? item['Relevant Date'] : item['Due Date'];
+      let dateVal = cleanDateDisplay((sheetName === 'Requests') ? item['Relevant Date'] : item['Due Date']);
       if(dateVal && dateVal.includes('/')) {
          let parts = dateVal.split('/');
          dateVal = `${parts[2]}-${parts[1]}-${parts[0]}`;
@@ -2467,8 +2535,19 @@
     function evaluateOverdueSchedules(dataset) {
       let pendingItems = dataset.requests.filter(r => r['Status'] === 'Pending');
       let overdueItems = []; let today = new Date(); today.setHours(0,0,0,0);
-      dataset.tracker.forEach(t => { if(t['Due Date'] && t['Due Date'] !== '-') { let due = new Date(t['Due Date']); if(!isNaN(due.getTime())) { due.setHours(0,0,0,0); let diff = Math.ceil((due.getTime() - today.getTime()) / (1000 * 3600 * 24)); if(diff <= 3) overdueItems.push(t); } } });
-      let currentPendingStr = pendingItems.map(p => p['Name'] + p['Equipment Name']).join('|'); let currentOverdueStr = overdueItems.map(o => o['Name'] + o['Equipment Name']).join('|');
+      dataset.tracker.forEach(t => { 
+        let cleanDue = cleanDateDisplay(t['Due Date']);
+        if(cleanDue && cleanDue !== '-') { 
+          let due = new Date(cleanDue); 
+          if(!isNaN(due.getTime())) { 
+            due.setHours(0,0,0,0); 
+            let diff = Math.ceil((due.getTime() - today.getTime()) / (1000 * 3600 * 24)); 
+            if(diff <= 3) overdueItems.push(t); 
+          } 
+        } 
+      });
+      let currentPendingStr = pendingItems.map(p => p['Name'] + p['Equipment Name']).join('|'); 
+      let currentOverdueStr = overdueItems.map(o => o['Name'] + o['Equipment Name']).join('|');
       if(currentPendingStr !== lastToastPendingStr || currentOverdueStr !== lastToastOverdueStr) {
         lastToastPendingStr = currentPendingStr;
         lastToastOverdueStr = currentOverdueStr; let toastContent = "";

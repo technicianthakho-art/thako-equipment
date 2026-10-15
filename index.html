@@ -2510,6 +2510,7 @@
       const tbody = document.getElementById('tableInventoryMatrixBody');
       if (!tbody || !masterAdminCachedData) return;
 
+      // กรองประวัติย้อนหลังตามปีงบประมาณเฉพาะรายการที่ได้รับการอนุมัติแล้ว
       let hYearFilter = masterAdminCachedData.history.filter(h => h['Fiscal Year'] === selectedFY && (h['Status'] === 'Approved' || h['Status'] === 'Returned'));
       let matrixHtml = "";
 
@@ -2517,9 +2518,17 @@
         let eName = stock['Name'].trim();
         let total = Number(stock['Total Qty']) || 0;
 
-        let accumBorrowed = 0;
-        let accumReturned = 0;
-        let accumDonated = 0;
+        // 1. ดึงยอด "ถูกยืม" ณ ปัจจุบันโดยตรงจากฐานข้อมูล Stock (ตรงกับการ์ดสต็อก 100%)
+        let currentActiveBorrowed = Number(stock['Borrowed Qty']) || 0;
+
+        // 2. คำนวณ % การใช้งานจากยอดถูกยืมจริง ณ ปัจจุบัน
+        let usagePercent = total > 0 ? ((currentActiveBorrowed / total) * 100).toFixed(1) : "0.0";
+        let usageBadgeColor = usagePercent > 70 ? 'bg-danger' : (usagePercent >= 30 ? 'bg-warning text-dark' : 'bg-success');
+
+        // 3. คำนวณสถิติสะสมตามปีงบประมาณจาก History_Log
+        let accumBorrowed = 0; // ยืมสะสม (นับเฉพาะยืมใหม่ ไม่รวมยืมต่อ เพื่อไม่ให้นับชิ้นอุปกรณ์ซ้ำ)
+        let accumReturned = 0; // คืนแล้ว
+        let accumDonated = 0;  // บริจาคเข้าคลัง
 
         hYearFilter.forEach(h => {
           let hEquip = (h['Equipment Name'] || '').trim();
@@ -2527,23 +2536,24 @@
           let act = (h['Action Type'] || '').trim();
 
           if (hEquip === eName) {
-            if (act === 'ยืม' || act === 'ยืมต่อ') accumBorrowed += qty;
-            else if (act === 'คืน' || act.includes('คืน')) accumReturned += qty;
-            else if (act === 'บริจาค') accumDonated += qty;
+            if (act === 'ยืม') {
+              accumBorrowed += qty; 
+            } else if (act === 'คืน' || act.includes('คืน')) {
+              accumReturned += qty;
+            } else if (act === 'บริจาค') {
+              accumDonated += qty;
+            }
           }
         });
 
-        let activeInFY = Math.max(0, accumBorrowed - accumReturned);
-        let usagePercent = total > 0 ? ((activeInFY / total) * 100).toFixed(1) : 0;
-        let usageBadgeColor = usagePercent > 70 ? 'bg-danger' : (usagePercent >= 30 ? 'bg-warning text-dark' : 'bg-success');
-
-        let accumTurnoverPercent = total > 0 ? ((accumBorrowed / total) * 100).toFixed(1) : 0;
+        // 4. คำนวณ % หมุนเวียนสะสมประจำปีงบประมาณ
+        let accumTurnoverPercent = total > 0 ? ((accumBorrowed / total) * 100).toFixed(1) : "0.0";
         let turnoverBadgeColor = accumTurnoverPercent >= 100 ? 'bg-primary' : (accumTurnoverPercent >= 50 ? 'bg-info text-dark' : 'bg-secondary');
 
         matrixHtml += `<tr>
           <td class="fw-bold text-dark">${eName}</td>
           <td class="text-center fw-semibold">${total}</td>
-          <td class="text-center text-danger fw-bold">${activeInFY}</td>
+          <td class="text-center text-danger fw-bold fs-6">${currentActiveBorrowed}</td>
           <td class="text-center"><span class="badge ${usageBadgeColor} px-2 py-1 fs-6">${usagePercent}%</span></td>
           <td class="text-center text-primary fw-bold">${accumBorrowed}</td>
           <td class="text-center text-success fw-bold">${accumReturned}</td>

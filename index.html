@@ -104,7 +104,6 @@
     .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; }
     .bento-col-4 { grid-column: span 4; }
     .bento-col-8 { grid-column: span 8; }
-    .bento-col-12 { grid-column: span 12; }
     @media (max-width: 992px) {
       .bento-col-4, .bento-col-8 { grid-column: span 12; }
     }
@@ -354,7 +353,6 @@
           <li class="nav-item"><button class="nav-link active" onclick="switchAdminSubTab('operations')"><i class="bi bi-list-check me-1"></i>ติดตามงานและอนุมัติ</button></li>
           <li class="nav-item"><button class="nav-link" onclick="switchAdminSubTab('analytics')"><i class="bi bi-pie-chart-fill me-1"></i>รายงานสถิติ</button></li>
           <li class="nav-item"><button class="nav-link" onclick="switchAdminSubTab('inventory')"><i class="bi bi-boxes me-1"></i>จัดการคลังอุปกรณ์</button></li>
-          <!-- NEW SUB TAB: ครุภัณฑ์และ QR Code placed right after Inventory -->
           <li class="nav-item"><button class="nav-link" onclick="switchAdminSubTab('asset_qr')"><i class="bi bi-qr-code-scan me-1"></i>ครุภัณฑ์และ QR Code</button></li>
           <li class="nav-item"><button class="nav-link" onclick="switchAdminSubTab('history')"><i class="bi bi-journal-text me-1"></i>ประวัติทั้งหมด</button></li>
           <li class="nav-item"><button class="nav-link" onclick="switchAdminSubTab('calendar')"><i class="bi bi-calendar3 me-1"></i>ปฏิทินงาน</button></li>
@@ -528,7 +526,7 @@
           </div>
         </div>
 
-        <!-- NEW SUB VIEW 3.5: ครุภัณฑ์และ QR Code (Asset QR Hub in Bento Grid) -->
+        <!-- SUB VIEW 3.5: ครุภัณฑ์และ QR Code (Asset QR Hub in Bento Grid) -->
         <div id="subViewAssetQr" class="admin-subview d-none">
           <div class="bento-grid">
             
@@ -577,11 +575,12 @@
 
                 <div class="d-flex gap-2 mb-3">
                   <input type="text" id="filterAssetInput" class="form-control form-control-sm" placeholder="ค้นหารหัส หรือชื่ออุปกรณ์..." onkeyup="executeTableFilter('filterAssetInput', 'tableAssetItemsBody')">
-                  <select class="form-select form-select-sm" id="filterAssetStatusSelect" onchange="renderAssetItemsTableUI()" style="width: 150px;">
+                  <select class="form-select form-select-sm" id="filterAssetStatusSelect" onchange="renderAssetItemsTableUI()" style="width: 160px;">
                     <option value="">-- ทุกสถานะ --</option>
                     <option value="Available">Available (ว่าง)</option>
                     <option value="Borrowed">Borrowed (ถูกยืม)</option>
                     <option value="Maintenance">Maintenance (ชำรุด)</option>
+                    <option value="Retired">Retired (ปลดระวาง)</option>
                   </select>
                 </div>
 
@@ -593,8 +592,10 @@
                         <th>รหัสครุภัณฑ์ (Asset Code)</th>
                         <th>ชื่อกายอุปกรณ์</th>
                         <th>สถานะ</th>
+                        <th>สภาพวัสดุ</th>
+                        <th class="text-center">ยืมสะสม</th>
                         <th>ผู้ถือครองปัจจุบัน</th>
-                        <th>วันที่ลงทะเบียน</th>
+                        <th class="text-center">จัดการ</th>
                       </tr>
                     </thead>
                     <tbody id="tableAssetItemsBody"></tbody>
@@ -668,7 +669,7 @@
   <!-- Thermal Printing Container Hidden for UI -->
   <div id="thermalPrintArea" class="d-none d-print-block"></div>
 
-  <!-- Modal Smart Approve Binding (Pre-binding Validation) -->
+  <!-- Modal Smart Approve Binding -->
   <div class="modal fade" id="smartApproveModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
@@ -696,7 +697,63 @@
     </div>
   </div>
 
-  <!-- Modal Field Migration (ผูกรหัสหน้างาน) -->
+  <!-- MODAL: Edit Asset Condition & Status -->
+  <div class="modal fade" id="editAssetConditionModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
+        <div class="modal-header bg-dark text-white py-3">
+          <h5 class="modal-title fw-bold"><i class="bi bi-tools text-warning me-2"></i> บันทึกปรับเปลี่ยนสภาพ/สถานะครุภัณฑ์</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4">
+          <form id="editAssetConditionForm" onsubmit="submitAssetConditionUpdate(event)">
+            <input type="hidden" id="modalAssetCode">
+            <div class="mb-3">
+              <label class="fw-bold text-muted small">รหัสครุภัณฑ์:</label>
+              <div class="fs-5 text-primary fw-bold" id="modalAssetCodeDisplay"></div>
+              <div class="small text-secondary" id="modalEquipNameDisplay"></div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-semibold">สถานะความพร้อมใช้งาน</label>
+              <select class="form-select" id="modalAssetStatusSelect" required>
+                <option value="Available">Available (พร้อมใช้งาน/ว่าง)</option>
+                <option value="Maintenance">Maintenance (ชำรุด/ส่งซ่อมบำรุง)</option>
+                <option value="Retired">Retired (ปลดระวาง/แทงจำหน่าย)</option>
+              </select>
+            </div>
+            <div class="mb-4">
+              <label class="form-label fw-semibold">หมายเหตุรายละเอียดสภาพวัสดุ</label>
+              <textarea class="form-control" id="modalConditionNoteInput" rows="3" placeholder="ระบุสภาพ เช่น ยางล้อเสื่อม, โครงเหล็กถลอก, สภาพสมบูรณ์ 95%" required></textarea>
+            </div>
+            <div class="d-flex justify-content-end gap-2">
+              <button type="button" class="btn btn-secondary px-3" data-bs-dismiss="modal">ยกเลิก</button>
+              <button type="submit" id="btnSaveAssetCond" class="btn btn-primary px-4 fw-bold"><i class="bi bi-save-fill me-1"></i> บันทึกข้อมูล</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Asset Lifecycle & Full History Log -->
+  <div class="modal fade" id="assetLifecycleModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content border-0 shadow-lg" style="border-radius: 20px;">
+        <div class="modal-header bg-primary text-white py-3" style="border-top-left-radius: 20px; border-top-right-radius: 20px;">
+          <h5 class="modal-title fw-bold"><i class="bi bi-journal-check text-warning me-2"></i> สมุดประวัติครุภัณฑ์เชิงลึก (Asset Lifecycle Log)</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4" id="assetLifecycleModalBody">
+          <div class="text-center py-5"><div class="spinner-border text-primary"></div> กำลังดึงประวัติครุภัณฑ์...</div>
+        </div>
+        <div class="modal-footer bg-light border-0 py-2" style="border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;">
+          <button type="button" class="btn btn-secondary px-4 fw-bold rounded-pill" data-bs-dismiss="modal">ปิดหน้าต่าง</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Field Migration -->
   <div class="modal fade" id="fieldMigrationModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
@@ -832,7 +889,7 @@
 
   <script>
     // ==========================================
-    // Configuration & State Anchor
+    // REST API Endpoint Config
     // ==========================================
     const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxbbbbJQnA4CAWgXWwhpwbiJTxwAhBJn1FS2BTpoePGIiHrFTr1oS_-48ZIgVpz0nL0/exec";
     
@@ -1468,7 +1525,6 @@
       refreshDashboardVisualCharts();
       renderAssetItemsTableUI();
       
-      // 1. Requests Table
       const pTable = document.getElementById('tablePendingBody');
       let pFilter = masterAdminCachedData.requests.filter(r => r['Status'] === 'Pending');
       let pHtml = "";
@@ -1516,7 +1572,6 @@
       });
       pTable.innerHTML = pHtml || '<tr><td colspan="9" class="text-center text-muted py-3">ไม่มีรายการค้างรอดำเนินการครับ</td></tr>';
       
-      // 2. Tracker Table
       const tTable = document.getElementById('tableTrackerBody');
       let tHtml = "";
       let sortedTracker = masterAdminCachedData.tracker.map(t => {
@@ -1569,7 +1624,6 @@
       });
       tTable.innerHTML = tHtml || '<tr><td colspan="10" class="text-center text-muted py-4">ไม่มีรายการค้างส่งคืนในระบบครับ</td></tr>';
 
-      // 3. Stock Cards
       const invContainer = document.getElementById('inventoryCardsContainer');
       let invHtml = "";
       masterAdminCachedData.stock.forEach(s => {
@@ -1599,7 +1653,6 @@
       });
       invContainer.innerHTML = invHtml || '<div class="col-12 text-center py-5 text-muted">ไม่มีข้อมูลอุปกรณ์ในคลังระบบ</div>';
       
-      // 4. History Table
       const hTable = document.getElementById('tableHistoryBody');
       const actionFilter = document.getElementById('historyActionFilter').value;
       let hHtml = "";
@@ -1676,20 +1729,27 @@
       }
 
       let html = "";
-      assets.forEach((a, idx) => {
-        let stBadge = a['Status'] === 'Available' ? '<span class="badge bg-success">ว่าง (Available)</span>' : (a['Status'] === 'Borrowed' ? '<span class="badge bg-warning text-dark">ถูกยืม (Borrowed)</span>' : '<span class="badge bg-danger">ชำรุด (Maintenance)</span>');
+      assets.forEach((a) => {
+        let stBadge = a['Status'] === 'Available' ? '<span class="badge bg-success">ว่าง (Available)</span>' : (a['Status'] === 'Borrowed' ? '<span class="badge bg-warning text-dark">ถูกยืม (Borrowed)</span>' : (a['Status'] === 'Maintenance' ? '<span class="badge bg-danger">ชำรุด (Maintenance)</span>' : '<span class="badge bg-dark">ปลดระวาง (Retired)</span>'));
+        let conditionNote = a['Condition Note'] || 'พร้อมใช้งาน';
+        let borrowCount = Number(a['Borrow_Count']) || 0;
         
         html += `<tr>
           <td class="text-center"><input type="checkbox" class="form-check-input asset-checkbox" value="${a['Asset Code']}" onchange="updateSelectedQrCount()"></td>
           <td class="fw-bold"><code class="text-primary fs-6">${a['Asset Code']}</code></td>
           <td class="fw-semibold text-dark">${a['Equipment Name']}</td>
           <td>${stBadge}</td>
+          <td><small class="text-muted"><i class="bi bi-info-circle"></i> ${conditionNote}</small></td>
+          <td class="text-center fw-bold text-primary fs-6">${borrowCount} ครั้ง</td>
           <td>${a['Current Borrower'] || '-'}</td>
-          <td class="small text-muted">${a['Registered Date'] || '-'}</td>
+          <td class="text-center">
+            <button class="btn btn-sm btn-outline-primary py-0 px-2 me-1" onclick="openAssetLifecycleModal('${a['Asset Code']}')" title="ดูสมุดประวัติเชิงลึก"><i class="bi bi-eye-fill"></i> ประวัติ</button>
+            <button class="btn btn-sm btn-outline-warning text-dark py-0 px-2" onclick="openEditAssetConditionModal('${a['Asset Code']}', '${a['Equipment Name']}', '${a['Status']}', '${conditionNote}')" title="แก้ไขสภาพ/สถานะ"><i class="bi bi-pencil-square"></i> แก้ไข</button>
+          </td>
         </tr>`;
       });
 
-      tbody.innerHTML = html || '<tr><td colspan="6" class="text-center text-muted py-4">ไม่มีข้อมูลรหัสครุภัณฑ์ในระบบ</td></tr>';
+      tbody.innerHTML = html || '<tr><td colspan="8" class="text-center text-muted py-4">ไม่มีข้อมูลรหัสครุภัณฑ์ในระบบ</td></tr>';
       updateSelectedQrCount();
     }
 
@@ -1703,6 +1763,104 @@
       const selected = document.querySelectorAll('.asset-checkbox:checked');
       const text = document.getElementById('selectedQrCountText');
       if (text) text.textContent = selected.length;
+    }
+
+    function openEditAssetConditionModal(code, name, status, note) {
+      document.getElementById('modalAssetCode').value = code;
+      document.getElementById('modalAssetCodeDisplay').textContent = code;
+      document.getElementById('modalEquipNameDisplay').textContent = name;
+      document.getElementById('modalAssetStatusSelect').value = status || 'Available';
+      document.getElementById('modalConditionNoteInput').value = note || 'พร้อมใช้งาน';
+      
+      let modal = new bootstrap.Modal(document.getElementById('editAssetConditionModal'));
+      modal.show();
+    }
+
+    async function submitAssetConditionUpdate(e) {
+      e.preventDefault();
+      const code = document.getElementById('modalAssetCode').value;
+      const status = document.getElementById('modalAssetStatusSelect').value;
+      const note = document.getElementById('modalConditionNoteInput').value.trim();
+
+      const btn = document.getElementById('btnSaveAssetCond');
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> กำลังบันทึก...';
+
+      try {
+        const resMsg = await callGASApi('updateAssetConditionAndStatus', { assetCode: code, status: status, conditionNote: note }, sessionPassword);
+        alert(resMsg);
+        btn.disabled = false;
+        btn.innerHTML = '<i class="bi bi-save-fill me-1"></i> บันทึกข้อมูล';
+        bootstrap.Modal.getInstance(document.getElementById('editAssetConditionModal')).hide();
+        executeAdminBackgroundRefresh();
+      } catch(err) {
+        alert("เกิดข้อผิดพลาด: " + err.message);
+        btn.disabled = false;
+        btn.innerHTML = '<i class="bi bi-save-fill me-1"></i> บันทึกข้อมูล';
+      }
+    }
+
+    async function openAssetLifecycleModal(assetCode) {
+      const bodyNode = document.getElementById('assetLifecycleModalBody');
+      bodyNode.innerHTML = '<div class="text-center py-5"><div class="spinner-border text-primary"></div> กำลังโหลดข้อมูลประวัติครุภัณฑ์...</div>';
+      
+      let modal = new bootstrap.Modal(document.getElementById('assetLifecycleModal'));
+      modal.show();
+
+      try {
+        const data = await callGASApi('getAssetFullHistory', { assetCode: assetCode }, sessionPassword);
+        let info = data.assetInfo;
+        let logs = data.logs;
+
+        let logsHtml = "";
+        if (logs.length > 0) {
+          logs.forEach(l => {
+            logsHtml += `<tr>
+              <td class="small text-muted">${l.timestamp}</td>
+              <td><code>${l.requestId}</code></td>
+              <td class="fw-bold">${l.borrowerName}</td>
+              <td><span class="badge bg-secondary">${l.actionType}</span></td>
+              <td class="small text-muted">${l.relevantDate}</td>
+              <td><span class="badge bg-success">${l.status}</span></td>
+            </tr>`;
+          });
+        } else {
+          logsHtml = `<tr><td colspan="6" class="text-center text-muted py-3">ยังไม่มีประวัติบันทึกการใช้งานในคลัง Log</td></tr>`;
+        }
+
+        bodyNode.innerHTML = `
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <div class="p-3 bg-light rounded-3 border">
+                <h6 class="fw-bold text-primary mb-2"><i class="bi bi-qr-code me-1"></i> ข้อมูลเฉพาะครุภัณฑ์</h6>
+                <div><b>รหัสครุภัณฑ์:</b> <code class="fs-6 text-primary">${info.assetCode}</code></div>
+                <div><b>ชื่อประเภทอุปกรณ์:</b> ${info.equipName}</div>
+                <div><b>สถานะปัจจุบัน:</b> <span class="badge bg-info text-dark">${info.status}</span></div>
+                <div><b>ผู้ถือครองปัจจุบัน:</b> ${info.currentBorrower}</div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="p-3 bg-light rounded-3 border">
+                <h6 class="fw-bold text-primary mb-2"><i class="bi bi-activity me-1"></i> สถิติและการใช้งาน</h6>
+                <div><b>วันที่ลงทะเบียนระบบ:</b> ${info.registeredDate}</div>
+                <div><b>สภาพวัสดุปัจจุบัน:</b> <span class="fw-bold text-dark">${info.conditionNote}</span></div>
+                <div><b>จำนวนครั้งที่ยืมสะสม:</b> <span class="fs-5 text-success fw-bold">${info.borrowCount} ครั้ง</span></div>
+              </div>
+            </div>
+          </div>
+
+          <h6 class="fw-bold text-dark mb-2"><i class="bi bi-clock-history me-1"></i> ประวัติการทำรายการยืม-คืนย้อนหลัง</h6>
+          <div class="table-responsive bg-white rounded border" style="max-height: 250px;">
+            <table class="table table-sm table-hover align-middle mb-0 text-nowrap">
+              <thead class="table-light">
+                <tr><th>วัน/เวลา</th><th>รหัสคำขอ</th><th>ผู้ยืม/ทำรายการ</th><th>กิจกรรม</th><th>กำหนดคืน</th><th>สถานะ</th></tr>
+              </thead>
+              <tbody>${logsHtml}</tbody>
+            </table>
+          </div>`;
+      } catch(err) {
+        bodyNode.innerHTML = `<div class="alert alert-danger">${err.message}</div>`;
+      }
     }
 
     async function handleAssetBatchGenerateSubmit(e) {
@@ -1789,7 +1947,7 @@
           for (let k = 0; k < qtyReq; k++) {
             html += `<div class="mb-2"><label class="small text-muted mb-1">ชิ้นที่ ${k+1}:</label><select class="form-select form-select-sm approve-asset-select"><option value="">-- ไม่ระบุผูกรหัส --</option>`;
             availables.forEach(a => {
-              html += `<option value="${a.assetCode}">${a.assetCode} (${a.equipName})</option>`;
+              html += `<option value="${a.assetCode}">${a.assetCode} (${a.equipName}) [${a.conditionNote}]</option>`;
             });
             html += `</select></div>`;
           }
@@ -1903,7 +2061,7 @@
           { fps: 10, qrbox: { width: 250, height: 250 } },
           onQrScanSuccess,
           onQrScanError
-        ).catch(err => {
+        ).catch(() => {
           document.getElementById('reader').innerHTML = `<div class="alert alert-warning p-2 small">ไม่สามารถเปิดกล้องได้: โปรดอนุญาตการเข้าถึงกล้องบนเบราว์เซอร์</div>`;
         });
       }, 300);
@@ -1917,7 +2075,7 @@
       }
     }
 
-    async function onQrScanSuccess(decodedText, decodedResult) {
+    async function onQrScanSuccess(decodedText) {
       stopQrScanner();
       
       const resultCard = document.getElementById('scanResultCard');
@@ -1936,7 +2094,8 @@
         let html = `
           <div class="card card-custom p-3 text-start border-top border-4 border-info">
             <h6 class="fw-bold text-primary mb-1"><i class="bi bi-qr-code text-info me-1"></i> ${asset.assetCode}</h6>
-            <div class="fw-bold text-dark fs-5 mb-2">${asset.equipName}</div>
+            <div class="fw-bold text-dark fs-5 mb-1">${asset.equipName}</div>
+            <div class="small text-muted mb-2"><b>สภาพวัสดุ:</b> ${asset.conditionNote} (ยืมสะสม ${asset.borrowCount} ครั้ง)</div>
             <div class="mb-2"><span class="badge ${asset.status === 'Available' ? 'bg-success' : 'bg-warning text-dark'}">${asset.status}</span></div>`;
 
         if (tracker) {
@@ -1968,7 +2127,7 @@
       }
     }
 
-    function onQrScanError(errorMessage) {}
+    function onQrScanError() {}
 
     function openFieldMigrationModal(assetCode, equipName) {
       if (!masterAdminCachedData) return;

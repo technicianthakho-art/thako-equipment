@@ -471,11 +471,15 @@
                 <div class="table-responsive">
                   <table class="table table-bordered table-hover align-middle mb-0 text-nowrap">
                     <thead class="table-light">
-                      <tr class="text-center">
-                        <th class="text-start">ชื่อกายอุปกรณ์</th>
+                      <tr class="text-center align-middle">
+                        <th rowspan="2" class="text-start bg-light">ชื่อกายอุปกรณ์</th>
+                        <th colspan="3" class="bg-primary bg-opacity-10 text-primary fw-bold border-end">สถานะคลังอุปกรณ์ปัจจุบัน</th>
+                        <th colspan="4" class="bg-success bg-opacity-10 text-success fw-bold">สถิติการให้บริการสะสม (ประจำปีงบประมาณ)</th>
+                      </tr>
+                      <tr class="text-center align-middle">
                         <th class="bg-primary bg-opacity-10">รวม (ชิ้น)</th>
                         <th class="bg-primary bg-opacity-10">ถูกยืม (ชิ้น)</th>
-                        <th class="bg-primary bg-opacity-10">ใช้งาน (%)</th>
+                        <th class="bg-primary bg-opacity-10 border-end">ใช้งาน (%)</th>
                         <th class="bg-success bg-opacity-10">ยืมสะสม (ชิ้น)</th>
                         <th class="bg-success bg-opacity-10">คืนแล้ว (ชิ้น)</th>
                         <th class="bg-success bg-opacity-10">บริจาค (ชิ้น)</th>
@@ -2066,7 +2070,7 @@
         let logs = data.logs;
 
         let logsHtml = "";
-        if (logs.length > 0) {
+        if (logs && logs.length > 0) {
           logs.forEach(l => {
             logsHtml += `<tr>
               <td class="small text-muted">${l.timestamp}</td>
@@ -2537,7 +2541,8 @@
       let sumApprovedBorrowedPieces = 0;
       hFilter.forEach(h => {
         let act = (h['Action Type'] || '').trim();
-        if (act === 'ยืม' || act === 'ยืมต่อ') {
+        // คำนวณยอดสะสมเฉพาะ Action 'ยืม' เท่านั้น (ไม่รวมรายการยืมต่อ)
+        if (act === 'ยืม') {
           sumApprovedBorrowedPieces += (Number(h['Qty']) || 0);
         }
       });
@@ -2603,7 +2608,8 @@
       const tbody = document.getElementById('tableInventoryMatrixBody');
       if (!tbody || !masterAdminCachedData) return;
 
-      let hYearFilter = masterAdminCachedData.history.filter(h => h['Fiscal Year'] === selectedFY && (h['Status'] === 'Approved' || h['Status'] === 'Returned'));
+      // กรองเฉพาะ History Log ประจำปีงบประมาณที่เลือก (ทั้งสถานะ Approved และ Returned)
+      let hYearFilter = masterAdminCachedData.history.filter(h => h['Fiscal Year'] === selectedFY && (h['Status'] === 'Approved' || h['Status'] === 'Returned' || h['Status'] === 'Pending'));
       let matrixHtml = "";
 
       masterAdminCachedData.stock.forEach(stock => {
@@ -2626,16 +2632,16 @@
 
           if (hEquip === eName) {
             if (act === 'ยืม') {
-              newBorrowedInFY += qty; 
+              newBorrowedInFY += qty; // นับเฉพาะ 'ยืม' ไม่รวม 'ยืมต่อ'
             } else if (act === 'คืน' || act.includes('คืน')) {
-              accumReturned += qty;
+              accumReturned += qty; // นับสถิติคืนสะสม
             } else if (act === 'บริจาค') {
               accumDonated += qty;
             }
           }
         });
 
-        let accumBorrowedTotal = Math.max(currentActiveBorrowed, newBorrowedInFY + accumReturned);
+        let accumBorrowedTotal = newBorrowedInFY;
 
         let accumTurnoverPercent = total > 0 ? ((accumBorrowedTotal / total) * 100).toFixed(1) : "0.0";
         let turnoverBadgeColor = accumTurnoverPercent >= 100 ? 'bg-primary' : (accumTurnoverPercent >= 50 ? 'bg-info text-dark' : 'bg-secondary');
@@ -2644,7 +2650,7 @@
           <td class="fw-bold text-dark">${eName}</td>
           <td class="text-center fw-semibold">${total}</td>
           <td class="text-center text-danger fw-bold fs-6">${currentActiveBorrowed}</td>
-          <td class="text-center"><span class="badge ${usageBadgeColor} px-2 py-1 fs-6">${usagePercent}%</span></td>
+          <td class="text-center border-end"><span class="badge ${usageBadgeColor} px-2 py-1 fs-6">${usagePercent}%</span></td>
           <td class="text-center text-primary fw-bold">${accumBorrowedTotal}</td>
           <td class="text-center text-success fw-bold">${accumReturned}</td>
           <td class="text-center text-info fw-bold">${accumDonated}</td>

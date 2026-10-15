@@ -653,45 +653,6 @@
 
   <div id="thermalPrintArea" class="d-none d-print-block"></div>
 
-  <!-- MODAL: Mobile Quick Admin Action (ยืมต่อ / ส่งคืน ผ่าน QR Scan) -->
-  <div class="modal fade" id="adminPasscodeAuthModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
-    <div class="modal-dialog modal-dialog-centered modal-sm">
-      <div class="modal-content modal-frosted border-0 shadow-lg">
-        <div class="modal-header bg-primary text-white py-2.5">
-          <h6 class="modal-title fw-bold mb-0" id="adminAuthModalTitle"><i class="bi bi-shield-lock-fill me-1"></i> ยืนยันสิทธิ์แอดมิน</h6>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body p-3 text-center">
-          <input type="hidden" id="qrActionType">
-          <input type="hidden" id="qrTargetTrackerId">
-          
-          <div class="alert alert-light border small text-start p-2 mb-3">
-            <div class="fw-bold text-dark" id="qrActionTargetSummary"></div>
-          </div>
-
-          <div id="returnConditionNoteGroup" class="mb-3 text-start d-none">
-            <label class="form-label fw-semibold small text-muted mb-1">ประเมินสภาพวัสดุ ณ วันรับคืน</label>
-            <select class="form-select form-select-sm" id="qrReturnConditionNote">
-              <option value="สภาพสมบูรณ์พร้อมใช้">สภาพสมบูรณ์พร้อมใช้</option>
-              <option value="ยางล้อเสื่อม/ต้องดูแล">ยางล้อเสื่อม/ต้องดูแล</option>
-              <option value="ชำรุดส่งซ่อมบำรุง">ชำรุดส่งซ่อมบำรุง</option>
-              <option value="แทงจำหน่าย/ปลดระวาง">แทงจำหน่าย/ปลดระวาง</option>
-            </select>
-          </div>
-
-          <div class="mb-3">
-            <label class="form-label fw-semibold small text-secondary">ระบุรหัสผ่านแอดมินเพื่อยืนยัน</label>
-            <input type="password" id="qrAdminPasscodeInput" class="form-control text-center py-2 fs-5" placeholder="รหัสผ่าน" required>
-          </div>
-
-          <button type="button" id="btnConfirmQrAction" class="btn btn-primary w-100 fw-bold rounded-pill shadow-sm" onclick="submitQrQuickAdminAction()">
-            <i class="bi bi-check-circle-fill me-1"></i> ยืนยันทำรายการ
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- MODAL: Generate Asset Batch -->
   <div class="modal fade" id="batchGenerateAssetModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-centered">
@@ -883,16 +844,38 @@
         <div class="modal-body p-3 text-center">
           <div id="reader"></div>
           
-          <!-- Quick Fallback Search -->
-          <div class="mt-3 p-2 bg-light rounded-3 border">
-            <label class="form-label fw-bold text-dark small mb-1"><i class="bi bi-search me-1"></i> สแกนไม่ได้? ค้นหาด้วยรหัสครุภัณฑ์เอง:</label>
+          <!-- Quick Fallback Search Field -->
+          <div class="mt-3 p-2.5 bg-light border rounded-3 text-start">
+            <label class="form-label fw-bold text-dark small mb-1"><i class="bi bi-keyboard-fill text-primary me-1"></i> สแกนไม่ได้? ป้อนรหัสครุภัณฑ์เอง</label>
             <div class="input-group input-group-sm">
-              <input type="text" id="manualAssetCodeInput" class="form-control text-uppercase fw-bold text-center" placeholder="เช่น CRU-69-001">
-              <button class="btn btn-primary fw-bold" onclick="executeManualAssetCodeSearch()"><i class="bi bi-arrow-right-short"></i> ค้นหา</button>
+              <input type="text" id="manualAssetCodeInput" class="form-control text-uppercase fw-bold text-primary" placeholder="เช่น CRU-69-001, BED-69-002" onkeyup="if(event.key==='Enter') executeManualAssetSearch()">
+              <button class="btn btn-primary fw-bold px-3" type="button" id="btnManualSearchAsset" onclick="executeManualAssetSearch()"><i class="bi bi-search me-1"></i> ค้นหา</button>
             </div>
           </div>
 
           <div id="scanResultCard" class="mt-3 d-none"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Admin Password Guard Action Modal -->
+  <div class="modal fade" id="adminAuthActionModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content modal-frosted border-0 shadow-lg">
+        <div class="modal-header bg-dark text-white py-3">
+          <h6 class="modal-title fw-bold mb-0" id="adminAuthActionModalTitle"><i class="bi bi-shield-lock-fill text-warning me-2"></i> ยืนยันสิทธิ์ผู้ดูแลระบบ</h6>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4 text-center">
+          <p class="text-muted small mb-2" id="adminAuthActionSubTitle">กรุณาระบุรหัสผ่านผู้ดูแลระบบเพื่อยืนยันการทำรายการ</p>
+          <input type="hidden" id="actionTargetTrackerId">
+          <input type="hidden" id="actionTypeFlag">
+          <input type="password" id="actionAdminPasswordInput" class="form-control text-center py-2 mb-3" placeholder="ระบุรหัสผ่านแอดมิน" onkeyup="if(event.key==='Enter') submitAdminActionWithAuth()" required>
+          <div class="d-grid gap-2">
+            <button type="button" id="btnSubmitAdminAuthAction" class="btn btn-primary fw-bold rounded-pill" onclick="submitAdminActionWithAuth()"><i class="bi bi-check-circle-fill me-1"></i> ยืนยันทำรายการ</button>
+            <button type="button" class="btn btn-light rounded-pill fw-bold" data-bs-dismiss="modal">ยกเลิก</button>
+          </div>
         </div>
       </div>
     </div>
@@ -1011,6 +994,28 @@
 
     Chart.register(ChartDataLabels);
 
+    // Audio & Haptic Feedback Helper
+    function triggerScanFeedback() {
+      try {
+        if (navigator.vibrate) {
+          navigator.vibrate([100, 50, 100]);
+        }
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (AudioContext) {
+          const ctx = new AudioContext();
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(800, ctx.currentTime);
+          gain.gain.setValueAtTime(0.2, ctx.currentTime);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.12);
+        }
+      } catch (e) {}
+    }
+
     function cleanDateDisplay(rawDate) {
       if (!rawDate && rawDate !== 0) return "-";
       let str = rawDate.toString().trim();
@@ -1018,25 +1023,6 @@
         str = str.split("T")[0];
       }
       return str;
-    }
-
-    // Audio Beep Sound & Haptic Feedback
-    function triggerScanFeedback() {
-      try {
-        if ("vibrate" in navigator) {
-          navigator.vibrate([100, 50, 100]);
-        }
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(1000, audioCtx.currentTime);
-        gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.15);
-      } catch(e) {}
     }
 
     async function callGASApi(action, payload = {}, pass = "") {
@@ -1732,8 +1718,8 @@
           <td class="text-danger fw-bold"><i class="bi bi-calendar-x"></i> ${t._cleanDueDate}</td>
           <td>${t._statusBadge}</td>
           <td class="text-center" onclick="event.stopPropagation();">
-            <button class="btn btn-sm btn-warning text-dark py-1 me-1 shadow-sm hover-elevate" onclick="processDirectTrackerRenew('${t['Tracker ID']}')" title="ยืมต่อ +90 วัน"><i class="bi bi-arrow-repeat"></i> ยืมต่อ</button>
-            <button class="btn btn-sm btn-success py-1 me-1 shadow-sm hover-elevate" onclick="processDirectTrackerReturn('${t['Tracker ID']}')"><i class="bi bi-box-arrow-in-down"></i> รับคืน</button>
+            <button class="btn btn-sm btn-warning text-dark py-1 me-1 shadow-sm hover-elevate" onclick="openActionAdminAuthModal('renew', '${t['Tracker ID']}')" title="ยืมต่อ +90 วัน"><i class="bi bi-arrow-repeat"></i> ยืมต่อ</button>
+            <button class="btn btn-sm btn-success py-1 me-1 shadow-sm hover-elevate" onclick="openActionAdminAuthModal('return', '${t['Tracker ID']}')"><i class="bi bi-box-arrow-in-down"></i> รับคืน</button>
             <button class="btn btn-sm btn-outline-secondary py-1 me-1 shadow-sm hover-elevate" onclick="openFullAdminEditModal('Tracker', '${t['Tracker ID']}')"><i class="bi bi-pencil-square"></i></button>
             <button class="btn btn-sm btn-danger py-1 shadow-sm hover-elevate" onclick="executeAdminDeleteRowAction('Tracker', '${t['Tracker ID']}')"><i class="bi bi-trash"></i></button>
           </td>
@@ -2249,25 +2235,59 @@
       }
     }
 
-    async function processDirectTrackerRenew(trackerId) {
-      if(!confirm("ยืนยันขยายเวลายืมต่ออีก 90 วัน สำหรับรายการนี้ใช่หรือไม่ครับ?")) return;
-      try {
-        const resMsg = await callGASApi('renewEquipmentFromTracker', { trackerId: trackerId }, sessionPassword);
-        alert(resMsg);
-        executeAdminBackgroundRefresh();
-      } catch(err) {
-        alert("เกิดข้อผิดพลาด: " + err.message);
+    function openActionAdminAuthModal(actionFlag, trackerId) {
+      document.getElementById('actionTypeFlag').value = actionFlag;
+      document.getElementById('actionTargetTrackerId').value = trackerId;
+      document.getElementById('actionAdminPasswordInput').value = "";
+
+      const titleNode = document.getElementById('adminAuthActionModalTitle');
+      const subTitleNode = document.getElementById('adminAuthActionSubTitle');
+
+      if (actionFlag === 'renew') {
+        titleNode.innerHTML = `<i class="bi bi-arrow-repeat text-warning me-2"></i> ยืนยันขยายเวลายืมต่อ (+90 วัน)`;
+        subTitleNode.textContent = `ระบุรหัสผ่านแอดมินเพื่ออนุมัติขยายเวลายืมต่อ`;
+      } else if (actionFlag === 'return') {
+        titleNode.innerHTML = `<i class="bi bi-box-arrow-in-down text-success me-2"></i> ยืนยันรับอุปกรณ์คืนเข้าคลัง`;
+        subTitleNode.textContent = `ระบุรหัสผ่านแอดมินเพื่อยืนยันรับอุปกรณ์คืน`;
       }
+
+      let modal = new bootstrap.Modal(document.getElementById('adminAuthActionModal'));
+      modal.show();
     }
 
-    async function processDirectTrackerReturn(trackerId) {
-      if(!confirm("ยืนยันรับอุปกรณ์ชิ้นนี้คืนเข้าคลังใช่หรือไม่ครับ?")) return;
+    async function submitAdminActionWithAuth() {
+      const actionFlag = document.getElementById('actionTypeFlag').value;
+      const trackerId = document.getElementById('actionTargetTrackerId').value;
+      const pass = document.getElementById('actionAdminPasswordInput').value;
+
+      if (!pass) return alert("โปรดระบุรหัสผ่านผู้ดูแลระบบก่อนกดทำรายการครับ");
+
+      const btn = document.getElementById('btnSubmitAdminAuthAction');
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> กำลังทำรายการ...';
+
       try {
-        const resMsg = await callGASApi('returnEquipmentFromTracker', { trackerId: trackerId }, sessionPassword);
+        let resMsg = "";
+        if (actionFlag === 'renew') {
+          resMsg = await callGASApi('renewEquipmentFromTracker', { trackerId: trackerId }, pass);
+        } else if (actionFlag === 'return') {
+          resMsg = await callGASApi('returnEquipmentFromTracker', { trackerId: trackerId }, pass);
+        }
+
         alert(resMsg);
+        btn.disabled = false;
+        btn.innerHTML = '<i class="bi bi-check-circle-fill me-1"></i> ยืนยันทำรายการ';
+        bootstrap.Modal.getInstance(document.getElementById('adminAuthActionModal')).hide();
+
+        let qModalEl = document.getElementById('qrScannerModal');
+        let qModalInst = bootstrap.Modal.getInstance(qModalEl);
+        if (qModalInst) qModalInst.hide();
+
         executeAdminBackgroundRefresh();
       } catch(err) {
         alert("เกิดข้อผิดพลาด: " + err.message);
+        btn.disabled = false;
+        btn.innerHTML = '<i class="bi bi-check-circle-fill me-1"></i> ยืนยันทำรายการ';
       }
     }
 
@@ -2331,7 +2351,7 @@
           onQrScanSuccess,
           onQrScanError
         ).catch(() => {
-          document.getElementById('reader').innerHTML = `<div class="alert alert-warning p-2 small"><i class="bi bi-camera-video-off me-1"></i> ไม่สามารถเปิดกล้องได้: โปรดพิมพ์ค้นหาผ่านช่องด้านล่างแทน</div>`;
+          document.getElementById('reader').innerHTML = `<div class="alert alert-warning p-2 small mb-0">ไม่สามารถเปิดกล้องได้: สามารถพิมพ์ค้นหารหัสครุภัณฑ์ที่ช่องด้านล่างได้ครับ</div>`;
         });
       }, 300);
     }
@@ -2344,25 +2364,24 @@
       }
     }
 
-    function executeManualAssetCodeSearch() {
-      const codeInput = document.getElementById('manualAssetCodeInput').value.trim();
-      if (!codeInput) return alert("โปรดป้อนรหัสครุภัณฑ์เพื่อค้นหาครับ");
-      processAssetCodeLookup(codeInput);
+    function executeManualAssetSearch() {
+      const codeInput = document.getElementById('manualAssetCodeInput');
+      const val = codeInput.value.trim().toUpperCase();
+      if (!val) return alert("กรุณาป้อนรหัสครุภัณฑ์ก่อนกดค้นหาครับ");
+      codeInput.value = val;
+      onQrScanSuccess(val);
     }
 
     async function onQrScanSuccess(decodedText) {
       triggerScanFeedback();
       stopQrScanner();
-      processAssetCodeLookup(decodedText);
-    }
-
-    async function processAssetCodeLookup(assetCodeText) {
+      
       const resultCard = document.getElementById('scanResultCard');
       resultCard.classList.remove('d-none');
       resultCard.innerHTML = '<div class="spinner-border spinner-border-sm text-info me-2"></div> กำลังตรวจสอบรหัสอุปกรณ์...';
 
       try {
-        const resData = await callGASApi('scanAssetItem', { assetCode: assetCodeText });
+        const resData = await callGASApi('scanAssetItem', { assetCode: decodedText });
         if (!resData.found) {
           resultCard.innerHTML = `<div class="alert alert-danger mb-0">${resData.message}</div>`;
           return;
@@ -2371,7 +2390,7 @@
         let asset = resData.asset;
         let tracker = resData.tracker;
         let html = `
-          <div class="card card-custom p-3 text-start border-top border-4 border-info">
+          <div class="card card-custom p-3 text-start border-top border-4 border-info shadow-sm">
             <h6 class="fw-bold text-primary mb-1"><i class="bi bi-qr-code text-info me-1"></i> ${asset.assetCode}</h6>
             <div class="fw-bold text-dark fs-5 mb-1">${asset.equipName}</div>
             <div class="small text-muted mb-2"><b>สภาพวัสดุ:</b> ${asset.conditionNote} (ยืมสะสม ${asset.borrowCount} ครั้ง)</div>
@@ -2381,80 +2400,21 @@
           html += `
             <div class="p-2 bg-light rounded border mb-3 small">
               <div><b>ผู้ถือครองปัจจุบัน:</b> ${tracker.borrowerName}</div>
-              <div><b>เบอร์โทร:</b> <a href="tel:${tracker.phone}" class="text-success fw-bold"><i class="bi bi-telephone-fill me-1"></i>${tracker.phone}</a></div>
+              <div><b>เบอร์โทร:</b> ${tracker.phone}</div>
               <div><b>วันกำหนดคืน:</b> <span class="text-danger fw-bold">${cleanDateDisplay(tracker.dueDate)}</span></div>
             </div>
             <div class="d-grid gap-2">
-              <button class="btn btn-warning btn-sm text-dark fw-bold" onclick="openQrAdminAuthModal('renew', '${tracker.trackerId}', '${asset.equipName}', '${tracker.borrowerName}')"><i class="bi bi-arrow-repeat me-1"></i> ขยายเวลายืมต่อ (+90 วัน)</button>
-              <button class="btn btn-success btn-sm fw-bold" onclick="openQrAdminAuthModal('return', '${tracker.trackerId}', '${asset.equipName}', '${tracker.borrowerName}')"><i class="bi bi-box-arrow-in-down me-1"></i> รับอุปกรณ์คืนเข้าคลัง</button>
+              <button class="btn btn-warning btn-sm text-dark fw-bold" onclick="openActionAdminAuthModal('renew', '${tracker.trackerId}')"><i class="bi bi-arrow-repeat me-1"></i> ขยายเวลายืมต่อ (+90 วัน)</button>
+              <button class="btn btn-success btn-sm fw-bold" onclick="openActionAdminAuthModal('return', '${tracker.trackerId}')"><i class="bi bi-box-arrow-in-down me-1"></i> รับคืนเข้าคลัง</button>
             </div>`;
         } else {
-          html += `<div class="text-muted small mb-3">อุปกรณ์ชิ้นนี้อยู่ในคลัง / รหัสยังไม่ได้ผูกผู้ยืม</div>`;
+          html += `<div class="text-muted small mb-0">อุปกรณ์ชิ้นนี้อยู่ในคลัง / รหัสยังไม่ได้ผูกผู้ยืม</div>`;
         }
 
         html += `</div>`;
         resultCard.innerHTML = html;
       } catch(err) {
         resultCard.innerHTML = `<div class="alert alert-danger mb-0">${err.message}</div>`;
-      }
-    }
-
-    function openQrAdminAuthModal(actionType, trackerId, equipName, borrowerName) {
-      document.getElementById('qrActionType').value = actionType;
-      document.getElementById('qrTargetTrackerId').value = trackerId;
-      document.getElementById('qrAdminPasscodeInput').value = sessionPassword || "";
-
-      const titleNode = document.getElementById('adminAuthModalTitle');
-      const summaryNode = document.getElementById('qrActionTargetSummary');
-      const condGroup = document.getElementById('returnConditionNoteGroup');
-
-      if (actionType === 'renew') {
-        titleNode.innerHTML = `<i class="bi bi-arrow-repeat me-1"></i> ยืนยันยืมต่อ (+90 วัน)`;
-        summaryNode.innerHTML = `รายการ: <b>${equipName}</b><br>ผู้ยืม: <b>${borrowerName}</b>`;
-        condGroup.classList.add('d-none');
-      } else {
-        titleNode.innerHTML = `<i class="bi bi-box-arrow-in-down me-1"></i> ยืนยันรับคืนอุปกรณ์เข้าคลัง`;
-        summaryNode.innerHTML = `รายการ: <b>${equipName}</b><br>ผู้ส่งคืน: <b>${borrowerName}</b>`;
-        condGroup.classList.remove('d-none');
-      }
-
-      let modal = new bootstrap.Modal(document.getElementById('adminPasscodeAuthModal'));
-      modal.show();
-    }
-
-    async function submitQrQuickAdminAction() {
-      const actionType = document.getElementById('qrActionType').value;
-      const trackerId = document.getElementById('qrTargetTrackerId').value;
-      const pass = document.getElementById('qrAdminPasscodeInput').value;
-      const condNote = document.getElementById('qrReturnConditionNote').value;
-
-      if (!pass) return alert("กรุณาระบุรหัสผ่านแอดมินก่อนกดทำรายการครับ");
-
-      const btn = document.getElementById('btnConfirmQrAction');
-      btn.disabled = true;
-      btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> กำลังประมวลผล...';
-
-      try {
-        let resMsg = "";
-        if (actionType === 'renew') {
-          resMsg = await callGASApi('renewEquipmentFromTracker', { trackerId: trackerId }, pass);
-        } else {
-          resMsg = await callGASApi('returnEquipmentFromTracker', { trackerId: trackerId, conditionNote: condNote }, pass);
-        }
-
-        alert(resMsg);
-        btn.disabled = false;
-        btn.innerHTML = '<i class="bi bi-check-circle-fill me-1"></i> ยืนยันทำรายการ';
-        bootstrap.Modal.getInstance(document.getElementById('adminPasscodeAuthModal')).hide();
-        bootstrap.Modal.getInstance(document.getElementById('qrScannerModal')).hide();
-        
-        sessionPassword = pass;
-        localStorage.setItem('gas_admin_session_key', pass);
-        executeAdminBackgroundRefresh();
-      } catch(err) {
-        alert("เกิดข้อผิดพลาด: " + err.message);
-        btn.disabled = false;
-        btn.innerHTML = '<i class="bi bi-check-circle-fill me-1"></i> ยืนยันทำรายการ';
       }
     }
 

@@ -449,19 +449,20 @@
           <div class="row g-4 mt-1">
             <div class="col-12">
               <div class="card card-custom p-4 border-top border-4 border-primary">
-                <h6 class="fw-bold text-dark mb-1"><i class="bi bi-bar-chart-fill text-primary me-2"></i> สถิติจำนวนยืมสะสม ประจำปีงบประมาณ แยกตามประเภทกายอุปกรณ์</h6>
+                <h6 class="fw-bold text-dark mb-1"><i class="bi bi-bar-chart-fill text-primary me-2"></i> สถิติจำนวนครั้งกิจกรรมการใช้งาน แยกตามประเภทกายอุปกรณ์</h6>
                 <div style="height: 380px; position: relative;"><canvas id="chartEquipmentUsage"></canvas></div>
               </div>
             </div>
           </div>
 
+          <!-- ตารางสรุปภาพรวมคลังอุปกรณ์ (Table Inventory Matrix - Real-time vs Historical) -->
           <div class="row g-4 mt-1">
             <div class="col-12">
               <div class="card card-custom p-4 border-top border-4 border-info">
                 <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
                   <div>
                     <h6 class="fw-bold text-dark mb-0"><i class="bi bi-table text-info me-2"></i> ตารางสรุปภาพรวมคลังอุปกรณ์</h6>
-                    <small class="text-muted">สรุปสถานะการใช้งานและสถิติตัวเลขสะสมแยกตามปีงบประมาณ</small>
+                    <small class="text-muted">เปรียบเทียบสถานะความพร้อมใช้งานปัจจุบัน และสถิติการให้บริการสะสมประจำปีงบประมาณ</small>
                   </div>
                   <div class="d-flex align-items-center gap-2">
                     <label class="fw-medium text-nowrap text-dark small">ปีงบประมาณ:</label>
@@ -470,19 +471,19 @@
                 </div>
                 <div class="table-responsive">
                   <table class="table table-bordered table-hover align-middle mb-0 text-nowrap">
-                    <thead class="table-light">
-                      <tr class="text-center align-middle">
-                        <th rowspan="2" class="text-start bg-light">ชื่อกายอุปกรณ์</th>
-                        <th colspan="3" class="bg-primary bg-opacity-10 text-primary fw-bold border-end">สถานะคลังอุปกรณ์ปัจจุบัน</th>
-                        <th colspan="4" class="bg-success bg-opacity-10 text-success fw-bold">สถิติการให้บริการสะสม (ประจำปีงบประมาณ)</th>
+                    <thead>
+                      <tr class="text-center align-middle" style="background-color: #f8fafc;">
+                        <th rowspan="2" class="text-start bg-white" style="min-width: 180px;">ชื่อกายอุปกรณ์</th>
+                        <th colspan="3" class="bg-primary bg-opacity-10 text-primary fw-bold">1. สถานะคลังอุปกรณ์ปัจจุบัน (Real-time)</th>
+                        <th colspan="4" class="bg-success bg-opacity-10 text-success fw-bold">2. สถิติสะสมประจำปีงบประมาณ (Historical Log)</th>
                       </tr>
-                      <tr class="text-center align-middle">
+                      <tr class="text-center align-middle small fw-bold">
                         <th class="bg-primary bg-opacity-10">รวม (ชิ้น)</th>
-                        <th class="bg-primary bg-opacity-10">ถูกยืม (ชิ้น)</th>
-                        <th class="bg-primary bg-opacity-10 border-end">ใช้งาน (%)</th>
-                        <th class="bg-success bg-opacity-10">ยืมสะสม (ชิ้น)</th>
-                        <th class="bg-success bg-opacity-10">คืนแล้ว (ชิ้น)</th>
-                        <th class="bg-success bg-opacity-10">บริจาค (ชิ้น)</th>
+                        <th class="bg-primary bg-opacity-10 text-danger">ถูกยืม (ชิ้น)</th>
+                        <th class="bg-primary bg-opacity-10">ใช้งาน (%)</th>
+                        <th class="bg-success bg-opacity-10 text-primary">ยืมสะสม (ชิ้น)</th>
+                        <th class="bg-success bg-opacity-10 text-success">คืนแล้ว (ชิ้น)</th>
+                        <th class="bg-success bg-opacity-10 text-info">บริจาค (ชิ้น)</th>
                         <th class="bg-success bg-opacity-10">หมุนเวียนสะสม (%)</th>
                       </tr>
                     </thead>
@@ -1788,7 +1789,7 @@
           <td><span class="fw-medium text-dark"><i class="bi bi-telephone-fill text-success"></i> ${dispPhone}</span></td>
           <td class="small">อายุ: ${h['Age']} ปี | ${h['Gender']}<br><span class="badge bg-secondary">${h['User Status']}</span> ม.${h['Moo']} ${h['Village']}</td>
           <td><span class="badge ${badgeColor}">${h['Action Type']}</span></td>
-          <td><span class="fw-medium">${h['Equipment Name']}</span>${assetTag}</td>
+          <td class="fw-medium">${h['Equipment Name']}${assetTag}</td>
           <td class="text-center fw-bold fs-6">${h['Qty']}</td>
           <td class="text-muted small"><i class="bi bi-calendar-check"></i> ${cleanDateDisplay(h['Relevant Date'])}</td>
           <td class="${stColor} fw-bold">${h['Status']}</td>
@@ -2070,7 +2071,7 @@
         let logs = data.logs;
 
         let logsHtml = "";
-        if (logs && logs.length > 0) {
+        if (logs.length > 0) {
           logs.forEach(l => {
             logsHtml += `<tr>
               <td class="small text-muted">${l.timestamp}</td>
@@ -2536,12 +2537,12 @@
       
       document.getElementById('cardStatPending').textContent = masterAdminCachedData.requests.filter(r => r['Status'] === 'Pending').length;
       document.getElementById('cardStatActive').textContent = masterAdminCachedData.tracker.length;
-      document.getElementById('cardStatReturned').textContent = masterAdminCachedData.history.filter(h => (h['Action Type'] || '').trim().includes('คืน') && h['Fiscal Year'] === selectedFY).length;
+      document.getElementById('cardStatReturned').textContent = masterAdminCachedData.history.filter(h => h['Action Type'] === 'คืน' || h['Action Type'].includes('คืน')).length;
 
       let sumApprovedBorrowedPieces = 0;
       hFilter.forEach(h => {
         let act = (h['Action Type'] || '').trim();
-        if (act === 'ยืม' || act === 'ยืมต่อ') {
+        if (act === 'ยืม') {
           sumApprovedBorrowedPieces += (Number(h['Qty']) || 0);
         }
       });
@@ -2577,22 +2578,25 @@
 
       let equipmentLabels = masterAdminCachedData.stock.map(s => s['Name']).filter(name => name !== "");
       let equipMatrix = {};
-      equipmentLabels.forEach(label => { equipMatrix[label] = { 'borrowAccum': 0 }; });
+      equipmentLabels.forEach(label => { equipMatrix[label] = { 'borrow': 0, 'return': 0, 'renew': 0, 'donate': 0 }; });
 
-      // คำนวณยอดบริการยืมสะสมจาก History_Log โดยตรงเพื่อให้ตัวเลขสถิติต่างๆ เท่ากันและสอดคล้องกัน
       hFilter.forEach(h => {
         let eName = h['Equipment Name'] ? h['Equipment Name'].toString().trim() : "";
         let action = h['Action Type'] ? h['Action Type'].toString().trim() : "";
         
         if (equipMatrix[eName] !== undefined) {
-          if (action === 'ยืม' || action === 'ยืมต่อ') {
-            equipMatrix[eName]['borrowAccum'] += (Number(h['Qty']) || 0);
-          }
+          if (action === 'ยืม') equipMatrix[eName]['borrow'] += (Number(h['Qty']) || 0);
+          else if (action === 'คืน' || action.includes('คืน')) equipMatrix[eName]['return'] += (Number(h['Qty']) || 0);
+          else if (action === 'ยืมต่อ') equipMatrix[eName]['renew'] += (Number(h['Qty']) || 0);
+          else if (action === 'บริจาค') equipMatrix[eName]['donate'] += (Number(h['Qty']) || 0);
         }
       });
 
       let datasetsUsage = [
-        { label: 'ยืมสะสม (ชิ้น)', data: equipmentLabels.map(l => equipMatrix[l]['borrowAccum']), backgroundColor: '#0d6efd' }
+        { label: 'ยืม (ชิ้น)', data: equipmentLabels.map(l => equipMatrix[l]['borrow']), backgroundColor: '#0d6efd' },
+        { label: 'ยืมต่อ/ขยายเวลา (ชิ้น)', data: equipmentLabels.map(l => equipMatrix[l]['renew']), backgroundColor: '#ff9800' },
+        { label: 'ส่งคืนแล้ว (ชิ้น)', data: equipmentLabels.map(l => equipMatrix[l]['return']), backgroundColor: '#198754' },
+        { label: 'บริจาคเข้าคลัง (ชิ้น)', data: equipmentLabels.map(l => equipMatrix[l]['donate']), backgroundColor: '#0dcaf0' }
       ];
       
       renderStackedChartNode('chartEquipmentUsage', equipmentLabels, datasetsUsage);
@@ -2600,24 +2604,36 @@
       renderSummaryInventoryMatrixTable(selectedFY);
     }
 
+    // =========================================================================
+    // ตารางสรุปภาพรวมคลังอุปกรณ์ (Table Inventory Matrix Table - 100% Precision)
+    // โซน 1: Real-time Inventory Status (ชีต Stock)
+    // โซน 2: Historical Service Log (ชีต History_Log)
+    // =========================================================================
     function renderSummaryInventoryMatrixTable(selectedFY) {
       const tbody = document.getElementById('tableInventoryMatrixBody');
       if (!tbody || !masterAdminCachedData) return;
 
-      let hYearFilter = masterAdminCachedData.history.filter(h => h['Fiscal Year'] === selectedFY && (h['Status'] === 'Approved' || h['Status'] === 'Returned'));
+      // 1. กรองประวัติกิจกรรมจาก History_Log เฉพาะปีงบประมาณที่เลือก และสถานะ Approved/Returned
+      let hYearFilter = masterAdminCachedData.history.filter(h => 
+        h['Fiscal Year'] === selectedFY && 
+        (h['Status'] === 'Approved' || h['Status'] === 'Returned')
+      );
+
       let matrixHtml = "";
 
       masterAdminCachedData.stock.forEach(stock => {
         let eName = stock['Name'].trim();
-        let total = Number(stock['Total Qty']) || 0;
-        let currentActiveBorrowed = Number(stock['Borrowed Qty']) || 0;
+        let total = Number(stock['Total Qty']) || 0;            // 1. รวม (ชิ้น) จาก Stock
+        let currentBorrowed = Number(stock['Borrowed Qty']) || 0; // 2. ถูกยืม (ชิ้น) จาก Stock
 
-        let usagePercent = total > 0 ? ((currentActiveBorrowed / total) * 100).toFixed(1) : "0.0";
+        // 3. ใช้งาน (%) คำนวณจาก (ถูกยืม / รวม) * 100
+        let usagePercent = total > 0 ? ((currentBorrowed / total) * 100).toFixed(1) : "0.0";
         let usageBadgeColor = usagePercent > 70 ? 'bg-danger' : (usagePercent >= 30 ? 'bg-warning text-dark' : 'bg-success');
 
-        let accumBorrowedTotal = 0;
-        let accumReturned = 0;
-        let accumDonated = 0;
+        // โซนที่ 2: สถิติการให้บริการสะสมประจำปีงบประมาณ ( Historical Service Log จาก History_Log เท่านั้น )
+        let accumBorrowedInFY = 0;
+        let accumReturnedInFY = 0;
+        let accumDonatedInFY = 0;
 
         hYearFilter.forEach(h => {
           let hEquip = (h['Equipment Name'] || '').trim();
@@ -2625,32 +2641,37 @@
           let act = (h['Action Type'] || '').trim();
 
           if (hEquip === eName) {
-            if (act === 'ยืม' || act === 'ยืมต่อ') {
-              accumBorrowedTotal += qty;
+            if (act === 'ยืม') {
+              accumBorrowedInFY += qty; // 1. ยืมสะสม (นับเฉพาะ 'ยืม' ไม่รวม 'ยืมต่อ')
             } else if (act === 'คืน' || act.includes('คืน')) {
-              accumReturned += qty;
+              accumReturnedInFY += qty; // 2. คืนแล้ว
             } else if (act === 'บริจาค') {
-              accumDonated += qty;
+              accumDonatedInFY += qty;  // 3. บริจาค
             }
           }
         });
 
-        let accumTurnoverPercent = total > 0 ? ((accumBorrowedTotal / total) * 100).toFixed(1) : "0.0";
-        let turnoverBadgeColor = accumTurnoverPercent >= 100 ? 'bg-primary' : (accumTurnoverPercent >= 50 ? 'bg-info text-dark' : 'bg-secondary');
+        // หมุนเวียนสะสม (%) คำนวณจาก (ยืมสะสม / รวม) * 100
+        let turnoverPercent = total > 0 ? ((accumBorrowedInFY / total) * 100).toFixed(1) : "0.0";
+        let turnoverBadgeColor = turnoverPercent >= 100 ? 'bg-primary' : (turnoverPercent >= 50 ? 'bg-info text-dark' : 'bg-secondary');
 
         matrixHtml += `<tr>
           <td class="fw-bold text-dark">${eName}</td>
+          
+          <!-- โซนที่ 1: สถานะคลังอุปกรณ์ปัจจุบัน (Real-time) -->
           <td class="text-center fw-semibold">${total}</td>
-          <td class="text-center text-danger fw-bold fs-6">${currentActiveBorrowed}</td>
-          <td class="text-center border-end"><span class="badge ${usageBadgeColor} px-2 py-1 fs-6">${usagePercent}%</span></td>
-          <td class="text-center text-primary fw-bold">${accumBorrowedTotal}</td>
-          <td class="text-center text-success fw-bold">${accumReturned}</td>
-          <td class="text-center text-info fw-bold">${accumDonated}</td>
-          <td class="text-center"><span class="badge ${turnoverBadgeColor} px-2 py-1 fs-6">${accumTurnoverPercent}%</span></td>
+          <td class="text-center text-danger fw-bold fs-6">${currentBorrowed}</td>
+          <td class="text-center"><span class="badge ${usageBadgeColor} px-2 py-1 fs-6">${usagePercent}%</span></td>
+          
+          <!-- โซนที่ 2: สถิติสะสมประจำปีงบประมาณ (${selectedFY}) -->
+          <td class="text-center text-primary fw-bold fs-6">${accumBorrowedInFY}</td>
+          <td class="text-center text-success fw-bold fs-6">${accumReturnedInFY}</td>
+          <td class="text-center text-info fw-bold fs-6">${accumDonatedInFY}</td>
+          <td class="text-center"><span class="badge ${turnoverBadgeColor} px-2 py-1 fs-6">${turnoverPercent}%</span></td>
         </tr>`;
       });
 
-      tbody.innerHTML = matrixHtml || '<tr><td colspan="8" class="text-center text-muted">ไม่มีข้อมูลคลังอุปกรณ์สำหรับปีงบประมาณนี้</td></tr>';
+      tbody.innerHTML = matrixHtml || '<tr><td colspan="8" class="text-center text-muted py-4">ไม่มีข้อมูลสำหรับปีงบประมาณนี้</td></tr>';
     }
 
     function renderPieChartWithLabels(canvasId, type, labels, data, labelTitle, colors) {
